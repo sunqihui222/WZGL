@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputType;
 import android.util.Log;
@@ -25,7 +26,9 @@ import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.bean.BHZEquipment;
 import com.shtoone.shtw.bean.EquipmentAndTestTypeData;
+import com.shtoone.shtw.bean.MaterialListData;
 import com.shtoone.shtw.bean.ParametersData;
+import com.shtoone.shtw.bean.WaagListData;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.DateUtils;
 import com.shtoone.shtw.utils.URL;
@@ -40,10 +43,6 @@ import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
-/**
- * Created by leguang on 2016/6/01 0031.
- */
-
 public class DialogActivity extends BaseActivity implements View.OnClickListener, TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     private static final String TAG = DialogActivity.class.getSimpleName();
     private TextInputLayout start_date_time;
@@ -51,6 +50,8 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private CircularProgressButton bt_search;
     private MaterialSpinner ms_select_equipment;
     private MaterialSpinner ms_select_test_type;
+    private MaterialSpinner ms_select_waagname;
+    private MaterialSpinner ms_select_materialname;
     private ImageView iv_cancel;
     private boolean isStartDateTime;
     private String startDateTime;
@@ -66,6 +67,10 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private List<String> testTypeIDs;
     private RadioGroup rg_handle;
     private RadioGroup rg_examine;
+    private WaagListData waagListData;
+    private MaterialListData materialListData;
+    private List<String> cailiaoName;
+    private List<String> cailiaoNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +91,8 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         iv_cancel = (ImageView) findViewById(R.id.iv_cancel_dialog);
         ms_select_equipment = (MaterialSpinner) findViewById(R.id.ms_select_equipment_dialog);
         ms_select_test_type = (MaterialSpinner) findViewById(R.id.ms_select_test_type_dialog);
+        ms_select_waagname = (MaterialSpinner) findViewById(R.id.ms_select_waagname_dialog);
+        ms_select_materialname = (MaterialSpinner) findViewById(R.id.ms_select_materialname_dialog);
         rg_handle = (RadioGroup) findViewById(R.id.rg_handle_dialog);
         rg_examine = (RadioGroup) findViewById(R.id.rg_examine_dialog);
         start_date_time.getEditText().setInputType(InputType.TYPE_NULL);
@@ -159,6 +166,43 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
+        ms_select_waagname.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                KLog.e("equipment选择第：" + i + "个");
+                if (i >= 0) {
+                    mParametersData.equipmentID = equipmentIDs.get(i);
+                    KLog.e("equipmentIDs[i]:" + equipmentNames.get(i));
+                } else if (i == -1) {
+                    mParametersData.equipmentID = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ms_select_materialname.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e("equipment选择第：", + i + "个");
+                if (i >= 0) {
+                    Log.e(TAG, "onItemSelected: "+ cailiaoNo.size() +" bianhao88  " + cailiaoNo.get(i));
+                    mParametersData.cailiaono = cailiaoNo.get(i);
+                    KLog.e("equipmentIDs[i]:" + cailiaoName.get(i));
+                } else if (i == -1) {
+                    mParametersData.cailiaono = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         rg_handle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -203,7 +247,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 ms_select_equipment.setVisibility(View.VISIBLE);
                 ms_select_test_type.setVisibility(View.VISIBLE);
                 url = URL.getLibEquipmentTest(mParametersData.userGroupID);
-                Log.e("float","url=:"+url);
+                Log.e("float", "url=:" + url);
                 refresh();
                 break;
             case ConstantsUtils.MATERIALSTATISTICFRAGMENT:
@@ -221,6 +265,14 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 rg_examine.setVisibility(View.INVISIBLE);
                 url = URL.getBHZEquipment(mParametersData.userGroupID);
                 refresh();
+                break;
+            case ConstantsUtils.WEIGHTHOUSEFRAGMENT:
+                ms_select_waagname.setVisibility(View.VISIBLE);
+                ms_select_materialname.setVisibility(View.VISIBLE);
+                url = URL.getWaagList(mParametersData.userGroupID);
+                refresh();
+                url = URL.MATERIAL_LIST;
+                loadMore();
                 break;
         }
 
@@ -244,8 +296,14 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
+    public void loadMoreSuccess(String response) {
+        materialListData = new Gson().fromJson(response, MaterialListData.class);
+        setMaterialListView();
+    }
+
+    @Override
     public void onRefreshSuccess(String response) {
-        Log.e(TAG,"response=:"+response.toString());
+        Log.e(TAG, "response=:" + response.toString());
         switch (mParametersData.fromTo) {
             case ConstantsUtils.LABORATORYFRAGMENT:
             case ConstantsUtils.CONCRETEFRAGMENT:
@@ -268,10 +326,53 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 mBHZEquipment = new Gson().fromJson(response, BHZEquipment.class);
                 setBHZQueryView();
                 break;
+            case ConstantsUtils.WEIGHTHOUSEFRAGMENT:
+                waagListData = new Gson().fromJson(response, WaagListData.class);
+                setWaagListView();
+                break;
         }
 
     }
 
+    private void setWaagListView() {
+        equipmentNames = new ArrayList<>();
+        equipmentIDs = new ArrayList<>();
+        for (WaagListData.DataBean temp : waagListData.getData()) {
+            equipmentNames.add(temp.getBanhezhanminchen());
+            equipmentIDs.add(temp.getGprsbianhao());
+        }
+
+        ArrayAdapter<String> equipmentsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, equipmentNames);
+        equipmentsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ms_select_waagname.setAdapter(equipmentsAdapter);
+
+        for (int i = 0; i < equipmentIDs.size(); i++) {
+            if (mParametersData.equipmentID.equals(equipmentIDs.get(i))) {
+                ms_select_waagname.setSelection(i + 1);
+                KLog.e("默认：" + (i + 1) + "个");
+            }
+        }
+    }
+
+    private void setMaterialListView() {
+        cailiaoName = new ArrayList<>();
+        cailiaoNo = new ArrayList<>();
+        for (MaterialListData.DataBean temp : materialListData.getData()) {
+            cailiaoName.add(temp.getCailiaoname());
+            cailiaoNo.add(temp.getCailiaono());
+        }
+
+        ArrayAdapter<String> equipmentsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cailiaoName);
+        equipmentsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ms_select_materialname.setAdapter(equipmentsAdapter);
+
+        for (int i = 0; i < cailiaoNo.size(); i++) {
+            if (mParametersData.cailiaono.equals(cailiaoNo.get(i))) {
+                ms_select_materialname.setSelection(i + 1);
+                Log.e("默认：" ,+ (i + 1) + "个");
+            }
+        }
+    }
 
     private void setBHZQueryView() {
         equipmentNames = new ArrayList<>();
@@ -427,6 +528,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private void revealView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             fl_container.post(new Runnable() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void run() {
 
@@ -519,6 +621,11 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public String createRefreshULR() {
+        return url;
+    }
+
+    @Override
+    public String createLoadMoreULR() {
         return url;
     }
 

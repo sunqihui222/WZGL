@@ -218,7 +218,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     public void loadMore() {
         String URL = createLoadMoreULR();
-
+        Log.e("当前的url","url=:"+URL);
         //联网获取数据
         //还没有判断url，用户再判断
         HttpUtils.getRequest(URL, new HttpUtils.HttpListener() {

@@ -38,7 +38,8 @@ public class URL {
     //中交集团二航局地址
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
-    public static final String BaseURL = "http://192.168.11.103:8080/jeecg/";
+//    public static final String BaseURL = "http://121.40.150.65:8083/gxzjzqms3.6.6WZ ";//物资平台地址
+    public static final String BaseURL = "http://192.168.11.106:8080/jeecg/";
 
     /**
      * 登录地址
@@ -58,7 +59,7 @@ public class URL {
         if (TextUtils.isEmpty(url)) {
             return null;
         }
-        Log.e("登录url","登录url=:"+url);
+        Log.e("登录url", "登录url=:" + url);
         return url;
     }
 
@@ -565,4 +566,42 @@ public class URL {
         }
         return url;
     }
+
+    /**
+     * 进磅list数据
+     */
+    public static final String ENTER_POUNDS_LIST = BaseURL + "AppGB.do?JinChangGB&jinchangshijian1=%1&chuchangshijian1=%2&orgcode=%3&pageNo=%4&maxPageItems=%5&pici=%6&cheliangbianhao=%7&gprsbianhao=%8&cailiaono=%9";
+
+    public static String getEnterPoundsListData(String jinchangshijian1, String chuchangshijian1, String orgcode, String pageNo, String maxPageItems, String pici, String cheliangbianhao, String gprsbianhao, String cailiaono) {
+        jinchangshijian1 = DateUtils.ChangeTimeToLong(jinchangshijian1);
+        chuchangshijian1 = DateUtils.ChangeTimeToLong(chuchangshijian1);
+        if (Integer.valueOf(jinchangshijian1) <= Integer.valueOf(chuchangshijian1)) {
+            String url = ENTER_POUNDS_LIST.replace("%1", jinchangshijian1).replace("%2", chuchangshijian1).replace("%3", orgcode).replace("%4", pageNo)
+                    .replace("%5", maxPageItems).replace("%6", pici).replace("%7", cheliangbianhao).replace("%8", gprsbianhao).replace("%9", cailiaono);
+            Log.e(TAG, "磅房管理进磅list数据" + url);
+            if (TextUtils.isEmpty(url)) {
+                return null;
+            }
+            return url;
+        }
+        return null;
+    }
+
+    /**
+     * 磅房列表
+     */
+    public static final String WAAG_LIST = BaseURL + "AppGB.do?AppDiBangList&departId=%1";
+
+    public static String getWaagList(String departId) {
+        String url = WAAG_LIST.replace("%1", departId);
+        KLog.e(TAG, "磅房列表:" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+    /**
+     * 材料列表
+     */
+    public static final String MATERIAL_LIST = BaseURL + "appWZproject.do?AppCaiLiaoNameDict";
 }
