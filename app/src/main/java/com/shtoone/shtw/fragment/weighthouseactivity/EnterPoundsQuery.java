@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import com.google.gson.Gson;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
-import com.shtoone.shtw.adapter.EnterPoundsRecycleviewAdapter;
+import com.shtoone.shtw.adapter.EnterPoundsRecycleViewAdapter;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.bean.EnterPoundsListData;
 import com.shtoone.shtw.bean.ParametersData;
@@ -50,7 +49,7 @@ public class EnterPoundsQuery extends BaseFragment {
     private LinearLayoutManager mLinearLayoutManager;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
     private SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter;
-    private EnterPoundsRecycleviewAdapter mAdapter;
+    private EnterPoundsRecycleViewAdapter mAdapter;
     private int lastVisibleItemPosition;
     private boolean isLoading;
 
@@ -96,7 +95,7 @@ public class EnterPoundsQuery extends BaseFragment {
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         //设置动画与适配器
-        mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new EnterPoundsRecycleviewAdapter(_mActivity, listDatas));
+        mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new EnterPoundsRecycleViewAdapter(_mActivity, listDatas));
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

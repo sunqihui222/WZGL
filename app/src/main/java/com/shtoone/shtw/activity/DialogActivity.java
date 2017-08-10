@@ -189,7 +189,6 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.e("equipment选择第：", + i + "个");
                 if (i >= 0) {
-                    Log.e(TAG, "onItemSelected: "+ cailiaoNo.size() +" bianhao88  " + cailiaoNo.get(i));
                     mParametersData.cailiaono = cailiaoNo.get(i);
                     KLog.e("equipmentIDs[i]:" + cailiaoName.get(i));
                 } else if (i == -1) {

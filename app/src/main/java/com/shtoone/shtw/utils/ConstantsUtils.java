@@ -36,6 +36,8 @@ public class ConstantsUtils {
     public static final int PRODUCEQUERYFRAGMENT = 5;
     public static final int OVERPROOFFRAGMENT = 6;
     public static final int WEIGHTHOUSEFRAGMENT = 7;
+    public static final int PLAYPOUNDSQUERY = 8;
+    public static final int ENTERPOUNDSQUERY = 9;
 
     public static final int CAMERA = 1;
     public static final int ALBUM = 2;

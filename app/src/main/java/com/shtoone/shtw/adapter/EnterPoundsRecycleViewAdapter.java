@@ -14,13 +14,13 @@ import com.shtoone.shtw.bean.EnterPoundsListData;
 
 import java.util.List;
 
-public class EnterPoundsRecycleviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class EnterPoundsRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<EnterPoundsListData.DataBean> itemData;
     private Resources mResources;
     private OnItemClickListener mOnItemClickListener;
 
-    public EnterPoundsRecycleviewAdapter(Context context, List<EnterPoundsListData.DataBean> itemData){
+    public EnterPoundsRecycleViewAdapter(Context context, List<EnterPoundsListData.DataBean> itemData){
         super();
         this.context = context;
         this.itemData = itemData;
