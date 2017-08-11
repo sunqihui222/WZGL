@@ -1,5 +1,6 @@
 package com.shtoone.shtw.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class EnterPoundsListData {
@@ -29,7 +30,7 @@ public class EnterPoundsListData {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * JCGKPic : null
          * koulv : 97

@@ -85,6 +85,9 @@
 
         <activity android:name=".activity.TestActivity" />
 
+        <activity android:name=".activity.EnterPoundsQueryDetailActivity"/>
+        <activity android:name=".activity.PlayPoundsQueryDetailActivity"/>
+
         <activity
             android:name=".activity.AboutActivity"
             android:theme="@style/AppTheme.Transparent" />

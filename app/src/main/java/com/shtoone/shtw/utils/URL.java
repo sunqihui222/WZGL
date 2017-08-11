@@ -39,7 +39,7 @@ public class URL {
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
 //    public static final String BaseURL = "http://121.40.150.65:8083/gxzjzqms3.6.6WZ ";//物资平台地址
-    public static final String BaseURL = "http://192.168.11.119:8080/jeecg/";
+    public static final String BaseURL = "http://192.168.11.108:8080/jeecg/";
 
     /**
      * 登录地址
@@ -597,7 +597,6 @@ public class URL {
         jinchangshijian1 = DateUtils.ChangeTimeToLong(jinchangshijian1);
         chuchangshijian1 = DateUtils.ChangeTimeToLong(chuchangshijian1);
         if (Integer.valueOf(jinchangshijian1) <= Integer.valueOf(chuchangshijian1)) {
-            Log.e(TAG, "getPlayPoundsListData666666: "+ states );
             String url = PIAY_POUNDS_LIST.replace("%1", jinchangshijian1).replace("%2", chuchangshijian1).replace("%3", orgcode).replace("%4", pageNo)
                     .replace("%5", maxPageItems).replace("%6", cheliangbianhao).replace("%7", gprsbianhao).replace("%8", states).replace("%9", cailiaono);
             Log.e(TAG, "磅房管理出磅list数据" + url);
@@ -627,4 +626,32 @@ public class URL {
      * 材料列表
      */
     public static final String MATERIAL_LIST = BaseURL + "appWZproject.do?AppCaiLiaoNameDict";
+
+    /**
+     * 进场过磅数据详情
+     */
+    public static final String ENTER_POUNDS_DETAIL = BaseURL + "AppGB.do?JinChangGBDetail&id=%1";
+
+    public static String getEnterPoundsDetail(String id){
+        String url = ENTER_POUNDS_DETAIL.replace("%1", id);
+        KLog.e(TAG, "进磅数据详情:" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+
+    /**
+     * 出场过磅数据详情
+     */
+    public static final String Play_POUNDS_DETAIL = BaseURL + "AppGB.do?ChuChangGBDetail&id=%1";
+
+    public static String getPlayPoundsDetail(String id){
+        String url = Play_POUNDS_DETAIL.replace("%1", id);
+        KLog.e(TAG, "出磅数据详情:" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
 }

@@ -24,6 +24,8 @@
     <string name="concrete">混凝土</string>
     <string name="banhezhan">拌合站</string>
     <string name="weight_house">磅房</string>
+    <string name="enter_pounds">进场过磅</string>
+    <string name="play_pounds">出场过磅</string>
     <string name="storage">料仓</string>
     <string name="engineering_department">工程部</string>
     <string name="asphalt">沥青</string>

@@ -1,5 +1,6 @@
 package com.shtoone.shtw.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class PlayPoundsListData {
@@ -28,7 +29,7 @@ public class PlayPoundsListData {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * banhezhanminchen : 1号拌合站地磅
          * cailiaoName : 碎石(16-31.5mm)

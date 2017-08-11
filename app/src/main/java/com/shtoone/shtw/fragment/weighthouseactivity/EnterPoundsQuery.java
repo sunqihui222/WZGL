@@ -1,5 +1,6 @@
 package com.shtoone.shtw.fragment.weighthouseactivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.google.gson.Gson;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
+import com.shtoone.shtw.activity.EnterPoundsQueryDetailActivity;
 import com.shtoone.shtw.adapter.EnterPoundsRecycleViewAdapter;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.bean.EnterPoundsListData;
@@ -100,7 +102,7 @@ public class EnterPoundsQuery extends BaseFragment {
             @Override
             public void onItemClick(View view, int position) {
                 // 实现局部界面刷新, 这个view就是被点击的item布局对象
-//                jumpToLiQingDetailActivity(position);
+                jumpToEnterPoundsDetailActivity(position);
 
             }
         });
@@ -145,6 +147,14 @@ public class EnterPoundsQuery extends BaseFragment {
 
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
+    }
+
+    private void jumpToEnterPoundsDetailActivity(int position) {
+        Intent intent = new Intent(_mActivity, EnterPoundsQueryDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("enterdetail", listDatas.get(position));
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override
