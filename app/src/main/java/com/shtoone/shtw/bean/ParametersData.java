@@ -28,6 +28,12 @@ public class ParametersData implements Cloneable, Serializable {
     public String detailID = "";
     public int fromTo;
 
+    public String cailiaono = "";
+    public String cailiaoname="";
+    public String dataType = "0";
+    public String states = "";
+
+
     public ParametersData() {
         initParametersData();
     }

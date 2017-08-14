@@ -46,4 +46,10 @@ public class ConstantsUtils {
     public static final int OVERPROOFFABHIDE = 17;
     public static final int OVERPROOFFABSHOW = 16;
     public static final int NOTIFY_REFRESH = 22;
+
+
+
+    public static final int YCLJINCHANG = 37;
+    public static final int YCLCHUCHANG = 38;
+
 }

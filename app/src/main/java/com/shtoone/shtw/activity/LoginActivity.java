@@ -221,8 +221,10 @@ public class LoginActivity extends BaseActivity {
         Intent intent = null;
         if ("GL".equals(userInfoData.getType())) {
             intent = new Intent(this, MainActivity.class);
-        } else if ("SG".equals(userInfoData.getType())) {
-            switch (userInfoData.getUserRole()) {
+        } else if ("SG".equals(userInfoData.getType()))
+        {
+            switch (userInfoData.getUserRole())
+            {
                 case "1":
                     intent = new Intent(this, ConcreteMainActivity.class);
                     break;

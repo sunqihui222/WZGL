@@ -565,4 +565,112 @@ public class URL {
         }
         return url;
     }
+
+    /**
+     * 原材料进场数据查询
+     */
+    public static String YCLJINCHANG_QUERY = BaseURL +"AppWZYCLJinChangGBCountInterfaceController.do?AppWZYCLJinChangGBCount&departId=%1&cailiaomingcheng=%2&gprsbianhao=%3&tongjitype=%4&jinchangshijian1=%5&jinchangshijian2=%6&pageNo=%7&maxPageItems=10";
+
+
+    public static String getYCLJINCHANGquery(String departId,String cailiaomingcheng,String gprsbianhao,String tongjitype,String jinchangshijian1,String jinchangshijian2,String pageNo) {
+        jinchangshijian1 = DateUtils.ChangeTimeToLong(jinchangshijian1);
+        jinchangshijian2 = DateUtils.ChangeTimeToLong(jinchangshijian2);
+
+        //如果开始时间大于结束时间，返回null
+        if (Integer.valueOf(jinchangshijian1) <= Integer.valueOf(jinchangshijian2)) {
+            String url = YCLJINCHANG_QUERY.replace("%1", departId).replace("%2", cailiaomingcheng).replace("%3", gprsbianhao).replace("%4", tongjitype).replace("%5", jinchangshijian1).replace("%6", jinchangshijian2).replace("%7", pageNo);
+            KLog.e(TAG, "原材料进场过账数据:" + url);
+            if (TextUtils.isEmpty(url)) {
+                return null;
+            }
+            Log.e("原材料进场过账数据", url);
+            return url;
+        }
+        return null;
+    }
+
+    /**
+     * 进厂数据详情查询
+     */
+    public static final String YCL_JINCHANG_DETAIL = BaseURL + "AppWZYCLJinChangGBCountInterfaceController.do?AppWZYCLJinChangGBDetail&jinchuliaodanno=%1&cailiaono=%2&gongyingshangdanweibianma=%3&pici=%4&shebeibianhao=%5&jcmin=%6&jcmax=%7&ccmin=%8&ccmax=%9";
+
+    /**
+     * 进厂生产数据详情查询
+     *
+     * @param
+     * @return 返回拼凑后的url
+     */
+    public static String getYclJinchangDetailData(String jinchuliaodanno,String cailiaono,String gongyingshangdanweibianma,String pici,String shebeibianhao,String jcmin,String jcmax,String ccmin,String ccmax) {
+        String url = YCL_JINCHANG_DETAIL.replace("%1", jinchuliaodanno).replace("%2", cailiaono).replace("%3", gongyingshangdanweibianma).replace("%4",pici).replace("%5",shebeibianhao).replace("%6", jcmin).replace("%7", jcmax).replace("%8", ccmin).replace("%9", ccmax);
+        KLog.e(TAG, "原材料进场数据详情查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        Log.e("原材料进场数据详情查询",url);
+        return url;
+    }
+
+    /**
+     * 磅房列表
+     */
+    public static final String WAAG_LIST = BaseURL + "AppGB.do?AppDiBangList&departId=%1";
+
+    public static String getWaagList(String departId) {
+        String url = WAAG_LIST.replace("%1", departId);
+        KLog.e(TAG, "磅房列表:" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+
+    /**
+     * 材料列表
+     */
+    public static final String MATERIAL_LIST = BaseURL + "appWZproject.do?AppCaiLiaoNameDict";
+
+
+    /**
+     * 原材料出场数据查询
+     */
+    public static String YCLCHUCHANG_QUERY = BaseURL +"AppWZYCLChuChangGBCountInterfaceController.do?AppWZYCLChuChangGBCount&departId=%1&cailiaomingcheng=%2&gprsbianhao=%3&tongjitype=%4&chuchangshijian1=%5&chuchangshijian2=%6&states=%7&pageNo=%8&maxPageItems=10";
+
+
+    public static String getYCLCHUCHANGquery(String departId,String cailiaomingcheng,String gprsbianhao,String tongjitype,String jinchangshijian1,String jinchangshijian2,String states,String pageNo) {
+        jinchangshijian1 = DateUtils.ChangeTimeToLong(jinchangshijian1);
+        jinchangshijian2 = DateUtils.ChangeTimeToLong(jinchangshijian2);
+
+        //如果开始时间大于结束时间，返回null
+        if (Integer.valueOf(jinchangshijian1) <= Integer.valueOf(jinchangshijian2)) {
+            String url = YCLCHUCHANG_QUERY.replace("%1", departId).replace("%2", cailiaomingcheng).replace("%3", gprsbianhao).replace("%4", tongjitype).replace("%5", jinchangshijian1).replace("%6", jinchangshijian2).replace("%7", states).replace("%8",pageNo);
+            KLog.e(TAG, "原材料出厂过账数据:" + url);
+            if (TextUtils.isEmpty(url)) {
+                return null;
+            }
+            Log.e("原材料出厂过账数据", url);
+            return url;
+        }
+        return null;
+    }
+
+    /**
+     * 出厂数据详情查询
+     */
+    public static final String YCL_CHUCHANG_DETAIL = BaseURL + "AppWZYCLChuChangGBCountInterfaceController.do?AppWZYCLChuChangGBDetail&id=%1&guobangleibie=%2&cailiaono=%3&gongyingshangdanweibianma=%4&pici=%5&shebeibianhao=%6&jcmin=%7&jcmax=%8&ccmin=%9&ccmax=@10";
+
+    /**
+     * 出厂生产数据详情查询
+     *
+     * @param
+     * @return 返回拼凑后的url
+     */
+    public static String getYclChuchangDetailData(String id,String guobangleibie,String cailiaono,String gongyingshangdanweibianma,String pici,String shebeibianhao,String jcmin,String jcmax,String ccmin,String ccmax) {
+        String url = YCL_CHUCHANG_DETAIL.replace("%1",id).replace("%2",guobangleibie).replace("%3",cailiaono).replace("%4",gongyingshangdanweibianma).replace("%5",pici).replace("%6",shebeibianhao).replace("%7",jcmin).replace("%8", jcmax).replace("%9",ccmin).replace("@10",ccmax);
+        KLog.e(TAG, "原材料出场数据详情查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        Log.e("原材料出场数据详情查询",url);
+        return url;
+    }
 }

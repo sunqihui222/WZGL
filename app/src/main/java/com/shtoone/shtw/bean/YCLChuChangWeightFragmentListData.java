@@ -7,11 +7,11 @@ import java.util.List;
  * Created by Administrator on 2017/8/7.
  */
 
-public class YCLJinChangWeightFragmentListData {
+public class YCLChuChangWeightFragmentListData {
 
 
     /**
-     * data : [{"cailiaoName":"河砂(中砂)","maozhong":65.9,"jingzhong":49.53,"ccmin":"2017-07-04","pici":null,"gongyingshangdanweibianma":"b785dea1-1aa2-402d-9e8c-c799d891979b","cailiaoNo":"003001","shebeibianhao":"TJ1B1db","pizhong":14.84,"tempRowNumber":1,"id":1,"jcmax":"2017-07-04","jinchuliaodanNo":"20170704210353","datetype":"3季度","banhezhanminchen":"1号拌合站地磅","gongyingshangName":"全椒润尧商贸有限公司","tempColumn":0,"jcmin":"2017-07-04","ccmax":"2017-07-04"}]
+     * data : [{"cailiaoName":"碎石(16-31.5mm)","maozhong":50.64,"jingzhong":34.16,"ccmin":"2017-06-14","pici":null,"gongyingshangdanweibianma":"feaec4e3-8338-4592-9656-22402384952f","cailiaoNo":"002002","shebeibianhao":"TJ1B1db","pizhong":15.78,"tempRowNumber":1,"id":1,"jcmax":"2017-06-14","guobangleibie":"1","datetype":"2季度","banhezhanminchen":"1号拌合站地磅","gongyingshangName":"安徽祥实商贸有限公司","tempColumn":0,"jcmin":"2017-06-14","ccmax":"2017-06-14"}]
      * success : true
      */
 
@@ -34,27 +34,27 @@ public class YCLJinChangWeightFragmentListData {
         return data;
     }
 
-    public static class DataEntity implements Serializable{
+    public static class DataEntity implements Serializable {
         /**
-         * cailiaoName : 河砂(中砂)
-         * maozhong : 65.9
-         * jingzhong : 49.53
-         * ccmin : 2017-07-04
+         * cailiaoName : 碎石(16-31.5mm)
+         * maozhong : 50.64
+         * jingzhong : 34.16
+         * ccmin : 2017-06-14
          * pici : null
-         * gongyingshangdanweibianma : b785dea1-1aa2-402d-9e8c-c799d891979b
-         * cailiaoNo : 003001
+         * gongyingshangdanweibianma : feaec4e3-8338-4592-9656-22402384952f
+         * cailiaoNo : 002002
          * shebeibianhao : TJ1B1db
-         * pizhong : 14.84
+         * pizhong : 15.78
          * tempRowNumber : 1
          * id : 1
-         * jcmax : 2017-07-04
-         * jinchuliaodanNo : 20170704210353
-         * datetype : 3季度
+         * jcmax : 2017-06-14
+         * guobangleibie : 1
+         * datetype : 2季度
          * banhezhanminchen : 1号拌合站地磅
-         * gongyingshangName : 全椒润尧商贸有限公司
+         * gongyingshangName : 安徽祥实商贸有限公司
          * tempColumn : 0
-         * jcmin : 2017-07-04
-         * ccmax : 2017-07-04
+         * jcmin : 2017-06-14
+         * ccmax : 2017-06-14
          */
 
         private String cailiaoName;
@@ -69,7 +69,7 @@ public class YCLJinChangWeightFragmentListData {
         private int    tempRowNumber;
         private int    id;
         private String jcmax;
-        private String jinchuliaodanNo;
+        private String guobangleibie;
         private String datetype;
         private String banhezhanminchen;
         private String gongyingshangName;
@@ -125,8 +125,8 @@ public class YCLJinChangWeightFragmentListData {
             this.jcmax = jcmax;
         }
 
-        public void setJinchuliaodanNo(String jinchuliaodanNo) {
-            this.jinchuliaodanNo = jinchuliaodanNo;
+        public void setGuobangleibie(String guobangleibie) {
+            this.guobangleibie = guobangleibie;
         }
 
         public void setDatetype(String datetype) {
@@ -201,8 +201,8 @@ public class YCLJinChangWeightFragmentListData {
             return jcmax;
         }
 
-        public String getJinchuliaodanNo() {
-            return jinchuliaodanNo;
+        public String getGuobangleibie() {
+            return guobangleibie;
         }
 
         public String getDatetype() {
