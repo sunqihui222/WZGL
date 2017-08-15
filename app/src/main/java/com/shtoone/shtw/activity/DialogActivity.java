@@ -2,10 +2,11 @@ package com.shtoone.shtw.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
+import android.support.annotation.IdRes;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputType;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.dd.CircularProgressButton;
 import com.google.gson.Gson;
@@ -29,6 +31,7 @@ import com.shtoone.shtw.bean.EquipmentAndTestTypeData;
 import com.shtoone.shtw.bean.MaterialListData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.bean.WaagListData;
+import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.DateUtils;
 import com.shtoone.shtw.utils.URL;
@@ -42,6 +45,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
+
+/**
+ * Created by leguang on 2016/6/01 0031.
+ */
 
 public class DialogActivity extends BaseActivity implements View.OnClickListener, TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     private static final String TAG = DialogActivity.class.getSimpleName();
@@ -60,17 +67,21 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private FrameLayout fl_container;
     private String url;
     private EquipmentAndTestTypeData mEquipmentTestData;
-    private BHZEquipment mBHZEquipment;
-    private List<String> equipmentNames;
-    private List<String> equipmentIDs;
-    private List<String> testTypeNames;
-    private List<String> testTypeIDs;
-    private RadioGroup rg_handle;
-    private RadioGroup rg_examine;
-    private WaagListData waagListData;
-    private MaterialListData materialListData;
-    private List<String> cailiaoName;
-    private List<String> cailiaoNo;
+    private BHZEquipment             mBHZEquipment;
+    private List<String>             equipmentNames;
+    private List<String>             equipmentIDs;
+    private List<String>             testTypeNames;
+    private List<String>             testTypeIDs;
+    private RadioGroup               rg_handle;
+    private RadioGroup               rg_examine;
+    private RadioGroup               rg_jinchang_handle;
+    private RadioGroup               rg_chuchang_handle;
+    private WaagListData             waagListData;
+    private MaterialListData         materialListData;
+    private List<String>             cailiaoName;
+    private List<String>             cailiaoNo;
+    private TextView tv_MaterialName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,10 +106,15 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         ms_select_materialname = (MaterialSpinner) findViewById(R.id.ms_select_materialname_dialog);
         rg_handle = (RadioGroup) findViewById(R.id.rg_handle_dialog);
         rg_examine = (RadioGroup) findViewById(R.id.rg_examine_dialog);
+        rg_jinchang_handle = (RadioGroup) findViewById(R.id.rg_jinchang_handle_dialog);
+        rg_chuchang_handle= (RadioGroup) findViewById(R.id.rg_chuchang_handle_dialog);
         start_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         end_date_time.getEditText().setInputType(InputType.TYPE_NULL);
+        tv_MaterialName = (TextView) findViewById(R.id.tv_material_choose);
+
         iv_cancel.setOnClickListener(this);
         bt_search.setOnClickListener(this);
+        tv_MaterialName.setOnClickListener(this);
 
         start_date_time.getEditText().setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -189,6 +205,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.e("equipment选择第：", + i + "个");
                 if (i >= 0) {
+                    Log.e(TAG, "onItemSelected: "+ cailiaoNo.size() +" bianhao88  " + cailiaoNo.get(i));
                     mParametersData.cailiaono = cailiaoNo.get(i);
                     KLog.e("equipmentIDs[i]:" + cailiaoName.get(i));
                 } else if (i == -1) {
@@ -233,6 +250,34 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
+        rg_jinchang_handle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int i) {
+                if (i==R.id.rb_ji_handle_dialog){
+                    mParametersData.dataType="0";
+                }else if(i==R.id.rb_yue_handle_dialog){
+                    mParametersData.dataType="1";
+                }else if (i==R.id.rb__zhou_handled_dialog){
+                    mParametersData.dataType = "2";
+                }
+            }
+        });
+
+        rg_chuchang_handle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int i) {
+                if (i==R.id.rb_chu_all_handle_dialog){
+                    mParametersData.states="";
+                }else if (i==R.id.rb_feiliao_handle_dialog){
+                    mParametersData.states="0";
+                }else if (i==R.id.rb__diaobo_handled_dialog){
+                    mParametersData.states="1";
+                }
+            }
+        });
+
+
 
         //设置哪些条件选择该显示，默认只有时间选择是显示的
         switch (mParametersData.fromTo) {
@@ -273,6 +318,24 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 url = URL.MATERIAL_LIST;
                 loadMore();
                 break;
+
+            case ConstantsUtils.YCLJINCHANG:
+                rg_jinchang_handle.setVisibility(View.VISIBLE);
+                ms_select_waagname.setVisibility(View.VISIBLE);
+                tv_MaterialName.setVisibility(View.VISIBLE);
+                url = URL.getWaagList(mParametersData.userGroupID);
+                refresh();
+                break;
+
+            case ConstantsUtils.YCLCHUCHANG:
+                rg_jinchang_handle.setVisibility(View.VISIBLE);
+                rg_chuchang_handle.setVisibility(View.VISIBLE);
+                ms_select_waagname.setVisibility(View.VISIBLE);
+                tv_MaterialName.setVisibility(View.VISIBLE);
+                url = URL.getWaagList(mParametersData.userGroupID);
+                refresh();
+
+                break;
         }
 
         if (mParametersData.handleType.equals("")) {
@@ -291,6 +354,22 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             rg_handle.check(R.id.rb_handled_dialog);
             rg_examine.check(R.id.rb_examined_dialog);
             rg_examine.setVisibility(View.VISIBLE);
+        }
+
+        if (mParametersData.dataType.equals("0")){
+            rg_jinchang_handle.check(R.id.rb_ji_handle_dialog);
+        }else if(mParametersData.dataType.equals("1")){
+            rg_jinchang_handle.check(R.id.rb_yue_handle_dialog);
+        }else if (mParametersData.dataType.equals("2")){
+            rg_jinchang_handle.check(R.id.rb__zhou_handled_dialog);
+        }
+
+        if (mParametersData.states.equals("")){
+            rg_chuchang_handle.check(R.id.rb_chu_all_handle_dialog);
+        }else if(mParametersData.states.equals("0")){
+            rg_chuchang_handle.check(R.id.rb_feiliao_handle_dialog);
+        }else if (mParametersData.states.equals("1")){
+            rg_chuchang_handle.check(R.id.rb__diaobo_handled_dialog);
         }
     }
 
@@ -329,6 +408,15 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 waagListData = new Gson().fromJson(response, WaagListData.class);
                 setWaagListView();
                 break;
+
+            case ConstantsUtils.YCLJINCHANG:
+                waagListData = new Gson().fromJson(response, WaagListData.class);
+                setWaagListView();
+
+            case ConstantsUtils.YCLCHUCHANG:
+                waagListData = new Gson().fromJson(response, WaagListData.class);
+                setWaagListView();
+
         }
 
     }
@@ -489,6 +577,13 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                     end_date_time.setErrorEnabled(true);
                 }
                 break;
+
+            case R.id.tv_material_choose:
+                Intent intent = new Intent(this,MaterialListActivity.class);
+                //AnimationUtils.startActivityForResult(this,intent,10,tv_MaterialName,R.color.base_color);
+                startActivityForResult(intent,10);
+
+                break;
         }
     }
 
@@ -527,7 +622,6 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private void revealView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             fl_container.post(new Runnable() {
-                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void run() {
 
@@ -611,6 +705,22 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             endDateTime = dateString;
         }
         showTimePicker();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode==10){
+
+            if (resultCode==15){
+
+                tv_MaterialName.setText(data.getExtras().getString("cailiaoname"));
+                mParametersData.cailiaono=data.getExtras().getString("cailiaono");
+                Log.e("tv_MaterialName",data.getStringExtra("cailiaoname"));
+
+            }
+
+        }
+
     }
 
     @Override

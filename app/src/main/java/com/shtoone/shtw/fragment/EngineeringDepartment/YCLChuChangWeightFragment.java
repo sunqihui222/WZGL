@@ -19,12 +19,13 @@ import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
-import com.shtoone.shtw.activity.ProduceQueryDetailActivity;
+import com.shtoone.shtw.activity.YCLChuChangWeightFragmentActivity;
 import com.shtoone.shtw.activity.YCLJinChangWeightFragmentActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
+import com.shtoone.shtw.adapter.YCLChuChangWeightFragmentRecycleViewAdapter;
 import com.shtoone.shtw.adapter.YCLJinChangWeightFragmentRecycleViewAdapter;
 import com.shtoone.shtw.bean.ParametersData;
-import com.shtoone.shtw.bean.ProduceQueryFragmentListData;
+import com.shtoone.shtw.bean.YCLChuChangWeightFragmentListData;
 import com.shtoone.shtw.bean.YCLJinChangWeightFragmentListData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
@@ -37,7 +38,6 @@ import com.squareup.otto.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,28 +49,28 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
  * Created by Administrator on 2017/8/7.
  */
 
-public class YCLJinChangWeightFragment extends BaseLazyFragment {
+public class YCLChuChangWeightFragment extends BaseLazyFragment {
 
-    private Toolbar        mToolbar;
-    private PtrFrameLayout mPtrFrameLayout;
-    private RecyclerView   mRecyclerView;
-    private YCLJinChangWeightFragmentRecycleViewAdapter mAdapter;
-    private YCLJinChangWeightFragmentListData itemsData;
+    private Toolbar                                     mToolbar;
+    private PtrFrameLayout                              mPtrFrameLayout;
+    private RecyclerView                                mRecyclerView;
+    private YCLChuChangWeightFragmentRecycleViewAdapter mAdapter;
+    private YCLChuChangWeightFragmentListData           itemsData;
 
     private FloatingActionButton fab;
     private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
     private Gson            mGson;
     private boolean         isLoading;
-    private List<YCLJinChangWeightFragmentListData.DataEntity> listData;
+    private List<YCLChuChangWeightFragmentListData.DataEntity> listData;
 
     private ParametersData          mParametersData;
     private LinearLayoutManager     mLinearLayoutManager;
     private int                     lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
 
-    public static YCLJinChangWeightFragment newInstance() {
-        return new YCLJinChangWeightFragment();
+    public static YCLChuChangWeightFragment newInstance() {
+        return new YCLChuChangWeightFragment();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
         mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
         mParametersData = (ParametersData) BaseApplication.parametersData.clone();
         mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
-        mParametersData.fromTo = ConstantsUtils.YCLJINCHANG;
+        mParametersData.fromTo = ConstantsUtils.YCLCHUCHANG;
 
         mGson = new Gson();
         listData = new ArrayList<>();
@@ -108,7 +108,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
 
 
         //设置动画与适配器
-        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new YCLJinChangWeightFragmentRecycleViewAdapter(_mActivity, listData));
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new YCLChuChangWeightFragmentRecycleViewAdapter(_mActivity, listData));
         mSlideInLeftAnimationAdapter.setDuration(500);
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
@@ -196,6 +196,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
+        String states= "";
 
 
         if (null != mParametersData) {
@@ -206,6 +207,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
             equipmentID = mParametersData.equipmentID;
+            states = mParametersData.states;
 
         }
 
@@ -214,7 +216,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
         }
 
 
-        return URL.getYCLJINCHANGquery(userGroupID, cailiaoname, equipmentID, tongjitype, startDateTime, endDateTime, currentPage);
+        return URL.getYCLCHUCHANGquery(userGroupID, cailiaoname, equipmentID, tongjitype, startDateTime, endDateTime, currentPage,states);
 
 
     }
@@ -229,6 +231,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
+        String states= "";
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             cailiaoname = mParametersData.cailiaono;
@@ -237,8 +240,9 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
             equipmentID = mParametersData.equipmentID;
+            states = mParametersData.states;
         }
-        return URL.getYCLJINCHANGquery(userGroupID,cailiaoname,equipmentID,tongjitype,startDateTime,endDateTime,currentPage);
+        return URL.getYCLCHUCHANGquery(userGroupID,cailiaoname,equipmentID,tongjitype,startDateTime,endDateTime,currentPage,states);
     }
 
     @Override
@@ -253,7 +257,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, YCLJinChangWeightFragmentListData.class);
+                itemsData = mGson.fromJson(response, YCLChuChangWeightFragmentListData.class);
                 if (null != itemsData) {
                     if (itemsData.getSuccess() && itemsData.getData().size() > 0) {
                         listData.addAll(itemsData.getData());
@@ -311,7 +315,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, YCLJinChangWeightFragmentListData.class);
+                itemsData = mGson.fromJson(response, YCLChuChangWeightFragmentListData.class);
                 if (null != itemsData) {
                     if (itemsData.getSuccess() && itemsData.getData().size() > 0) {
                         if (null != listData) {
@@ -362,12 +366,13 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
-            if (mParametersData.fromTo == ConstantsUtils.YCLJINCHANG) {
+            if (mParametersData.fromTo == ConstantsUtils.YCLCHUCHANG) {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
                 this.mParametersData.dataType = mParametersData.dataType;
                 this.mParametersData.equipmentID = mParametersData.equipmentID;
                 this.mParametersData.cailiaono = mParametersData.cailiaono;
+                this.mParametersData.states = mParametersData.states;
                 KLog.e("mParametersData:" + mParametersData.startDateTime);
                 KLog.e("mParametersData:" + mParametersData.endDateTime);
                 KLog.e("mParametersData:" + mParametersData.dataType);
@@ -387,7 +392,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
             isRegistered = true;
         }
 
-        View view = inflater.inflate(R.layout.fragment_jinchang_query, container, false);
+        View view = inflater.inflate(R.layout.fragment_chuchang_query, container, false);
         initView(view);
         return view;
 
@@ -428,9 +433,9 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
 
     //进入ProduceQueryDetailActivity
     private void jump2ProduceQueryDetailActivity(int position) {
-        Intent intent = new Intent(_mActivity, YCLJinChangWeightFragmentActivity.class);
+        Intent intent = new Intent(_mActivity, YCLChuChangWeightFragmentActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("jinchangquerydetail", listData.get(position));
+        bundle.putSerializable("chuchangquerydetail", listData.get(position));
         intent.putExtras(bundle);
         startActivity(intent);
     }

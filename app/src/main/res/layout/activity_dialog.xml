@@ -83,22 +83,22 @@
                 app:ms_hintColor="@color/black"
                 app:ms_multiline="true" />
 
-            <fr.ganfra.materialspinner.MaterialSpinner
-                android:id="@+id/ms_select_materialname_dialog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:ms_alignLabels="true"
-                app:ms_arrowColor="@color/black"
-                app:ms_arrowSize="16dp"
-                app:ms_baseColor="@color/black"
-                app:ms_enableErrorLabel="false"
-                app:ms_floatingLabelColor="@color/black"
-                app:ms_floatingLabelText="@string/setect_material"
-                app:ms_highlightColor="@color/white"
-                app:ms_hint="@string/setect_material"
-                app:ms_hintColor="@color/black"
-                app:ms_multiline="true" />
+            <!--<fr.ganfra.materialspinner.MaterialSpinner-->
+                <!--android:id="@+id/ms_select_materialname_dialog"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:visibility="gone"-->
+                <!--app:ms_alignLabels="true"-->
+                <!--app:ms_arrowColor="@color/black"-->
+                <!--app:ms_arrowSize="16dp"-->
+                <!--app:ms_baseColor="@color/black"-->
+                <!--app:ms_enableErrorLabel="false"-->
+                <!--app:ms_floatingLabelColor="@color/black"-->
+                <!--app:ms_floatingLabelText="@string/setect_material"-->
+                <!--app:ms_highlightColor="@color/white"-->
+                <!--app:ms_hint="@string/setect_material"-->
+                <!--app:ms_hintColor="@color/black"-->
+                <!--app:ms_multiline="true" />-->
 
             <fr.ganfra.materialspinner.MaterialSpinner
                 android:id="@+id/ms_select_equipment_dialog"
@@ -134,6 +134,42 @@
                 app:ms_hintColor="@color/black"
                 app:ms_multiline="true" />
 
+            <!--<fr.ganfra.materialspinner.MaterialSpinner-->
+                <!--android:id="@+id/ms_select_waagname_dialog"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:visibility="gone"-->
+                <!--app:ms_alignLabels="true"-->
+                <!--app:ms_arrowColor="@color/black"-->
+                <!--app:ms_arrowSize="16dp"-->
+                <!--app:ms_baseColor="@color/black"-->
+                <!--app:ms_enableErrorLabel="false"-->
+                <!--app:ms_floatingLabelColor="@color/black"-->
+                <!--app:ms_floatingLabelText="@string/select_waag"-->
+                <!--app:ms_highlightColor="@color/white"-->
+                <!--app:ms_hint="@string/select_waag"-->
+                <!--app:ms_hintColor="@color/black"-->
+                <!--app:ms_multiline="true" />-->
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/ms_select_materialname_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:ms_alignLabels="true"
+                app:ms_arrowColor="@color/black"
+                app:ms_arrowSize="16dp"
+                app:ms_baseColor="@color/black"
+                app:ms_enableErrorLabel="false"
+                app:ms_floatingLabelColor="@color/black"
+                app:ms_floatingLabelText="@string/setect_material"
+                app:ms_highlightColor="@color/white"
+                app:ms_hint="@string/setect_material"
+                app:ms_hintColor="@color/black"
+                app:ms_multiline="true" />
+
+
+
             <RadioGroup
                 android:id="@+id/rg_handle_dialog"
                 android:layout_width="match_parent"
@@ -166,6 +202,68 @@
             </RadioGroup>
 
             <RadioGroup
+                android:id="@+id/rg_jinchang_handle_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/rb_ji_handle_dialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="季度" />
+
+                <RadioButton
+                    android:id="@+id/rb_yue_handle_dialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="月" />
+
+                <RadioButton
+                    android:id="@+id/rb__zhou_handled_dialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="周" />
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/rg_chuchang_handle_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/rb_chu_all_handle_dialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="全部" />
+
+                <RadioButton
+                    android:id="@+id/rb_feiliao_handle_dialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="费料" />
+
+                <RadioButton
+                    android:id="@+id/rb__diaobo_handled_dialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="调拨" />
+            </RadioGroup>
+
+            <RadioGroup
                 android:id="@+id/rg_examine_dialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -195,6 +293,17 @@
                     android:layout_weight="1"
                     android:text="已审批" />
             </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_material_choose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="请选择材料类型"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:layout_marginTop="5dp"
+                />
 
             <com.dd.CircularProgressButton
                 android:id="@+id/bt_search_dialog"

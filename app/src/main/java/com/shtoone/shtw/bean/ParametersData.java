@@ -31,6 +31,9 @@ public class ParametersData implements Cloneable, Serializable {
     public String cheliangbianhao = "";
     public String cailiaono = "";
     public String states = "";
+    public String cailiaoname="";
+    public String dataType = "0";
+
 
     public ParametersData() {
         initParametersData();

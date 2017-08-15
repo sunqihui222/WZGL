@@ -47,7 +47,7 @@ public abstract class TreeListViewAdapter<T> extends BaseAdapter {
         mTree.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                expandOrCollapse(position);
+                expandOrCollapse(position);
 
                 if (mListener != null) {
                     mListener.onClick(mVisibleNodes.get(position), position);

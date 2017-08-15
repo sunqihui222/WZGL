@@ -61,10 +61,10 @@ public class TreeHelper {
             for (int j = i + 1; j < nodes.size(); j++) {
                 Node m = nodes.get(j);
 
-                if (m.getpId().equals(n.getId())) {
+                if (String.valueOf(m.getpId()).equals(n.getId())) {
                     n.getChildren().add(m);
                     m.setParent(n);
-                } else if (m.getId().equals(n.getpId())) {
+                } else if (m.getId().equals(String.valueOf(n.getpId()))) {
                     m.getChildren().add(n);
                     n.setParent(m);
                 }
