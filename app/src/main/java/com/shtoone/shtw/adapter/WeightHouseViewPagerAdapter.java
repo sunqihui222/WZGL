@@ -3,14 +3,13 @@ package com.shtoone.shtw.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.bean.ParametersData;
-import com.shtoone.shtw.fragment.mainactivity.LaboratoryFragment;
 import com.shtoone.shtw.fragment.weighthouseactivity.EnterPoundsQuery;
 import com.shtoone.shtw.fragment.weighthouseactivity.PlayPoundsQuery;
 import com.shtoone.shtw.utils.ConstantsUtils;
-import com.socks.library.KLog;
 import com.squareup.otto.Subscribe;
 
 public class WeightHouseViewPagerAdapter extends FragmentPagerAdapter {
@@ -22,7 +21,6 @@ public class WeightHouseViewPagerAdapter extends FragmentPagerAdapter {
     public WeightHouseViewPagerAdapter(FragmentManager fm, ParametersData mParametersData) {
         super(fm);
         this.mParametersData = mParametersData;
-
         if (!isRegistered) {
             BaseApplication.bus.register(this);
             isRegistered = true;
@@ -66,12 +64,10 @@ public class WeightHouseViewPagerAdapter extends FragmentPagerAdapter {
             if (mParametersData.fromTo == ConstantsUtils.WEIGHTHOUSEFRAGMENT) {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
+                this.mParametersData.userGroupID = mParametersData.userGroupID;
                 this.mParametersData.equipmentID = mParametersData.equipmentID;
                 this.mParametersData.cailiaono = mParametersData.cailiaono;
-                KLog.e("mParametersData:" + mParametersData.startDateTime);
-                KLog.e("mParametersData:" + mParametersData.endDateTime);
-                KLog.e("mParametersData:" + mParametersData.equipmentID);
-                KLog.e("mParametersData:" + mParametersData.cailiaono);
+                Log.e("mParametersData:6666", mParametersData.userGroupID);
             }
         }
     }

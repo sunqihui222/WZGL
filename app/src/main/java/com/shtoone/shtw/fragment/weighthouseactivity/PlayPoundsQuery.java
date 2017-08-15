@@ -20,10 +20,11 @@ import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.PlayPoundsQueryDetailActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.PlayPoundsRecycleViewAdapter;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.bean.PlayPoundsListData;
 import com.shtoone.shtw.event.EventData;
-import com.shtoone.shtw.fragment.base.BaseFragment;
+import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.URL;
@@ -40,8 +41,9 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
-public class PlayPoundsQuery extends BaseFragment {
+public class PlayPoundsQuery extends BaseLazyFragment {
     private ParametersData mParametersData;
+    private DepartmentData mDepartmentData;
     private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
     private PtrFrameLayout mPtrFrameLayout;
@@ -73,6 +75,11 @@ public class PlayPoundsQuery extends BaseFragment {
         }
     }
 
+    @Override
+    protected void initLazyView(@Nullable Bundle savedInstanceState) {
+        initData();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,9 +100,8 @@ public class PlayPoundsQuery extends BaseFragment {
     }
 
     private void initData() {
-        if (null != BaseApplication.parametersData) {
-            mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-            mParametersData.fromTo = ConstantsUtils.PLAYPOUNDSQUERY;
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.LABORATORYFRAGMENT);
         }
 
         mGson = new Gson();
@@ -216,7 +222,6 @@ public class PlayPoundsQuery extends BaseFragment {
         if (null != listDatas) {
             listDatas.clear();
         }
-
         return URL.getPlayPoundsListData(startDateTime, endDateTime, userGroupID, currentPage, 10 + "", pici, cheliangbianhao, equipmentID, cailiaono, states);
     }
 
@@ -357,6 +362,19 @@ public class PlayPoundsQuery extends BaseFragment {
     }
 
     @Subscribe
+    public void updateSearch(DepartmentData mDepartmentData) {
+        if (null != mDepartmentData && null != mParametersData && null != this.mDepartmentData) {
+            if (mDepartmentData.fromto == ConstantsUtils.WEIGHTHOUSEFRAGMENT) {
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                this.mDepartmentData.departmentID = mDepartmentData.departmentID;
+                this.mDepartmentData.departmentName = mDepartmentData.departmentName;
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                mPtrFrameLayout.autoRefresh(true);
+            }
+        }
+    }
+
+    @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
             if (mParametersData.fromTo == ConstantsUtils.WEIGHTHOUSEFRAGMENT) {
@@ -364,10 +382,6 @@ public class PlayPoundsQuery extends BaseFragment {
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
                 this.mParametersData.equipmentID = mParametersData.equipmentID;
                 this.mParametersData.cailiaono = mParametersData.cailiaono;
-                KLog.e("mParametersData:" + mParametersData.startDateTime);
-                KLog.e("mParametersData:" + mParametersData.endDateTime);
-                KLog.e("mParametersData:" + mParametersData.equipmentID);
-                KLog.e("mParametersData:" + mParametersData.cailiaono);
                 mPtrFrameLayout.autoRefresh(true);
             }
         }

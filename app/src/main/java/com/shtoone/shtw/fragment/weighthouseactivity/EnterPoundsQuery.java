@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.EnterPoundsQueryDetailActivity;
 import com.shtoone.shtw.adapter.EnterPoundsRecycleViewAdapter;
 import com.shtoone.shtw.adapter.OnItemClickListener;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.EnterPoundsListData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.event.EventData;
@@ -40,7 +42,10 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
 public class EnterPoundsQuery extends BaseFragment {
+
+    private static final String TAG = EnterPoundsQuery.class.getSimpleName();
     private ParametersData mParametersData;
+    private DepartmentData mDepartmentData;
     private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
     private PtrFrameLayout mPtrFrameLayout;
@@ -92,6 +97,9 @@ public class EnterPoundsQuery extends BaseFragment {
     }
 
     private void initData() {
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.LABORATORYFRAGMENT);
+        }
         mGson = new Gson();
         listDatas = new ArrayList<>();
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
@@ -149,6 +157,7 @@ public class EnterPoundsQuery extends BaseFragment {
         initPtrFrameLayout(mPtrFrameLayout);
     }
 
+
     private void jumpToEnterPoundsDetailActivity(int position) {
         Intent intent = new Intent(_mActivity, EnterPoundsQueryDetailActivity.class);
         Bundle bundle = new Bundle();
@@ -195,7 +204,7 @@ public class EnterPoundsQuery extends BaseFragment {
         String cailiaono = "";
 
         if (null != mParametersData) {
-            userGroupID = mParametersData.userGroupID;
+            userGroupID = mDepartmentData.departmentID;
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
@@ -207,6 +216,7 @@ public class EnterPoundsQuery extends BaseFragment {
         if (null != listDatas) {
             listDatas.clear();
         }
+        Log.e(TAG, "createRefreshULR: 11122"+ mDepartmentData.departmentID );
 
         return URL.getEnterPoundsListData(startDateTime, endDateTime, userGroupID, currentPage, 10 + "", pici, cheliangbianhao, equipmentID, cailiaono);
     }
@@ -345,6 +355,21 @@ public class EnterPoundsQuery extends BaseFragment {
         mAdapter.notifyItemRemoved(mAdapter.getItemCount());
     }
 
+    //组织结构的订阅事件
+    @Subscribe
+    public void updateSearch(DepartmentData mDepartmentData) {
+        if (null != mDepartmentData && null != mParametersData && null != this.mDepartmentData) {
+            if (mDepartmentData.fromto == ConstantsUtils.WEIGHTHOUSEFRAGMENT) {
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                this.mDepartmentData.departmentID = mDepartmentData.departmentID;
+                this.mDepartmentData.departmentName = mDepartmentData.departmentName;
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                mPtrFrameLayout.autoRefresh(true);
+            }
+        }
+    }
+
+    //菜单选择的订阅事件
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
@@ -353,10 +378,8 @@ public class EnterPoundsQuery extends BaseFragment {
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
                 this.mParametersData.equipmentID = mParametersData.equipmentID;
                 this.mParametersData.cailiaono = mParametersData.cailiaono;
-                KLog.e("mParametersData:" + mParametersData.startDateTime);
-                KLog.e("mParametersData:" + mParametersData.endDateTime);
-                KLog.e("mParametersData:" + mParametersData.equipmentID);
-                KLog.e("mParametersData:" + mParametersData.cailiaono);
+                this.mParametersData.userGroupID = mParametersData.userGroupID;
+                Log.e(TAG, "updateSearch: "+  mParametersData.userGroupID);
                 mPtrFrameLayout.autoRefresh(true);
             }
         }

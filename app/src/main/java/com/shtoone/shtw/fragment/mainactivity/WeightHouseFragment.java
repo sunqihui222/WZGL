@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.shtoone.shtw.adapter.WeightHouseViewPagerAdapter;
 import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
+import com.shtoone.shtw.fragment.weighthouseactivity.EnterPoundsQuery;
 import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.socks.library.KLog;
@@ -121,22 +123,18 @@ public class WeightHouseFragment extends BaseLazyFragment {
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-//    @Subscribe
-//    public void updateSearch(ParametersData mParametersData) {
-//        if (mParametersData != null) {
-//            if (mParametersData.fromTo == ConstantsUtils.WEIGHTHOUSEFRAGMENT) {
-//                this.mParametersData.startDateTime = mParametersData.startDateTime;
-//                this.mParametersData.endDateTime = mParametersData.endDateTime;
-//                this.mParametersData.equipmentID = mParametersData.equipmentID;
-//                this.mParametersData.testTypeID = mParametersData.testTypeID;
-//                KLog.e("mParametersData:" + mParametersData.startDateTime);
-//                KLog.e("mParametersData:" + mParametersData.endDateTime);
-//                KLog.e("mParametersData:" + mParametersData.equipmentID);
-//                KLog.e("mParametersData:" + mParametersData.testTypeID);
-//
-//            }
-//        }
-//    }
+    @Subscribe
+    public void updateSearch(DepartmentData mDepartmentData) {
+        if (null != mDepartmentData && null != mParametersData && null != this.mDepartmentData) {
+            if (mDepartmentData.fromto == ConstantsUtils.WEIGHTHOUSEFRAGMENT) {
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                this.mDepartmentData.departmentID = mDepartmentData.departmentID;
+                this.mDepartmentData.departmentName = mDepartmentData.departmentName;
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                setToolbarTitle();
+            }
+        }
+    }
 
     @Override
     public void onResume() {
