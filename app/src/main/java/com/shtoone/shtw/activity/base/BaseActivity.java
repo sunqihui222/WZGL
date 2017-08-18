@@ -189,7 +189,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
             }
         });
     }
-
+ 
     public void refresh() {
         String URL = createRefreshULR();
         Log.e("当前的url","url=:"+URL);
