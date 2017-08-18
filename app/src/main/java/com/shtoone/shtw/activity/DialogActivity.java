@@ -24,8 +24,10 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.bean.BHZEquipment;
+import com.shtoone.shtw.bean.DesignStrengthData;
 import com.shtoone.shtw.bean.EquipmentAndTestTypeData;
 import com.shtoone.shtw.bean.ParametersData;
+import com.shtoone.shtw.bean.StorageMaterialData;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.DateUtils;
 import com.shtoone.shtw.utils.URL;
@@ -51,6 +53,8 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private CircularProgressButton bt_search;
     private MaterialSpinner ms_select_equipment;
     private MaterialSpinner ms_select_test_type;
+    private MaterialSpinner ms_select_material;
+    private MaterialSpinner ms_select_strength;
     private ImageView iv_cancel;
     private boolean isStartDateTime;
     private String startDateTime;
@@ -60,10 +64,16 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private String url;
     private EquipmentAndTestTypeData mEquipmentTestData;
     private BHZEquipment mBHZEquipment;
+    private StorageMaterialData mStorageMaterialData;
+    private DesignStrengthData mDesignStrengthData;
     private List<String> equipmentNames;
     private List<String> equipmentIDs;
     private List<String> testTypeNames;
     private List<String> testTypeIDs;
+    private List<String> materialIDs;
+    private List<String> materialNames;
+    private List<String> strengthIds;
+    private List<String> strengthNames;
     private RadioGroup rg_handle;
     private RadioGroup rg_examine;
 
@@ -86,6 +96,8 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         iv_cancel = (ImageView) findViewById(R.id.iv_cancel_dialog);
         ms_select_equipment = (MaterialSpinner) findViewById(R.id.ms_select_equipment_dialog);
         ms_select_test_type = (MaterialSpinner) findViewById(R.id.ms_select_test_type_dialog);
+        ms_select_material = (MaterialSpinner) findViewById(R.id.ms_select_material_dialog);
+        ms_select_strength = (MaterialSpinner) findViewById(R.id.ms_select_strength_dialog);
         rg_handle = (RadioGroup) findViewById(R.id.rg_handle_dialog);
         rg_examine = (RadioGroup) findViewById(R.id.rg_examine_dialog);
         start_date_time.getEditText().setInputType(InputType.TYPE_NULL);
@@ -159,6 +171,42 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
+        ms_select_material.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e(TAG,"material选择第：" + i + "个");
+                if (i >= 0) {
+                    mParametersData.materialID = materialIDs.get(i);
+                    Log.e(TAG,"materialIDs[i]:" + materialNames.get(i));
+                } else if (i == -1) {
+                    mParametersData.materialID = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ms_select_strength.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e(TAG,"strength选择第：" + i + "个");
+                if (i >= 0) {
+                    mParametersData.strengthId = strengthIds.get(i);
+                    Log.e(TAG,"strengthIds[i]:" + strengthNames.get(i));
+                } else if (i == -1) {
+                    mParametersData.strengthId = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         rg_handle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -222,6 +270,16 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 url = URL.getBHZEquipment(mParametersData.userGroupID);
                 refresh();
                 break;
+            case ConstantsUtils.STORAGEFRAGMENT:
+                ms_select_material.setVisibility(View.VISIBLE);
+                url = URL.getStorageMaterialName();
+                refresh();
+                 break;
+            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
+                ms_select_strength.setVisibility(View.VISIBLE);
+                url = URL.getStrengthName("SJQD");
+                refresh();
+                break;
         }
 
         if (mParametersData.handleType.equals("")) {
@@ -268,6 +326,14 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 mBHZEquipment = new Gson().fromJson(response, BHZEquipment.class);
                 setBHZQueryView();
                 break;
+            case ConstantsUtils.STORAGEFRAGMENT:
+                mStorageMaterialData = new Gson().fromJson(response, StorageMaterialData.class);
+                setStorageQueryView();
+                break;
+            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
+                mDesignStrengthData = new Gson().fromJson(response, DesignStrengthData.class);
+                setStrengthQueryView();
+                break;
         }
 
     }
@@ -289,6 +355,49 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             if (mParametersData.equipmentID.equals(equipmentIDs.get(i))) {
                 ms_select_equipment.setSelection(i + 1);
                 KLog.e("默认：" + (i + 1) + "个");
+            }
+        }
+    }
+
+
+    private void setStorageQueryView() {
+        materialNames = new ArrayList<>();
+        materialIDs = new ArrayList<>();
+        for (StorageMaterialData.DataBean temp : mStorageMaterialData.getData()) {
+            materialNames.add(temp.getCailiaoname());
+            materialIDs.add(temp.getCailiaono());
+        }
+        Log.e(TAG,"materialNames=:" + materialNames);
+        Log.e(TAG,"materialIDs=:" + materialIDs);
+        ArrayAdapter<String> materialsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, materialNames);
+        materialsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ms_select_material.setAdapter(materialsAdapter);
+        Log.e(TAG, "-----setStorageQueryView----");
+        for (int i = 0; i < materialIDs.size(); i++) {
+            if (mParametersData.materialID.equals(materialIDs.get(i))) {
+                ms_select_material.setSelection(i + 1);
+                Log.e(TAG,"默认：" + (i + 1) + "个");
+            }
+        }
+    }
+
+    private void setStrengthQueryView() {
+        strengthNames = new ArrayList<>();
+        strengthIds = new ArrayList<>();
+        for (DesignStrengthData.DataBean temp : mDesignStrengthData.getData()) {
+            strengthNames.add(temp.getTypename());
+            strengthIds.add(temp.getTypecode());
+        }
+        Log.e(TAG,"strengthNames=:" + strengthNames);
+        Log.e(TAG,"strengthIds=:" + strengthIds);
+        ArrayAdapter<String> strengthAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strengthNames);
+        strengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ms_select_strength.setAdapter(strengthAdapter);
+        Log.e(TAG, "-----setStrengthQueryView----");
+        for (int i = 0; i < strengthIds.size(); i++) {
+            if (mParametersData.materialID.equals(strengthIds.get(i))) {
+                ms_select_material.setSelection(i + 1);
+                Log.e(TAG,"默认：" + (i + 1) + "个");
             }
         }
     }

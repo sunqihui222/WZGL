@@ -13,7 +13,6 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
-import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.common.Dialoghelper;
 import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.laboratoryactivity.LaboratoryStatisticFragment;
@@ -32,7 +31,7 @@ public class LaboratoryActivity extends BaseActivity {
     private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
     private AHBottomNavigation bottomNavigation;
     private int bottomNavigationPreposition = 0;
-    private SupportFragment[] mFragments = new SupportFragment[3];
+    private SupportFragment[] mFragments = new SupportFragment[4];
     private String itemFromSG;
     private FrameLayout fl_container;
 
@@ -46,12 +45,14 @@ public class LaboratoryActivity extends BaseActivity {
             mFragments[0] = YaLiJiFragment.newInstance();
             mFragments[1] = WannengjiFragment.newInstance();
             mFragments[2] = LaboratoryStatisticFragment.newInstance();
+//            mFragments[3] = PeiliaoTongzhidanFragment.newInstance();
             int showPosition = 0;
             loadMultipleRootFragment(R.id.fl_container_laboratory_activity, showPosition, mFragments[0], mFragments[1], mFragments[2]);
         } else {
             mFragments[0] = findFragment(YaLiJiFragment.class);
             mFragments[1] = findFragment(WannengjiFragment.class);
             mFragments[2] = findFragment(LaboratoryStatisticFragment.class);
+//            mFragments[2] = findFragment(PeiliaoTongzhidanFragment.class);
         }
 
         initView();

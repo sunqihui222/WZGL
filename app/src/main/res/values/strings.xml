@@ -43,6 +43,8 @@
     <string name="select_end_time">结束时间</string>
     <string name="select_equipment">选择设备</string>
     <string name="select_test_type">选择类型</string>
+    <string name="select_material">选择材料</string>
+    <string name="select_strength">设计强度</string>
 
     <!--主页LaboratoryActivity模块-->
     <string name="yaliji">压力试验</string>
@@ -80,5 +82,24 @@
     <string name="examine_approve">监理审批</string>
     <string name="confirm_time">确认时间</string>
     <string name="approve_time">审批时间</string>
+
+
+    <string name="material_consume">原材料进出耗分析</string>
+    <string name="peibi_tongzhin_cx">配比通知单查询</string>
+    <string name="lilun_peihebi_cx">理论配合比查询</string>
+    <string name="renwudan_zx">任务单执行</string>
+
+    <!-- 任务单状态-->
+    <string name="weipeiliao">未配料</string>
+    <string name="yipeiliao">已配料</string>
+    <string name="shengchangzhong">生产中</string>
+    <string name="yiwancheng">已完成</string>
+
+    <!-- 操作方式-->
+    <string name="add">新增</string>
+    <string name="modify">修改</string>
+    <string name="tijiao">提交</string>
+    <string name="delete">删除</string>
+    <string name="end">结束</string>
 
 </resources>

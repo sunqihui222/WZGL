@@ -100,6 +100,40 @@
                 app:ms_hintColor="@color/black"
                 app:ms_multiline="true" />
 
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/ms_select_material_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:ms_alignLabels="true"
+                app:ms_arrowColor="@color/black"
+                app:ms_arrowSize="16dp"
+                app:ms_baseColor="@color/black"
+                app:ms_enableErrorLabel="false"
+                app:ms_floatingLabelColor="@color/black"
+                app:ms_floatingLabelText="@string/select_material"
+                app:ms_highlightColor="@color/white"
+                app:ms_hint="@string/select_material"
+                app:ms_hintColor="@color/black"
+                app:ms_multiline="true" />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/ms_select_strength_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:ms_alignLabels="true"
+                app:ms_arrowColor="@color/black"
+                app:ms_arrowSize="16dp"
+                app:ms_baseColor="@color/black"
+                app:ms_enableErrorLabel="false"
+                app:ms_floatingLabelColor="@color/black"
+                app:ms_floatingLabelText="@string/select_strength"
+                app:ms_highlightColor="@color/white"
+                app:ms_hint="@string/select_strength"
+                app:ms_hintColor="@color/black"
+                app:ms_multiline="true" />
+
             <RadioGroup
                 android:id="@+id/rg_handle_dialog"
                 android:layout_width="match_parent"

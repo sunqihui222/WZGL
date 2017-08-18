@@ -38,7 +38,7 @@ public class URL {
     //中交集团二航局地址
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
-    public static final String BaseURL = "http://192.168.11.103:8080/jeecg/";
+    public static final String BaseURL = "http://192.168.11.105:8080/jeecg/";
 
     /**
      * 登录地址
@@ -565,4 +565,186 @@ public class URL {
         }
         return url;
     }
+
+    /**
+     * 库存主页数据
+     * @param departId
+     * @param cailiaomingcheng
+     * @param currentPage
+     * @param maxPageItems
+     * @return
+     */
+
+    public static final String STORAGE_MAIN = BaseURL + "AppKuCunInterfaceController.do?AppkuCunList&departId=%1&cailiaomingcheng=%2&currentPage=%3&maxPageItems=%4";
+    public static String getStorageListData(String departId, String cailiaomingcheng, String currentPage, String maxPageItems) {
+        String url = STORAGE_MAIN.replace("%1", departId).replace("%2", cailiaomingcheng).replace("%3", currentPage).replace("%4", maxPageItems);
+        KLog.e(TAG, "库存主页数据:" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+
+    /**
+     * 库存查询详情查询
+     */
+    public static final String STORAGE_DETAIL_URL = BaseURL + "AppKuCunInterfaceController.do?AppkuCunDetail&departId=%1&id=%2&cailiaoguid=%3";
+
+    /**
+     * 库存查询详情查询
+     *
+     * @param departID 详情ID
+     * @return 返回拼凑后的url
+     */
+    public static String getStorageDetailData(String departID,String id,String cailiaoguid) {
+        String url = STORAGE_DETAIL_URL.replace("%1", departID).replace("%2",id).replace("%3",cailiaoguid);
+        Log.e(TAG, "库存查询详情查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+
+    /**
+     * 获取材料名称
+     */
+    public static final String STORAGE_MATERIAL_URL = BaseURL + "appWZproject.do?AppCaiLiaoNameDict";
+    public static String getStorageMaterialName() {
+        String url = STORAGE_MATERIAL_URL;
+        Log.e(TAG, "库存查询详情查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+
+    //获取原材料进出耗分析
+    public static final String MATERIAL_CONSUME_URL = BaseURL + "AppWZJinChuChangController.do?list&departId=%1&jinchangshijian1=%2&jinchangshijian2=%3";
+    public static String getMaterialConsume(String userGroupID, String startDateTime, String endDateTime) {
+        startDateTime = DateUtils.ChangeTimeToLong(startDateTime);
+        endDateTime = DateUtils.ChangeTimeToLong(endDateTime);
+        if (Integer.valueOf(startDateTime) <= Integer.valueOf(endDateTime)) {
+            String url = MATERIAL_CONSUME_URL.replace("%1", userGroupID).replace("%2",startDateTime).replace("%3",endDateTime);
+            Log.e(TAG, "原材料进出耗分析查询 :" + url);
+            if (TextUtils.isEmpty(url)) {
+                return null;
+            }
+            return url;
+        }
+        return null;
+    }
+
+    //配料通知单查询
+    public static final String PEILIAOTONGZHIDAN_URL = BaseURL + "appWZSys.do?AppPeibiTongzhidanCX&departId=%1&kaipanriqi=%2&kaipanriqiend=%3&pageNo=%4&maxPageItems=%5";
+    public static String getPeiliaotongzhidan(String userGroupID, String startDateTime, String endDateTime,String currentPage, String maxPageItems) {
+        startDateTime = DateUtils.ChangeTimeToLong(startDateTime);
+        endDateTime = DateUtils.ChangeTimeToLong(endDateTime);
+        if (Integer.valueOf(startDateTime) <= Integer.valueOf(endDateTime)) {
+            String url = PEILIAOTONGZHIDAN_URL.replace("%1", userGroupID).replace("%2",startDateTime).replace("%3",endDateTime).replace("%4",currentPage).replace("%5",maxPageItems);
+            Log.e(TAG, "配料通知单查询 :" + url);
+            if (TextUtils.isEmpty(url)) {
+                return null;
+            }
+            return url;
+        }
+        return null;
+    }
+
+    /**
+     * 理论配合比详情
+     *
+     * @param detailID 详情ID
+     * @return 返回拼凑后的url
+     */
+    public static final String LILUN_PEIHEBI_DETAIL_URL = BaseURL + "appWZSys.do?AppLilunPeihebiCK&llphbno=%1";
+    public static String getLilunPeihebiDetailData(String llphbno) {
+        String url = LILUN_PEIHEBI_DETAIL_URL.replace("%1", llphbno);
+        KLog.e(TAG, "理论配合比详情查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+
+    /**
+     * 理论配合比详情
+     *
+     * @param detailID 详情ID
+     * @return 返回拼凑后的url
+     */
+    public static final String PEIBI_TONGZHIDAN_DETAIL_URL = BaseURL + "appWZproject.do?AppPeiBiTongzhidanDetail&sgphbNo=%1";
+    public static String getPeibiTongzhidanDetailData(String sgphbNo) {
+        String url = PEIBI_TONGZHIDAN_DETAIL_URL.replace("%1", sgphbNo);
+        KLog.e(TAG, "配比通知单详情查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+
+    /**
+     * 拌合站生产数据查询
+     */
+    public static final String TASK_LIST_ZX_URL = BaseURL + "appWZproject.do?AppTaskListZXQK&departId=%1&kaipanriqi=%2&kaipanriqiend=%3&sjqd=%4&pageNo=%5&maxPageItems=%6";
+
+    public static String getTaskListZXData(String userGroupID, String startTime, String endTime, String strengthId,String current_PageNo, String maxPageItems) {
+        startTime = DateUtils.ChangeTimeToLong(startTime);
+        endTime = DateUtils.ChangeTimeToLong(endTime);
+        //如果开始时间大于结束时间，返回null
+        if (Integer.valueOf(startTime) <= Integer.valueOf(endTime)) {
+            String url = TASK_LIST_ZX_URL.replace("%1", userGroupID).replace("%2", startTime).replace("%3", endTime).replace("%4", strengthId).replace("%5", current_PageNo).replace("%6", maxPageItems);
+            Log.e(TAG, "任务单执行情况查询URL :" + url);
+            if (TextUtils.isEmpty(url)) {
+                return null;
+            }
+            return url;
+        }
+        return null;
+    }
+
+    /**
+     * 任务单详情
+     *
+     * @param detailID 详情ID
+     * @return 返回拼凑后的url
+     */
+    public static final String RENWUDAN_DETAIL_URL = BaseURL + "appWZproject.do?AppTaskListDetail&id=%1";
+    public static String getRenwudanDetailData(String id) {
+        String url = RENWUDAN_DETAIL_URL.replace("%1", id);
+        KLog.e(TAG, "任务单详情查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+
+    /**
+     * 获取设计强度
+     */
+    public static final String STRENGTH_URL = BaseURL + "app.do?appTypes&typegroupcode=%1";
+    public static String getStrengthName(String typegroupcode) {
+        String url = STRENGTH_URL.replace("%1",typegroupcode);
+        Log.e(TAG, "设计强度查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+
+    /**
+     * 任务单编辑
+     *
+     * @param detailID 详情ID
+     * @return 返回拼凑后的url
+     */
+    public static final String RENWUDAN_EDIT_URL = BaseURL + "appWZproject.do?AppRenwudanSkip&id=%1";
+    public static String getRenwudanEditData(String id) {
+        String url = RENWUDAN_EDIT_URL.replace("%1", id);
+        KLog.e(TAG, "任务单编辑查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+
 }

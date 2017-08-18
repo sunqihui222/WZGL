@@ -132,6 +132,20 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".activity.StroageDetailActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".fragment.laboratoryactivity.LilunPeihebiDetailActivity"/>
+
+        <activity android:name=".fragment.laboratoryactivity.PeiliaoTongzhidanDetailActivity"/>
+
+        <activity android:name=".fragment.engineeringactivity.TaskListDetailActivity"/>
+
+        <activity android:name=".fragment.engineeringactivity.TaskListEditActivity"/>
+
+
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"

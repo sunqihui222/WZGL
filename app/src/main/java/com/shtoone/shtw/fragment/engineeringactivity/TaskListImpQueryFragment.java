@@ -1,4 +1,4 @@
-package com.shtoone.shtw.fragment.mainactivity;
+package com.shtoone.shtw.fragment.engineeringactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -21,17 +20,13 @@ import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
-import com.shtoone.shtw.activity.MainActivity;
-import com.shtoone.shtw.activity.OrganizationActivity;
-import com.shtoone.shtw.activity.StroageDetailActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
-import com.shtoone.shtw.adapter.StorageFragmentRecyclerViewAdapter;
-import com.shtoone.shtw.bean.DepartmentData;
+import com.shtoone.shtw.adapter.TaskListImpQueryFragmentRecyclerViewAdapter;
 import com.shtoone.shtw.bean.ParametersData;
-import com.shtoone.shtw.bean.StorageFragmentListData;
+import com.shtoone.shtw.bean.TaskListImpQueryFragmenData;
+import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
-import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
@@ -48,38 +43,44 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
-public class StorageFragment extends BaseLazyFragment {
+/**
+ * Created by Administrator on 2017/8/14.
+ */
 
-    private static final String TAG = StorageFragment.class.getSimpleName();
+public class TaskListImpQueryFragment extends BaseLazyFragment {
+
+    private static final String TAG = TaskListImpQueryFragment.class.getSimpleName();
     private Toolbar mToolbar;
     private PtrFrameLayout mPtrFrameLayout;
     private RecyclerView mRecyclerView;
-    private List<StorageFragmentListData.DataBean> listData;
+    private TaskListImpQueryFragmentRecyclerViewAdapter mAdapter;
+    private TaskListImpQueryFragmenData itemsData;
     private FloatingActionButton fab;
+    private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
-    private ParametersData mParametersData;
     private Gson mGson;
-    private StorageFragmentRecyclerViewAdapter mAdapter;
-    private LinearLayoutManager mLinearLayoutManager;
-    private ScaleInAnimationAdapter mScaleInAnimationAdapter;
-    private int lastVisibleItemPosition;
     private boolean isLoading;
-    private StorageFragmentListData itemsData;
-    private DepartmentData mDepartmentData;
+    private List<TaskListImpQueryFragmenData.DataBean> listData;
+    private ParametersData mParametersData;
+    private LinearLayoutManager mLinearLayoutManager;
+    private int lastVisibleItemPosition;
+    private ScaleInAnimationAdapter mScaleInAnimationAdapter;
 
-    public static StorageFragment newInstance(){
-        return new StorageFragment();
+    public static TaskListImpQueryFragment newInstance() {
+        return new TaskListImpQueryFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        BaseApplication.bus.register(this);
-        View view = inflater.inflate(R.layout.fragment_storage, container, false);
+        if (!isRegistered) {
+            BaseApplication.bus.register(this);
+            isRegistered = true;
+        }
+        View view = inflater.inflate(R.layout.fragment_tasklist_imp_query, container, false);
         initView(view);
         return view;
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -87,59 +88,31 @@ public class StorageFragment extends BaseLazyFragment {
         fab.show();
     }
 
-    //对于启用懒加载的fragment，最好把全局变量中的所有变量在此方法中初始化
     private void initView(View view) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptrframelayout);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         mPageStateLayout = (PageStateLayout) view.findViewById(R.id.pagestatelayout);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
     }
 
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
-
-        if (savedInstanceState == null) {
-            initData();
-        }
+        initData();
     }
 
     private void initData() {
         mParametersData = (ParametersData) BaseApplication.parametersData.clone();
         mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
-        mParametersData.fromTo = ConstantsUtils.STORAGEFRAGMENT;
+        mParametersData.fromTo = ConstantsUtils.TASKLISTIMPQUERYFRAGMENT;
         mGson = new Gson();
         listData = new ArrayList<>();
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        if (null != BaseApplication.parametersData) {
-            mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-            mParametersData.fromTo = ConstantsUtils.STORAGEFRAGMENT;
-        }
-        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
-            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.CONCRETEFRAGMENT);
-        }
-
         setToolbarTitle();
-        ((MainActivity) _mActivity).initToolBar(mToolbar);
-        mToolbar.inflateMenu(R.menu.menu_hierarchy);
-        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_hierarchy:
-                        Intent intent = new Intent(getActivity(), OrganizationActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
-                        intent.putExtras(bundle);
-                        intent.putExtra("type", "1");
-                        AnimationUtils.startActivity(_mActivity, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color, 500);
-                        break;
-                }
-                return true;
-            }
-        });
+        initToolbarBackNavigation(mToolbar);
+//        initToolbarMenu(mToolbar);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +126,7 @@ public class StorageFragment extends BaseLazyFragment {
         });
 
         //设置动画与适配器
-        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new StorageFragmentRecyclerViewAdapter(_mActivity, listData));
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new TaskListImpQueryFragmentRecyclerViewAdapter(_mActivity, listData));
         mSlideInLeftAnimationAdapter.setDuration(500);
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
@@ -161,7 +134,9 @@ public class StorageFragment extends BaseLazyFragment {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                jump2StorageQueryDetailActivity(position);
+                // 实现局部界面刷新, 这个view就是被点击的item布局对象
+                changeReadedState(view);
+                jump2TaskListDetailActivity(position);
             }
         });
 
@@ -201,12 +176,10 @@ public class StorageFragment extends BaseLazyFragment {
 
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
-        Log.e(TAG,"--------initdata----------");
     }
 
     @Override
     public boolean isCanDoRefresh() {
-        Log.e(TAG,"--------isCanDoRefresh----------");
         //判断是哪种状态的页面，都让其可下拉
         if (mPageStateLayout.isShowContent) {
             //判断RecyclerView是否在在顶部，在顶部则允许滑动下拉刷新
@@ -227,56 +200,58 @@ public class StorageFragment extends BaseLazyFragment {
         } else {
             return true;
         }
-
     }
 
     @Override
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
         mParametersData.currentPage = "1";//默认都是第一页
-        String departmentID = "";
+        String userGroupID = "";
+        String startDateTime = "";
+        String endDateTime = "";
         String currentPage = "";
         String maxPageItems = "";
-        String materialID ="";
-
+        String strengthId ="";
         if (null != mParametersData) {
-            departmentID = mParametersData.userGroupID;
+            userGroupID = mParametersData.userGroupID;
+            startDateTime = mParametersData.startDateTime;
+            endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
             maxPageItems = mParametersData.maxPageItems;
-            materialID = mParametersData.materialID;
-
+            strengthId = mParametersData.strengthId;
         }
-        departmentID = "8a8ab0b246dc81120146dc8180ba0017";
+
         if (null != listData) {
             listData.clear();
         }
-        Log.e(TAG, "库存主页url=:" + URL.getStorageListData(departmentID, materialID, currentPage, maxPageItems));
-        return URL.getStorageListData(departmentID, materialID, currentPage, maxPageItems);
+        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
+        return URL.getTaskListZXData(userGroupID, startDateTime, endDateTime,strengthId, currentPage, maxPageItems);
     }
 
 
     @Override
     public String createLoadMoreULR() {
         mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) + 1) + "";//默认都是第一页
-        String departmentID = "";
-        String cailiaomingcheng = "";
+        String userGroupID = "";
+        String startDateTime = "";
+        String endDateTime = "";
         String currentPage = "";
         String maxPageItems = "";
-        String materialID ="";
+        String strengthId ="";
         if (null != mParametersData) {
-            departmentID = mParametersData.userGroupID;
-            cailiaomingcheng = mParametersData.cailiaomingcheng;
+            userGroupID = mParametersData.userGroupID;
+            startDateTime = mParametersData.startDateTime;
+            endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
             maxPageItems = mParametersData.maxPageItems;
-            materialID = mParametersData.materialID;
+            strengthId = mParametersData.strengthId;
         }
-        Log.e(TAG, "库存主页更多url=:" + URL.getStorageListData(departmentID, cailiaomingcheng, currentPage, maxPageItems));
-        return URL.getStorageListData(departmentID, cailiaomingcheng, currentPage, maxPageItems);
+        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
+        return URL.getTaskListZXData(userGroupID, startDateTime, endDateTime,strengthId,currentPage, maxPageItems);
     }
 
     @Override
     public void onRefreshSuccess(String response) {
-        Log.e(TAG,"--------onRefreshSuccess----------");
         if (!TextUtils.isEmpty(response)) {
             JSONObject jsonObject = null;
             try {
@@ -287,7 +262,7 @@ public class StorageFragment extends BaseLazyFragment {
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, StorageFragmentListData.class);
+                itemsData = mGson.fromJson(response, TaskListImpQueryFragmenData.class);
                 if (null != itemsData) {
                     if (itemsData.isSuccess() && itemsData.getData().size() > 0) {
                         listData.addAll(itemsData.getData());
@@ -323,7 +298,6 @@ public class StorageFragment extends BaseLazyFragment {
 
     @Override
     public void onRefreshFailed(VolleyError error) {
-        Log.e(TAG,"--------onRefreshFailed----------");
         //提示网络数据异常，展示网络错误页面。此时：1.可能是本机网络有问题，2.可能是服务器问题
         if (!NetworkUtils.isConnected(_mActivity)) {
             //提示网络异常,让用户点击设置网络
@@ -346,7 +320,7 @@ public class StorageFragment extends BaseLazyFragment {
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, StorageFragmentListData.class);
+                itemsData = mGson.fromJson(response, TaskListImpQueryFragmenData.class);
                 if (null != itemsData) {
                     if (itemsData.isSuccess() && itemsData.getData().size() > 0) {
                         if (null != listData) {
@@ -385,7 +359,6 @@ public class StorageFragment extends BaseLazyFragment {
             mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
             mAdapter.notifyItemRemoved(mAdapter.getItemCount());
         }
-        Log.e(TAG,"--------onLoadMoreSuccess----------");
     }
 
     @Override
@@ -393,47 +366,68 @@ public class StorageFragment extends BaseLazyFragment {
         super.onLoadMoreFailed(error);
         mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
         mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-        Log.e(TAG,"--------onLoadMoreFailed----------");
+    }
+
+    private void changeReadedState(View view) {
+        //此处可以做一些修改点击过的item的样式，方便用户看出哪些已经点击查看过
     }
 
     //进入ProduceQueryDetailActivity
-    private void jump2StorageQueryDetailActivity(int position) {
-        Intent intent = new Intent(_mActivity, StroageDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("producequerydetail", listData.get(position));
-        intent.putExtras(bundle);
+    private void jump2TaskListDetailActivity(int position) {
+        Intent intent = new Intent(_mActivity, TaskListEditActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("tasklistdetail", listData.get(position));
+//        intent.putExtras(bundle);
         startActivity(intent);
     }
 
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
-            if (mParametersData.fromTo == ConstantsUtils.STORAGEFRAGMENT) {
-                fab.show();
-                this.mParametersData = mParametersData;
+            if (mParametersData.fromTo == ConstantsUtils.TASKLISTIMPQUERYFRAGMENT) {
+                this.mParametersData.startDateTime = mParametersData.startDateTime;
+                this.mParametersData.endDateTime = mParametersData.endDateTime;
+                this.mParametersData.strengthId = mParametersData.strengthId;
+                Log.e(TAG,"mParametersData:" + mParametersData.startDateTime);
+                Log.e(TAG,"mParametersData:" + mParametersData.endDateTime);
+                Log.e(TAG,"mParametersData:" + mParametersData.strengthId);
                 mPtrFrameLayout.autoRefresh(true);
             }
         }
     }
 
     @Subscribe
-    public void updateDepartment(DepartmentData mDepartmentData) {
-        if (null != mDepartmentData && null != mParametersData && null != this.mDepartmentData) {
-            if (mDepartmentData.fromto == ConstantsUtils.STORAGEFRAGMENT) {
-                this.mParametersData.userGroupID = mDepartmentData.departmentID;
-                this.mDepartmentData.departmentID = mDepartmentData.departmentID;
-                this.mDepartmentData.departmentName = mDepartmentData.departmentName;
-                this.mParametersData.materialID = mParametersData.materialID;
-                setToolbarTitle();
-                mPtrFrameLayout.autoRefresh(true);
-            }
+    public void go2TopOrRefresh(EventData event) {
+        if (event.position == 0) {
+            mRecyclerView.smoothScrollToPosition(0);
         }
     }
 
+    @Subscribe
+    public void handleRefresh(EventData event) {
+        if (event.position == ConstantsUtils.REFRESH) {
+            mPtrFrameLayout.autoRefresh(true);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //防止屏幕旋转后重画时fab显示
+        fab.hide();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        BaseApplication.bus.unregister(this);
+    }
+
     private void setToolbarTitle() {
-        if (null != mToolbar && null != mDepartmentData && !TextUtils.isEmpty(mDepartmentData.departmentName)) {
-            StringBuffer sb = new StringBuffer(mDepartmentData.departmentName + " > ");
-            sb.append(getString(R.string.storage)).trimToSize();
+        if (null != mToolbar && null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            StringBuffer sb = new StringBuffer(BaseApplication.mDepartmentData.departmentName + " > ");
+            sb.append(getString(R.string.engineering_department) + " > ");
+            sb.append(getString(R.string.renwudan_zx)).trimToSize();
             mToolbar.setTitle(sb.toString());
         }
     }
