@@ -26,8 +26,8 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.fragment.EngineeringDepartment.YCLChuChangWeightFragment;
+import com.shtoone.shtw.fragment.engineeringactivity.TaskListImpQueryFragment;
 import com.shtoone.shtw.fragment.mainactivity.ConcreteFragment;
-import com.shtoone.shtw.fragment.mainactivity.LaboratoryFragment;
 import com.shtoone.shtw.fragment.mainactivity.StorageFragment;
 import com.shtoone.shtw.fragment.mainactivity.WeightHouseFragment;
 import com.shtoone.shtw.utils.ConstantsUtils;
@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            mFragments[0] = LaboratoryFragment.newInstance();
+            mFragments[0] = TaskListImpQueryFragment.newInstance();
             mFragments[1] = ConcreteFragment.newInstance();
             mFragments[2] = WeightHouseFragment.newInstance();
             mFragments[3] = StorageFragment.newInstance();
@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
             // 这里我们需要拿到mFragments的引用,也可以通过getSupportFragmentManager.getFragments()自行进行判断查找(效率更高些),用下面的方法查找更方便些
-            mFragments[0] = findFragment(LaboratoryFragment.class);
+            mFragments[0] = findFragment(TaskListImpQueryFragment.class);
             mFragments[1] = findFragment(ConcreteFragment.class);
             mFragments[2] = findFragment(WeightHouseFragment.class);
             mFragments[3] = findFragment(StorageFragment.class);

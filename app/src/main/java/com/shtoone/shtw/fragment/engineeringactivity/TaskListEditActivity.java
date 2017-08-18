@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -44,15 +46,15 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     private PtrFrameLayout mPtrFrameLayout;
     private TaskListImpQueryFragmenData.DataBean mDataBean;
     private Gson mGson;
-    private TextView tv_renwuno;
-    private TextView tv_jhfl;
-    private TextView tv_kaipan_time;
-    private TextView tv_gcmc;
-    private TextView tv_kddj;
-    private TextView tv_ksdj;
+    private EditText tv_renwuno;
+    private EditText tv_jhfl;
+    private EditText tv_kaipan_time;
+    private EditText tv_gcmc;
+    private EditText tv_kddj;
+    private EditText tv_ksdj;
     private TextView tv_person;
     private TextView tv_create_time;
-    private TextView tv_remrak;
+    private EditText tv_remrak;
     private MaterialSpinner spinnerDepart;
     private MaterialSpinner spinner_jzbw;
     private MaterialSpinner spinner_sjqd;
@@ -87,20 +89,20 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptr_task_list_edit_activity);
         mPageStateLayout = (PageStateLayout) findViewById(R.id.psl_task_list_edit_activity);
         //基础信息
-        tv_renwuno = (TextView) findViewById(R.id.tv_renwuno_task_list_edit);
-        tv_jhfl = (TextView) findViewById(R.id.tv_fangliang_task_list_edit);
-        tv_kaipan_time = (TextView) findViewById(R.id.tv_time_task_list_edit);
+        tv_renwuno = (EditText) findViewById(R.id.tv_renwuno_task_list_edit);
+        tv_jhfl = (EditText) findViewById(R.id.tv_fangliang_task_list_edit);
+        tv_kaipan_time = (EditText) findViewById(R.id.tv_time_task_list_edit);
         spinnerDepart = (MaterialSpinner) findViewById(R.id.spinner_depart_task_list_edit);
         spinner_jzbw = (MaterialSpinner) findViewById(R.id.spinner_jzbw_task_list_edit);
         spinner_sjqd = (MaterialSpinner) findViewById(spinner_sjqd_task_list_edit);
         spinner_taluodu = (MaterialSpinner) findViewById(R.id.spinner_taluodu_task_list_edit);
         spinner_jzfs = (MaterialSpinner) findViewById(R.id.spinner_jzfs_task_list_edit);
-        tv_gcmc = (TextView) findViewById(R.id.tv_gcmc_task_list_edit);
-        tv_kddj = (TextView) findViewById(R.id.tv_kddj_task_list_edit);
-        tv_ksdj = (TextView) findViewById(R.id.tv_ksdj_task_list_edit);
+        tv_gcmc = (EditText) findViewById(R.id.tv_gcmc_task_list_edit);
+        tv_kddj = (EditText) findViewById(R.id.tv_kddj_task_list_edit);
+        tv_ksdj = (EditText) findViewById(R.id.tv_ksdj_task_list_edit);
         tv_person = (TextView) findViewById(R.id.tv_person_task_list_edit);
         tv_create_time = (TextView) findViewById(R.id.tv_create_time_task_list_edit);
-        tv_remrak = (TextView) findViewById(R.id.tv_remrak_task_list_edit);
+        tv_remrak = (EditText) findViewById(R.id.tv_remrak_task_list_edit);
         spinnerDepart.setOnClickListener(this);
         spinner_jzbw.setOnClickListener(this);
         spinner_sjqd.setOnClickListener(this);
@@ -259,10 +261,11 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         }
         Log.e(TAG,"strengthNames=:" + strengthNames);
         Log.e(TAG,"strengthIds=:" + strengthIds);
-//        ArrayAdapter<String> strengthAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strengthNames);
-//        strengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner_sjqd.setAdapter(strengthAdapter);
+        ArrayAdapter<String> strengthAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strengthNames);
+        strengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_sjqd.setAdapter(strengthAdapter);
         spinner_sjqd.setItems(strengthNames);
+        Log.e(TAG, "spinner_sjqd: "+ spinner_sjqd.getItems());
         Log.e(TAG, "-----setStrengthQueryView----");
     }
 
