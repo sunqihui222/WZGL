@@ -101,7 +101,7 @@ public class PlayPoundsQuery extends BaseLazyFragment {
 
     private void initData() {
         if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
-            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.LABORATORYFRAGMENT);
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.WEIGHTHOUSEFRAGMENT);
         }
 
         mGson = new Gson();
