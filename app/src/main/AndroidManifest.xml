@@ -85,6 +85,9 @@
 
         <activity android:name=".activity.TestActivity" />
 
+        <activity android:name=".activity.EnterPoundsQueryDetailActivity"/>
+        <activity android:name=".activity.PlayPoundsQueryDetailActivity"/>
+
         <activity
             android:name=".activity.AboutActivity"
             android:theme="@style/AppTheme.Transparent" />
@@ -145,6 +148,20 @@
 
         <activity android:name=".fragment.engineeringactivity.TaskListEditActivity"/>
 
+
+        <activity
+            android:name=".activity.YCLJinChangWeightFragmentActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.YCLChuChangWeightFragmentActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.MaterialListActivity"
+            android:launchMode="singleTop" />
 
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver

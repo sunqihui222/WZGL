@@ -35,6 +35,9 @@ public class ConstantsUtils {
     public static final int MATERIALSTATISTICFRAGMENT = 4;
     public static final int PRODUCEQUERYFRAGMENT = 5;
     public static final int OVERPROOFFRAGMENT = 6;
+    public static final int WEIGHTHOUSEFRAGMENT = 7;
+    public static final int PLAYPOUNDSQUERY = 8;
+    public static final int ENTERPOUNDSQUERY = 9;
 
     public static final int STORAGEFRAGMENT = 8;
 
@@ -51,5 +54,11 @@ public class ConstantsUtils {
     public static final int MATERIALCONSUME = 23;
     public static final int PEILIAOTONGZHIDAN = 24;
     public static final int TASKLISTIMPQUERYFRAGMENT = 25;
+
+
+
+
+    public static final int YCLJINCHANG = 37;
+    public static final int YCLCHUCHANG = 38;
 
 }

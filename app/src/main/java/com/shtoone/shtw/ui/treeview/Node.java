@@ -128,7 +128,7 @@ public class Node {
 
         if (!isExpand) {
             for (Node node : children) {
-                node.setExpand(false);
+                node.setExpand(isExpand);
             }
         }
     }

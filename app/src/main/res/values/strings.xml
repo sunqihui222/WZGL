@@ -24,6 +24,8 @@
     <string name="concrete">混凝土</string>
     <string name="banhezhan">拌合站</string>
     <string name="weight_house">磅房</string>
+    <string name="enter_pounds">进场过磅</string>
+    <string name="play_pounds">出场过磅</string>
     <string name="storage">料仓</string>
     <string name="engineering_department">工程部</string>
     <string name="asphalt">沥青</string>
@@ -45,6 +47,8 @@
     <string name="select_test_type">选择类型</string>
     <string name="select_material">选择材料</string>
     <string name="select_strength">设计强度</string>
+    <string name="select_waag">选择磅房</string>
+    <string name="setect_material">选择材料</string>
 
     <!--主页LaboratoryActivity模块-->
     <string name="yaliji">压力试验</string>
