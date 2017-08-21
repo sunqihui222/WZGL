@@ -27,7 +27,12 @@ public class ParametersData implements Cloneable, Serializable {
     public String isReal = "";
     public String detailID = "";
     public int fromTo;
-
+    public String materialID = "";
+    public String maxPageItems = "10";
+    public String cailiaomingcheng = "";
+    public String strengthId = "";
+    public String pici = "";
+    public String cheliangbianhao = "";
     public String cailiaono = "";
     public String cailiaoname="";
     public String dataType = "0";

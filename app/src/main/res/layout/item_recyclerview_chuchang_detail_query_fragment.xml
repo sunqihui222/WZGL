@@ -145,7 +145,7 @@
             style="@style/YalijiDetailTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/tv7_jinchang_query_detail_activity"
+            android:layout_toLeftOf="@+id/tv7_chuchang_query_detail_activity"
             android:layout_alignBottom="@id/textview6"
             android:text="皮重(吨)：" />
 
@@ -178,7 +178,7 @@
             style="@style/YalijiDetailTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/tv9_jinchang_query_detail_activity"
+            android:layout_toLeftOf="@+id/tv9_chuchang_query_detail_activity"
             android:layout_alignBottom="@+id/textview8"
             android:text="扣重(吨)：" />
 
@@ -211,7 +211,7 @@
             style="@style/YalijiDetailTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/tv11_jinchang_query_detail_activity"
+            android:layout_toLeftOf="@+id/tv11_chuchang_query_detail_activity"
             android:layout_alignBottom="@id/textview10"
             android:text="称重偏差：" />
 
@@ -245,7 +245,7 @@
             style="@style/YalijiDetailTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/tv13_jinchang_query_detail_activity"
+            android:layout_toLeftOf="@+id/tv13_chuchang_query_detail_activity"
             android:layout_alignBottom="@+id/textview12"
             android:text="备注：" />
 

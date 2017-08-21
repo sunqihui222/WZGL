@@ -85,6 +85,9 @@
 
         <activity android:name=".activity.TestActivity" />
 
+        <activity android:name=".activity.EnterPoundsQueryDetailActivity"/>
+        <activity android:name=".activity.PlayPoundsQueryDetailActivity"/>
+
         <activity
             android:name=".activity.AboutActivity"
             android:theme="@style/AppTheme.Transparent" />
@@ -131,6 +134,20 @@
             android:name=".activity.ConcreteMainActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".activity.StroageDetailActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".fragment.laboratoryactivity.LilunPeihebiDetailActivity"/>
+
+        <activity android:name=".fragment.laboratoryactivity.PeiliaoTongzhidanDetailActivity"/>
+
+        <activity android:name=".fragment.engineeringactivity.TaskListDetailActivity"/>
+
+        <activity android:name=".fragment.engineeringactivity.TaskListEditActivity"/>
+
 
         <activity
             android:name=".activity.YCLJinChangWeightFragmentActivity"

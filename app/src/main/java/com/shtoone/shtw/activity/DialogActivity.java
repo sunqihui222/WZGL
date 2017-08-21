@@ -27,9 +27,11 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.bean.BHZEquipment;
+import com.shtoone.shtw.bean.DesignStrengthData;
 import com.shtoone.shtw.bean.EquipmentAndTestTypeData;
 import com.shtoone.shtw.bean.MaterialListData;
 import com.shtoone.shtw.bean.ParametersData;
+import com.shtoone.shtw.bean.StorageMaterialData;
 import com.shtoone.shtw.bean.WaagListData;
 import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
@@ -59,23 +61,32 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private CircularProgressButton bt_search;
     private MaterialSpinner ms_select_equipment;
     private MaterialSpinner ms_select_test_type;
+    private MaterialSpinner ms_select_material;
+    private MaterialSpinner ms_select_strength;
     private MaterialSpinner ms_select_waagname;
-    private MaterialSpinner ms_select_materialname;
+//    private MaterialSpinner ms_select_materialname;
     private ImageView iv_cancel;
     private boolean isStartDateTime;
     private String startDateTime;
     private String endDateTime;
-    private ParametersData           mParametersData;
-    private FrameLayout              fl_container;
-    private String                   url;
+    private ParametersData mParametersData;
+    private FrameLayout fl_container;
+    private String url;
     private EquipmentAndTestTypeData mEquipmentTestData;
-    private BHZEquipment             mBHZEquipment;
-    private List<String>             equipmentNames;
-    private List<String>             equipmentIDs;
-    private List<String>             testTypeNames;
-    private List<String>             testTypeIDs;
-    private RadioGroup               rg_handle;
-    private RadioGroup               rg_examine;
+    private BHZEquipment mBHZEquipment;
+    private StorageMaterialData mStorageMaterialData;
+    private DesignStrengthData mDesignStrengthData;
+    private List<String> equipmentNames;
+    private List<String> equipmentIDs;
+    private List<String> testTypeNames;
+    private List<String> testTypeIDs;
+    private List<String> materialIDs;
+    private List<String> materialNames;
+    private List<String> strengthIds;
+    private List<String> strengthNames;
+    private RadioGroup rg_handle;
+    private RadioGroup rg_examine;
+
     private RadioGroup               rg_jinchang_handle;
     private RadioGroup               rg_chuchang_handle;
     private WaagListData             waagListData;
@@ -105,8 +116,10 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         iv_cancel = (ImageView) findViewById(R.id.iv_cancel_dialog);
         ms_select_equipment = (MaterialSpinner) findViewById(R.id.ms_select_equipment_dialog);
         ms_select_test_type = (MaterialSpinner) findViewById(R.id.ms_select_test_type_dialog);
+        ms_select_material = (MaterialSpinner) findViewById(R.id.ms_select_material_dialog);
+        ms_select_strength = (MaterialSpinner) findViewById(R.id.ms_select_strength_dialog);
         ms_select_waagname = (MaterialSpinner) findViewById(R.id.ms_select_waagname_dialog);
-        ms_select_materialname = (MaterialSpinner) findViewById(R.id.ms_select_materialname_dialog);
+//        ms_select_materialname = (MaterialSpinner) findViewById(R.id.ms_select_materialname_dialog);
         rg_handle = (RadioGroup) findViewById(R.id.rg_handle_dialog);
         rg_examine = (RadioGroup) findViewById(R.id.rg_examine_dialog);
         rg_jinchang_handle = (RadioGroup) findViewById(R.id.rg_jinchang_handle_dialog);
@@ -187,6 +200,42 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
+        ms_select_material.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e(TAG,"material选择第：" + i + "个");
+                if (i >= 0) {
+                    mParametersData.materialID = materialIDs.get(i);
+                    Log.e(TAG,"materialIDs[i]:" + materialNames.get(i));
+                } else if (i == -1) {
+                    mParametersData.materialID = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ms_select_strength.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e(TAG,"strength选择第：" + i + "个");
+                if (i >= 0) {
+                    mParametersData.strengthId = strengthIds.get(i);
+                    Log.e(TAG,"strengthIds[i]:" + strengthNames.get(i));
+                } else if (i == -1) {
+                    mParametersData.strengthId = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         ms_select_waagname.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -205,24 +254,24 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
-        ms_select_materialname.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("equipment选择第：", + i + "个");
-                if (i >= 0) {
-                    Log.e(TAG, "onItemSelected: "+ cailiaoNo.size() +" bianhao88  " + cailiaoNo.get(i));
-                    mParametersData.cailiaono = cailiaoNo.get(i);
-                    KLog.e("equipmentIDs[i]:" + cailiaoName.get(i));
-                } else if (i == -1) {
-                    mParametersData.cailiaono = "";
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        ms_select_materialname.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                Log.e("equipment选择第：", + i + "个");
+//                if (i >= 0) {
+//                    Log.e(TAG, "onItemSelected: "+ cailiaoNo.size() +" bianhao88  " + cailiaoNo.get(i));
+//                    mParametersData.cailiaono = cailiaoNo.get(i);
+//                    KLog.e("equipmentIDs[i]:" + cailiaoName.get(i));
+//                } else if (i == -1) {
+//                    mParametersData.cailiaono = "";
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
         rg_handle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -296,7 +345,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 ms_select_equipment.setVisibility(View.VISIBLE);
                 ms_select_test_type.setVisibility(View.VISIBLE);
                 url = URL.getLibEquipmentTest(mParametersData.userGroupID);
-                Log.e("float","url=:"+url);
+                Log.e("float", "url=:" + url);
                 refresh();
                 break;
             case ConstantsUtils.MATERIALSTATISTICFRAGMENT:
@@ -314,6 +363,15 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 rg_examine.setVisibility(View.INVISIBLE);
                 url = URL.getBHZEquipment(mParametersData.userGroupID);
                 refresh();
+                break;
+            case ConstantsUtils.WEIGHTHOUSEFRAGMENT:
+                ms_select_waagname.setVisibility(View.VISIBLE);
+                tv_MaterialName.setVisibility(View.VISIBLE);
+//                ms_select_materialname.setVisibility(View.VISIBLE);
+                url = URL.getWaagList(mParametersData.userGroupID);
+                refresh();
+//                url = URL.MATERIAL_LIST;
+//                loadMore();
                 break;
 
             case ConstantsUtils.YCLJINCHANG:
@@ -334,6 +392,16 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 url = URL.getWaagList(mParametersData.userGroupID);
                 refresh();
 
+                break;
+            case ConstantsUtils.STORAGEFRAGMENT:
+                ms_select_material.setVisibility(View.VISIBLE);
+                url = URL.getStorageMaterialName();
+                refresh();
+                 break;
+            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
+                ms_select_strength.setVisibility(View.VISIBLE);
+                url = URL.getStrengthName("SJQD");
+                refresh();
                 break;
         }
 
@@ -372,9 +440,15 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+//    @Override
+//    public void loadMoreSuccess(String response) {
+//        materialListData = new Gson().fromJson(response, MaterialListData.class);
+//        setMaterialListView();
+//    }
+
     @Override
     public void onRefreshSuccess(String response) {
-        Log.e(TAG,"response=:"+response.toString());
+        Log.e(TAG, "response=:" + response.toString());
         switch (mParametersData.fromTo) {
             case ConstantsUtils.LABORATORYFRAGMENT:
             case ConstantsUtils.CONCRETEFRAGMENT:
@@ -396,6 +470,18 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             case ConstantsUtils.OVERPROOFFRAGMENT:
                 mBHZEquipment = new Gson().fromJson(response, BHZEquipment.class);
                 setBHZQueryView();
+                break;
+            case ConstantsUtils.STORAGEFRAGMENT:
+                mStorageMaterialData = new Gson().fromJson(response, StorageMaterialData.class);
+                setStorageQueryView();
+                break;
+            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
+                mDesignStrengthData = new Gson().fromJson(response, DesignStrengthData.class);
+                setStrengthQueryView();
+                break;
+            case ConstantsUtils.WEIGHTHOUSEFRAGMENT:
+                waagListData = new Gson().fromJson(response, WaagListData.class);
+                setWaagListView();
                 break;
 
             case ConstantsUtils.YCLJINCHANG:
@@ -430,7 +516,25 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-
+//    private void setMaterialListView() {
+//        cailiaoName = new ArrayList<>();
+//        cailiaoNo = new ArrayList<>();
+//        for (MaterialListData.DataBean temp : materialListData.getData()) {
+//            cailiaoName.add(temp.getCailiaoname());
+//            cailiaoNo.add(temp.getCailiaono());
+//        }
+//
+//        ArrayAdapter<String> equipmentsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cailiaoName);
+//        equipmentsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        ms_select_materialname.setAdapter(equipmentsAdapter);
+//
+//        for (int i = 0; i < cailiaoNo.size(); i++) {
+//            if (mParametersData.cailiaono.equals(cailiaoNo.get(i))) {
+//                ms_select_materialname.setSelection(i + 1);
+//                Log.e("默认：" ,+ (i + 1) + "个");
+//            }
+//        }
+//    }
 
     private void setBHZQueryView() {
         equipmentNames = new ArrayList<>();
@@ -448,6 +552,49 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             if (mParametersData.equipmentID.equals(equipmentIDs.get(i))) {
                 ms_select_equipment.setSelection(i + 1);
                 KLog.e("默认：" + (i + 1) + "个");
+            }
+        }
+    }
+
+
+    private void setStorageQueryView() {
+        materialNames = new ArrayList<>();
+        materialIDs = new ArrayList<>();
+        for (StorageMaterialData.DataBean temp : mStorageMaterialData.getData()) {
+            materialNames.add(temp.getCailiaoname());
+            materialIDs.add(temp.getCailiaono());
+        }
+        Log.e(TAG,"materialNames=:" + materialNames);
+        Log.e(TAG,"materialIDs=:" + materialIDs);
+        ArrayAdapter<String> materialsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, materialNames);
+        materialsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ms_select_material.setAdapter(materialsAdapter);
+        Log.e(TAG, "-----setStorageQueryView----");
+        for (int i = 0; i < materialIDs.size(); i++) {
+            if (mParametersData.materialID.equals(materialIDs.get(i))) {
+                ms_select_material.setSelection(i + 1);
+                Log.e(TAG,"默认：" + (i + 1) + "个");
+            }
+        }
+    }
+
+    private void setStrengthQueryView() {
+        strengthNames = new ArrayList<>();
+        strengthIds = new ArrayList<>();
+        for (DesignStrengthData.DataBean temp : mDesignStrengthData.getData()) {
+            strengthNames.add(temp.getTypename());
+            strengthIds.add(temp.getTypecode());
+        }
+        Log.e(TAG,"strengthNames=:" + strengthNames);
+        Log.e(TAG,"strengthIds=:" + strengthIds);
+        ArrayAdapter<String> strengthAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strengthNames);
+        strengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ms_select_strength.setAdapter(strengthAdapter);
+        Log.e(TAG, "-----setStrengthQueryView----");
+        for (int i = 0; i < strengthIds.size(); i++) {
+            if (mParametersData.materialID.equals(strengthIds.get(i))) {
+                ms_select_material.setSelection(i + 1);
+                Log.e(TAG,"默认：" + (i + 1) + "个");
             }
         }
     }
@@ -654,8 +801,6 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         if (tpd != null) tpd.setOnTimeSetListener(this);
         if (dpd != null) dpd.setOnDateSetListener(this);
 
-
-
         revealView();
     }
 
@@ -721,6 +866,11 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     public String createRefreshULR() {
         return url;
     }
+
+//    @Override
+//    public String createLoadMoreULR() {
+//        return url;
+//    }
 
     @Override
     public boolean swipeBackPriority() {
