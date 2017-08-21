@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -19,15 +20,20 @@ import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
-import com.shtoone.shtw.activity.ProduceQueryDetailActivity;
+import com.shtoone.shtw.activity.EngineerDepartmentActivity;
+import com.shtoone.shtw.activity.MainActivity;
+import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.activity.YCLJinChangWeightFragmentActivity;
+import com.shtoone.shtw.activity.base.FBProjectListActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
+import com.shtoone.shtw.adapter.WZProjectProgressQueryAdapter;
 import com.shtoone.shtw.adapter.YCLJinChangWeightFragmentRecycleViewAdapter;
 import com.shtoone.shtw.bean.ParametersData;
-import com.shtoone.shtw.bean.ProduceQueryFragmentListData;
+import com.shtoone.shtw.bean.WZProjectProgressQueryData;
 import com.shtoone.shtw.bean.YCLJinChangWeightFragmentListData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
+import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
@@ -37,7 +43,6 @@ import com.squareup.otto.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,32 +50,34 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
+import static com.shtoone.shtw.BaseApplication.mDepartmentData;
+
 /**
  * Created by Administrator on 2017/8/7.
  */
 
-public class YCLJinChangWeightFragment extends BaseLazyFragment {
+public class WZProjectProgressQueryFragment extends BaseLazyFragment {
 
-    private Toolbar        mToolbar;
-    private PtrFrameLayout mPtrFrameLayout;
-    private RecyclerView   mRecyclerView;
-    private YCLJinChangWeightFragmentRecycleViewAdapter mAdapter;
-    private YCLJinChangWeightFragmentListData itemsData;
+    private Toolbar                       mToolbar;
+    private PtrFrameLayout                mPtrFrameLayout;
+    private RecyclerView                  mRecyclerView;
+    private WZProjectProgressQueryAdapter mAdapter;
+    private WZProjectProgressQueryData    itemsData;
 
     private FloatingActionButton fab;
     private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
     private Gson            mGson;
     private boolean         isLoading;
-    private List<YCLJinChangWeightFragmentListData.DataEntity> listData;
+    private List<WZProjectProgressQueryData.DataEntity> listData;
 
     private ParametersData          mParametersData;
     private LinearLayoutManager     mLinearLayoutManager;
     private int                     lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
 
-    public static YCLJinChangWeightFragment newInstance() {
-        return new YCLJinChangWeightFragment();
+    public static WZProjectProgressQueryFragment newInstance() {
+        return new WZProjectProgressQueryFragment();
     }
 
     @Override
@@ -83,12 +90,28 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
     private void initData() {
 
         mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
+        mParametersData.userGroupID = mDepartmentData.departmentID;
         mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
-        mParametersData.fromTo = ConstantsUtils.YCLJINCHANG;
+        mParametersData.userGroupID = mDepartmentData.departmentID;
+        mParametersData.fromTo = ConstantsUtils.WZPROGRESS;
 
         mGson = new Gson();
+        setToolbarTitle();
+        ((MainActivity) _mActivity).initToolBar(mToolbar);
+        mToolbar.inflateMenu(R.menu.menu_hierarchy);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_hierarchy:
+                        Intent intent = new Intent(getActivity(), FBProjectListActivity.class);
+
+                        AnimationUtils.startActivity(_mActivity, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color, 500);
+                        break;
+                }
+                return true;
+            }
+        });
         listData = new ArrayList<>();
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -98,17 +121,17 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(_mActivity, DialogActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
-                intent.putExtras(bundle);
+                Intent intent = new Intent(_mActivity, FBProjectListActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
+//                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
 
 
         //设置动画与适配器
-        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new YCLJinChangWeightFragmentRecycleViewAdapter(_mActivity, listData));
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new WZProjectProgressQueryAdapter(_mActivity, listData));
         mSlideInLeftAnimationAdapter.setDuration(500);
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
@@ -118,7 +141,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
             public void onItemClick(View view, int position) {
                 // 实现局部界面刷新, 这个view就是被点击的item布局对象
                 changeReadedState(view);
-                jump2ProduceQueryDetailActivity(position);
+                jump2EngineerDepartmentDetailActivity(position);
             }
         });
 
@@ -189,23 +212,14 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
         mParametersData.currentPage = "1";//默认都是第一页
-        String userGroupID = "";
-        String cailiaoname = "";
-        String tongjitype = "";
-        String equipmentID = "";
-        String startDateTime = "";
-        String endDateTime = "";
+        String parentno = "";
         String currentPage = "";
 
 
         if (null != mParametersData) {
-            userGroupID = mParametersData.userGroupID;
-            cailiaoname = mParametersData.cailiaono;
-            tongjitype = mParametersData.dataType;
-            startDateTime = mParametersData.startDateTime;
-            endDateTime = mParametersData.endDateTime;
+
             currentPage = mParametersData.currentPage;
-            equipmentID = mParametersData.equipmentID;
+            parentno = mParametersData.projectno;
 
         }
 
@@ -213,32 +227,23 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
             listData.clear();
         }
 
-
-        return URL.getYCLJINCHANGquery(userGroupID, cailiaoname, equipmentID, tongjitype, startDateTime, endDateTime, currentPage);
-
-
+        return URL.getWZprojectprogress(parentno,currentPage);
     }
 
     @Override
     public String createLoadMoreULR() {
         mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) + 1) + "";//默认都是第一页
-        String userGroupID = "";
-        String cailiaoname = "";
-        String tongjitype = "";
-        String equipmentID = "";
-        String startDateTime = "";
-        String endDateTime = "";
+        String parentno = "";
         String currentPage = "";
+
         if (null != mParametersData) {
-            userGroupID = mParametersData.userGroupID;
-            cailiaoname = mParametersData.cailiaono;
-            tongjitype = mParametersData.dataType;
-            startDateTime = mParametersData.startDateTime;
-            endDateTime = mParametersData.endDateTime;
+
             currentPage = mParametersData.currentPage;
-            equipmentID = mParametersData.equipmentID;
+            parentno = mParametersData.projectno;
+
         }
-        return URL.getYCLJINCHANGquery(userGroupID,cailiaoname,equipmentID,tongjitype,startDateTime,endDateTime,currentPage);
+
+        return URL.getWZprojectprogress(parentno,currentPage);
     }
 
     @Override
@@ -253,7 +258,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, YCLJinChangWeightFragmentListData.class);
+                itemsData = mGson.fromJson(response, WZProjectProgressQueryData.class);
                 if (null != itemsData) {
                     if (itemsData.getSuccess() && itemsData.getData().size() > 0) {
                         listData.addAll(itemsData.getData());
@@ -311,7 +316,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, YCLJinChangWeightFragmentListData.class);
+                itemsData = mGson.fromJson(response, WZProjectProgressQueryData.class);
                 if (null != itemsData) {
                     if (itemsData.getSuccess() && itemsData.getData().size() > 0) {
                         if (null != listData) {
@@ -362,19 +367,12 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
-            if (mParametersData.fromTo == ConstantsUtils.YCLJINCHANG) {
-                this.mParametersData.startDateTime = mParametersData.startDateTime;
-                this.mParametersData.endDateTime = mParametersData.endDateTime;
-                this.mParametersData.dataType = mParametersData.dataType;
-                this.mParametersData.equipmentID = mParametersData.equipmentID;
-                this.mParametersData.cailiaono = mParametersData.cailiaono;
-                this.mParametersData.userGroupID = mParametersData.userGroupID;
-                KLog.e("mParametersData:" + mParametersData.startDateTime);
-                KLog.e("mParametersData:" + mParametersData.endDateTime);
-                KLog.e("mParametersData:" + mParametersData.dataType);
-                KLog.e("mParametersData:" + mParametersData.cailiaono);
+
+
+                this.mParametersData.projectno = mParametersData.projectno;
+                KLog.e("mParametersData:" + mParametersData.projectno);
                 mPtrFrameLayout.autoRefresh(true);
-            }
+
         }
     }
 
@@ -388,7 +386,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
             isRegistered = true;
         }
 
-        View view = inflater.inflate(R.layout.fragment_jinchang_query, container, false);
+        View view = inflater.inflate(R.layout.fragment_wzprogress_query, container, false);
         initView(view);
         return view;
 
@@ -403,7 +401,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
     }
 
     private void initView(View view) {
- //       mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptrframelayout);
         mPageStateLayout = (PageStateLayout) view.findViewById(R.id.pagestatelayout);
@@ -423,16 +421,23 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
         BaseApplication.bus.unregister(this);
     }
 
+
+
     private void changeReadedState(View view) {
         //此处可以做一些修改点击过的item的样式，方便用户看出哪些已经点击查看过
     }
 
-    //进入ProduceQueryDetailActivity
-    private void jump2ProduceQueryDetailActivity(int position) {
-        Intent intent = new Intent(_mActivity, YCLJinChangWeightFragmentActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("jinchangquerydetail", listData.get(position));
-        intent.putExtras(bundle);
+    //进入EngineerActivity
+    private void jump2EngineerDepartmentDetailActivity(int position) {
+        Intent intent = new Intent(_mActivity, EngineerDepartmentActivity.class);
         startActivity(intent);
+    }
+
+    private void setToolbarTitle() {
+        if (null != mToolbar && null != mDepartmentData && !TextUtils.isEmpty(mDepartmentData.departmentName)) {
+            StringBuffer sb = new StringBuffer(mDepartmentData.departmentName + " > ");
+            sb.append("工程进度查询").trimToSize();
+            mToolbar.setTitle(sb.toString());
+        }
     }
 }

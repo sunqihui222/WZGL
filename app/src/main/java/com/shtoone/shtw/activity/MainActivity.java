@@ -25,6 +25,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
+import com.shtoone.shtw.fragment.EngineeringDepartment.WZProjectProgressQueryFragment;
 import com.shtoone.shtw.fragment.EngineeringDepartment.YCLChuChangWeightFragment;
 import com.shtoone.shtw.fragment.EngineeringDepartment.YCLJinChangWeightFragment;
 import com.shtoone.shtw.fragment.mainactivity.ConcreteFragment;
@@ -68,7 +69,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             mFragments[2] = WeightHouseFragment.newInstance();
             mFragments[3] = StorageFragment.newInstance();
          //   mFragments[4] = EngineeringDepartmentFragment.newInstance();
-            mFragments[4] = YCLChuChangWeightFragment.newInstance();
+            mFragments[4] = WZProjectProgressQueryFragment.newInstance();
             loadMultipleRootFragment(R.id.fl_container_main_activity, 0, mFragments[0], mFragments[1],mFragments[2],mFragments[3],mFragments[4]);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
@@ -78,7 +79,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             mFragments[2] = findFragment(WeightHouseFragment.class);
             mFragments[3] = findFragment(StorageFragment.class);
     //        mFragments[4] = findFragment(EngineeringDepartmen.class);
-            mFragments[4] = findFragment(YCLChuChangWeightFragment.class);
+            mFragments[4] = findFragment(WZProjectProgressQueryFragment.class);
         }
 
         initView();

@@ -84,4 +84,9 @@
     <string name="confirm_time">确认时间</string>
     <string name="approve_time">审批时间</string>
 
+
+    <string name="jinchang_data">进厂过磅</string>
+    <string name="chuchang_data">出厂过磅</string>
+
+
 </resources>

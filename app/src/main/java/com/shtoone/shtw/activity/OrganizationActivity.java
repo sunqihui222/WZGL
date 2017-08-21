@@ -1,6 +1,7 @@
 package com.shtoone.shtw.activity;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -216,6 +217,10 @@ public class OrganizationActivity extends BaseActivity {
                 mDepartmentData.departmentName = node.getName();
                 mDepartmentData.departmentID = node.getId();
                 BaseApplication.bus.post(mDepartmentData);
+                Intent intent = new Intent();
+                intent.putExtra("departmentname",node.getName());
+                intent.putExtra("departmentnno",node.getId());
+                setResult(15,intent);
                 onBackPressed();
             }
         });

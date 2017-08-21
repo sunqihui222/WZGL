@@ -38,7 +38,7 @@ public class URL {
     //中交集团二航局地址
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
-    public static final String BaseURL = "http://192.168.11.103:8080/jeecg/";
+    public static final String BaseURL = "http://192.168.11.100:8080/jeecg/";
 
     /**
      * 登录地址
@@ -673,4 +673,30 @@ public class URL {
         Log.e("原材料出场数据详情查询",url);
         return url;
     }
+
+    /**
+     * 工程进度查询查询
+     */
+    public static final String WZ_PROJECTPROGRESS = BaseURL+"AppWZprojectProgressQueryController.do?query&parentno=%1&pageNo=%2&maxPageItems=10";
+
+    /**
+     * 工程进度查询查询
+     *
+     * @param
+     * @return 返回拼凑后的url
+     */
+    public static String getWZprojectprogress(String parentno,String pageNo) {
+        String url = WZ_PROJECTPROGRESS.replace("%1",parentno).replace("%2",pageNo);
+        KLog.e(TAG, "工程进度查询查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        Log.e("原材料出场数据详情查询",url);
+        return url;
+    }
+
+    /**
+     * 分部分项列表
+     */
+    public static final String FB_PROJECT = BaseURL+"appWZproject.do?Appfenbufenxiang";
 }
