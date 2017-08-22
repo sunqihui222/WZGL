@@ -18,6 +18,7 @@ import com.shtoone.shtw.fragment.EngineeringDepartment.YCLJinChangWeightFragment
 import com.shtoone.shtw.fragment.concreteactivity.MaterialStatisticFragment;
 import com.shtoone.shtw.fragment.concreteactivity.OverproofFragment;
 import com.shtoone.shtw.fragment.concreteactivity.ProduceQueryFragment;
+import com.shtoone.shtw.fragment.engineeringactivity.JobOrderFragment;
 import com.shtoone.shtw.fragment.engineeringactivity.MaterialConsumeFragment;
 import com.shtoone.shtw.fragment.engineeringactivity.TaskListImpQueryFragment;
 import com.shtoone.shtw.fragment.mainactivity.YCLWeightHouseQuertFragment;
@@ -30,11 +31,11 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Created by Administrator on 2017/8/15.
  */
 
-public class EngineerDepartmentActivity extends BaseActivity{
+public class EngineerDepartmentActivity extends BaseActivity {
     private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
     private AHBottomNavigation bottomNavigation;
-    private int               bottomNavigationPreposition = 0;
-    private SupportFragment[] mFragments                  = new SupportFragment[3];
+    private int bottomNavigationPreposition = 0;
+    private SupportFragment[] mFragments = new SupportFragment[4];
     private FrameLayout fl_container;
 
 
@@ -43,24 +44,22 @@ public class EngineerDepartmentActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enginer);
 
-
         if (savedInstanceState == null) {
             mFragments[0] = YCLWeightHouseQuertFragment.newInstance();
             mFragments[1] = MaterialConsumeFragment.newInstance();
             mFragments[2] = TaskListImpQueryFragment.newInstance();
+            mFragments[3] = JobOrderFragment.newInstance();
             int showPosition = 0;
-            loadMultipleRootFragment(R.id.fl_container_concrete_activity, showPosition, mFragments[0], mFragments[1],mFragments[2]);
+            loadMultipleRootFragment(R.id.fl_container_concrete_activity, showPosition, mFragments[0], mFragments[1], mFragments[2],mFragments[3]);
         } else {
             mFragments[0] = findFragment(YCLJinChangWeightFragment.class);
             mFragments[1] = findFragment(MaterialConsumeFragment.class);
             mFragments[2] = findFragment(TaskListImpQueryFragment.class);
+            mFragments[3] = findFragment(JobOrderFragment.class);
         }
 
         initView();
-
         initData();
-
-
     }
 
     private void initData() {
@@ -68,9 +67,11 @@ public class EngineerDepartmentActivity extends BaseActivity{
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.jinchang_data, R.drawable.ic_search_white_18dp, R.color.white);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.material_consume, R.drawable.ic_overproof, R.color.material_green_100);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.renwudan_zxlist, R.drawable.ic_overproof, R.color.material_green_100);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.job_order, R.drawable.ic_search_white_18dp, R.color.white);
         bottomNavigationItems.add(item1);
         bottomNavigationItems.add(item2);
         bottomNavigationItems.add(item3);
+        bottomNavigationItems.add(item4);
         bottomNavigation.addItems(bottomNavigationItems);
         bottomNavigation.setDefaultBackgroundColor(getResources().getColor(R.color.white));
         bottomNavigation.setBehaviorTranslationEnabled(false);
