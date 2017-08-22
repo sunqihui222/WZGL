@@ -62,4 +62,8 @@ public class ConstantsUtils {
     public static final int YCLCHUCHANG = 38;
     public static final int WZPROGRESS = 39;
 
+
+    public static final int JOBORDERUNFINSH = 43;
+    public static final int JOBORDERFINSH = 44;
+
 }

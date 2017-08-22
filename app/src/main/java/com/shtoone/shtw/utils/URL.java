@@ -970,5 +970,63 @@ public class URL {
      */
     public static final String FB_PROJECT = BaseURL+"appWZproject.do?Appfenbufenxiang";
 
+    /**
+     * 发车单数据查询
+     */
+    public static final String PAGE_LIST = "http://61.237.239.105:18190/FCDService/FCDService.asmx/GetFCDListByPage?index=%1&size=%2&jgdm=%3&status=%4&begintime=%5&endtime=%6";
+
+    public static String getPAGE_LIST(String index,String size,String jgdm,String status,String begintime,String endtime) {
+        String url = PAGE_LIST.replace("%1",index).replace("%2",size).replace("%3",jgdm).replace("%4",status).replace("%5",begintime).replace("%6",endtime);
+        KLog.e(TAG, "发车单据查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        Log.e("发车单据查询",url);
+        return url;
+    }
+
+    /**
+     * 任务单（浇筑令）未生产
+     */
+    public static final String JOBODDER_UNFINSH = BaseURL+"AppWzRenWuDanList&departId=%1&state=%2&startTime=%3&endTime=%4&pageNo=%5&maxPageItems=10";
+
+    public static String getJobOrderUnfinsh(String departId,String state,String startTime,String endTime,String pageNo) {
+        startTime = DateUtils.ChangeTimeToLong(startTime);
+        endTime = DateUtils.ChangeTimeToLong(endTime);
+
+        //如果开始时间大于结束时间，返回null
+        if (Integer.valueOf(startTime) <= Integer.valueOf(endTime)) {
+            String url = YCLCHUCHANG_QUERY.replace("%1", departId).replace("%2",state).replace("%3",startTime).replace("%4",endTime).replace("%5",pageNo);
+            KLog.e(TAG, "任务单浇筑令未完成:" + url);
+            if (TextUtils.isEmpty(url)) {
+                return null;
+            }
+            Log.e("任务单浇筑令未完成数据", url);
+            return url;
+        }
+        return null;
+    }
+
+    /**
+     * 任务单（浇筑令）已完成
+     */
+    public static final String JOBODDER_FINSH = BaseURL+"AppWzRenWuDanList&departId=%1&state=%2&startTime=%3&endTime=%4";
+
+    public static String getJobOrderFinsh(String departId,String state,String startTime,String endTime) {
+        startTime = DateUtils.ChangeTimeToLong(startTime);
+        endTime = DateUtils.ChangeTimeToLong(endTime);
+
+        //如果开始时间大于结束时间，返回null
+        if (Integer.valueOf(startTime) <= Integer.valueOf(endTime)) {
+            String url = YCLCHUCHANG_QUERY.replace("%1", departId).replace("%2",state).replace("%3",startTime).replace("%4",endTime);
+            KLog.e(TAG, "任务单浇筑令已完成:" + url);
+            if (TextUtils.isEmpty(url)) {
+                return null;
+            }
+            Log.e("任务单浇筑令已完成数据", url);
+            return url;
+        }
+        return null;
+    }
 
 }
