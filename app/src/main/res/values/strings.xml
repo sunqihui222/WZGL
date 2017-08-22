@@ -88,12 +88,13 @@
     <string name="approve_time">审批时间</string>
 
 
-    <string name="jinchang_data">进厂过磅</string>
+    <string name="jinchang_data">过磅台账</string>
     <string name="chuchang_data">出厂过磅</string>
+    <string name="renwudan_zxlist">任务单执行情况</string>
 
 
 
-    <string name="material_consume">原材料进出耗分析</string>
+    <string name="material_consume">进出耗分析</string>
     <string name="peibi_tongzhin_cx">配比通知单查询</string>
     <string name="lilun_peihebi_cx">理论配合比查询</string>
     <string name="renwudan_zx">任务单执行</string>

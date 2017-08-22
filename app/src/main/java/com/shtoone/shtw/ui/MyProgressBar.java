@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
  * Created by Administrator on 2017/8/15.
  */
 
-<<<<<<< HEAD
 public class MyProgressBar extends ProgressBar {
 
     String text;

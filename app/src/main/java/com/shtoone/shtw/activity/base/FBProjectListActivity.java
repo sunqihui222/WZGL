@@ -65,7 +65,7 @@ public class FBProjectListActivity extends BaseActivity {
 
 
         mParametersData = BaseApplication.parametersData;
-        mToolbar.setTitle("材料名称");
+        mToolbar.setTitle("分部分项");
         initToolbarBackNavigation(mToolbar);
         treeNodes = new ArrayList<FBProjectData>();
 

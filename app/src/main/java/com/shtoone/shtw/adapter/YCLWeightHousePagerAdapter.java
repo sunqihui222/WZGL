@@ -15,7 +15,7 @@ import com.shtoone.shtw.fragment.EngineeringDepartment.YCLJinChangWeightFragment
 public class YCLWeightHousePagerAdapter extends FragmentPagerAdapter {
 
 
-    private String[] titleType = {"进场过磅", "出场过磅"};
+    private String[] titleType = {"进场台账", "出场台账"};
     private boolean isRegistered = false;
 
 

@@ -151,7 +151,7 @@ public class YCLJinChangWeightFragmentActivity extends BaseActivity{
 
 
     private void initView() {
-        mDataBean = (YCLJinChangWeightFragmentListData.DataEntity) getIntent().getSerializableExtra("jinchangquerydetail");
+//        mDataBean = (YCLJinChangWeightFragmentListData.DataEntity) getIntent().getSerializableExtra("jinchangquerydetail");
         mToolbar = (Toolbar) findViewById(R.id.toolbar_toolbar);
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nsv_jinchang_query_detail_activity);
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptr_jinchang_query_detail_activity);

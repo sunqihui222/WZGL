@@ -29,6 +29,7 @@ import com.shtoone.shtw.fragment.EngineeringDepartment.WZProjectProgressQueryFra
 import com.shtoone.shtw.fragment.EngineeringDepartment.YCLChuChangWeightFragment;
 import com.shtoone.shtw.fragment.engineeringactivity.TaskListImpQueryFragment;
 import com.shtoone.shtw.fragment.mainactivity.ConcreteFragment;
+import com.shtoone.shtw.fragment.mainactivity.LaboratoryFragment;
 import com.shtoone.shtw.fragment.mainactivity.StorageFragment;
 import com.shtoone.shtw.fragment.mainactivity.WeightHouseFragment;
 import com.shtoone.shtw.utils.ConstantsUtils;

@@ -38,7 +38,7 @@ public class URL {
     //中交集团二航局地址
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
-    public static final String BaseURL = "http://192.168.11.100:8080/jeecg/";
+    public static final String BaseURL = "http://192.168.11.101:8080/jeecg/";
 
     /**
      * 登录地址
@@ -969,4 +969,6 @@ public class URL {
      * 分部分项列表
      */
     public static final String FB_PROJECT = BaseURL+"appWZproject.do?Appfenbufenxiang";
+
+
 }

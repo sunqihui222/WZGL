@@ -63,8 +63,6 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     private RecyclerView                  mRecyclerView;
     private WZProjectProgressQueryAdapter mAdapter;
     private WZProjectProgressQueryData    itemsData;
-
-    private FloatingActionButton fab;
     private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
     private Gson            mGson;
@@ -117,17 +115,17 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
 
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(_mActivity, FBProjectListActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
-//                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+//
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(_mActivity, FBProjectListActivity.class);
+////                Bundle bundle = new Bundle();
+////                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
+////                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
 
 
         //设置动画与适配器
@@ -171,11 +169,7 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 lastVisibleItemPosition = mLinearLayoutManager.findLastVisibleItemPosition();
 
-                if (dy > 5) {
-                    fab.hide();
-                } else if (dy < -5) {
-                    fab.show();
-                }
+
             }
         });
 
@@ -397,12 +391,11 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     public void onResume() {
         super.onResume();
         //返回到看见此fragment时，fab显示
-        fab.show();
+
     }
 
     private void initView(View view) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptrframelayout);
         mPageStateLayout = (PageStateLayout) view.findViewById(R.id.pagestatelayout);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
@@ -412,7 +405,7 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     public void onPause() {
         super.onPause();
         //防止屏幕旋转后重画时fab显示
-        fab.hide();
+
     }
 
     @Override

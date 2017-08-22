@@ -224,7 +224,7 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
         if (null != listData) {
             listData.clear();
         }
-        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
+//        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
         return URL.getTaskListZXData(userGroupID, startDateTime, endDateTime,strengthId, currentPage, maxPageItems);
     }
 
@@ -246,7 +246,7 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
             maxPageItems = mParametersData.maxPageItems;
             strengthId = mParametersData.strengthId;
         }
-        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
+//        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
         return URL.getTaskListZXData(userGroupID, startDateTime, endDateTime,strengthId,currentPage, maxPageItems);
     }
 
