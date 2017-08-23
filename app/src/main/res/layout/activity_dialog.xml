@@ -303,6 +303,17 @@
                 android:layout_marginTop="5dp"
                 />
 
+            <TextView
+                android:id="@+id/tv_department_choose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="请选择组织机构"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:layout_marginTop="5dp"
+                />
+
             <com.dd.CircularProgressButton
                 android:id="@+id/bt_search_dialog"
                 android:layout_width="100dp"

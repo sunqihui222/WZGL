@@ -221,6 +221,10 @@ public class OrganizationActivity extends BaseActivity {
                 intent.putExtra("departName", node.getName());
                 intent.putExtra("departName", node.getId());
                 setResult(11, intent);
+                Intent intent = new Intent();
+                intent.putExtra("departmentname",node.getName());
+                intent.putExtra("departmentnno",node.getId());
+                setResult(15,intent);
                 onBackPressed();
             }
         });

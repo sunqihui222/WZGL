@@ -373,6 +373,7 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
                 this.mParametersData.equipmentID = mParametersData.equipmentID;
                 this.mParametersData.cailiaono = mParametersData.cailiaono;
                 this.mParametersData.states = mParametersData.states;
+                this.mParametersData.userGroupID =mParametersData.userGroupID;
                 KLog.e("mParametersData:" + mParametersData.startDateTime);
                 KLog.e("mParametersData:" + mParametersData.endDateTime);
                 KLog.e("mParametersData:" + mParametersData.dataType);
@@ -407,7 +408,7 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
     }
 
     private void initView(View view) {
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
+ //       mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptrframelayout);
         mPageStateLayout = (PageStateLayout) view.findViewById(R.id.pagestatelayout);

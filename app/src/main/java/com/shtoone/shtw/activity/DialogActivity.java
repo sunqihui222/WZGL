@@ -48,6 +48,8 @@ import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
+import static com.shtoone.shtw.BaseApplication.mDepartmentData;
+
 /**
  * Created by leguang on 2016/6/01 0031.
  */
@@ -92,6 +94,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private List<String>             cailiaoName;
     private List<String>             cailiaoNo;
     private TextView tv_MaterialName;
+    private TextView tv_DepartmentName;
 
 
     @Override
@@ -124,10 +127,12 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         start_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         end_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         tv_MaterialName = (TextView) findViewById(R.id.tv_material_choose);
+        tv_DepartmentName = (TextView) findViewById(R.id.tv_department_choose);
 
         iv_cancel.setOnClickListener(this);
         bt_search.setOnClickListener(this);
         tv_MaterialName.setOnClickListener(this);
+        tv_DepartmentName.setOnClickListener(this);
 
         start_date_time.getEditText().setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -373,6 +378,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 rg_jinchang_handle.setVisibility(View.VISIBLE);
                 ms_select_waagname.setVisibility(View.VISIBLE);
                 tv_MaterialName.setVisibility(View.VISIBLE);
+                tv_DepartmentName.setVisibility(View.VISIBLE);
                 url = URL.getWaagList(mParametersData.userGroupID);
                 refresh();
                 break;
@@ -382,6 +388,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 rg_chuchang_handle.setVisibility(View.VISIBLE);
                 ms_select_waagname.setVisibility(View.VISIBLE);
                 tv_MaterialName.setVisibility(View.VISIBLE);
+                tv_DepartmentName.setVisibility(View.VISIBLE);
                 url = URL.getWaagList(mParametersData.userGroupID);
                 refresh();
 
@@ -690,9 +697,18 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 break;
 
             case R.id.tv_material_choose:
-                Intent intent = new Intent(this,MaterialListActivity.class);
-                //AnimationUtils.startActivityForResult(this,intent,10,tv_MaterialName,R.color.base_color);
-                startActivityForResult(intent,10);
+                Intent material = new Intent(this,MaterialListActivity.class);
+                startActivityForResult(material,10);
+
+                break;
+
+            case R.id.tv_department_choose:
+                Intent intent = new Intent(this, OrganizationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
+                intent.putExtras(bundle);
+                intent.putExtra("type", "1");
+                startActivityForResult(intent,12);
 
                 break;
         }
@@ -830,6 +846,13 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
             }
 
+        }else if (requestCode==12){
+            if (resultCode==15){
+
+                tv_DepartmentName.setText(data.getExtras().getString("departmentname"));
+                mParametersData.userGroupID=data.getExtras().getString("departmentnno");
+                Log.e("tv_DepartmentName",data.getStringExtra("departmentnno"));
+            }
         }
 
     }

@@ -14,13 +14,13 @@ public class ParametersData implements Cloneable, Serializable {
     private static final String TAG = ParametersData.class.getSimpleName();
     public String startDateTime = "2015-03-01 00:00:00";
     public String endDateTime = "2016-06-01 00:00:00";
-    public String userGroupID = "";//组织机构id
+    public String userGroupID = "";
     public String deviceType = "";
     public String testTypeID = "";
     public String disposition = "";
     public String level = "";
     public String isQualified = "";
-    public String equipmentID = "";//设备id
+    public String equipmentID = "";
     public String alarmLevel = "";
     public String handleType = "";
     public String currentPage = "1";
@@ -34,9 +34,11 @@ public class ParametersData implements Cloneable, Serializable {
     public String pici = "";
     public String cheliangbianhao = "";
     public String cailiaono = "";
-    public String states = "";
     public String cailiaoname="";
     public String dataType = "0";
+    public String states = "";
+    public String parentno="";
+    public String projectno = "";
 
 
     public ParametersData() {

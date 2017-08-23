@@ -133,11 +133,11 @@ public class MaterialConsumeFragment extends BaseLazyFragment{
     @Override
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
-        String userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
+        String userGroupID = "";
         String startDateTime = "";
         String endDateTime = "";
         if (null != mParametersData) {
-//            userGroupID = mParametersData.userGroupID;
+            userGroupID = mParametersData.userGroupID;
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
         }

@@ -379,9 +379,9 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1){
-            if (resultCode == 11){
-                tv_depart.setText(data.getExtras().getString("departName"));
-                Log.e("tv_depart",data.getStringExtra("departName"));
+            if (resultCode == 15){
+                tv_depart.setText(data.getExtras().getString("departmentname"));
+                Log.e("tv_depart",data.getStringExtra("departmentname"));
             }
         }if (requestCode == 2){
             if (resultCode == 22){

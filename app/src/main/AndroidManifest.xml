@@ -171,6 +171,14 @@
 
         <activity android:name=".activity.PourWayActivity"/>
 
+        <activity
+            android:name=".activity.base.FBProjectListActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".activity.EngineerDepartmentActivity"
+            android:launchMode="singleTop" />
+
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"
