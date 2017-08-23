@@ -1,43 +1,62 @@
 package com.shtoone.shtw.fragment.engineeringactivity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
-import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
+import com.shtoone.shtw.activity.DesignStrengthActivity;
+import com.shtoone.shtw.activity.OrganizationActivity;
+import com.shtoone.shtw.activity.PourPositionActivity;
+import com.shtoone.shtw.activity.PourWayActivity;
+import com.shtoone.shtw.activity.SlumpActivity;
 import com.shtoone.shtw.activity.base.BaseActivity;
-import com.shtoone.shtw.bean.DesignStrengthData;
 import com.shtoone.shtw.bean.TaskListEditActivityData;
 import com.shtoone.shtw.bean.TaskListImpQueryFragmenData;
+import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.ui.PageStateLayout;
+import com.shtoone.shtw.utils.ConstantsUtils;
+import com.shtoone.shtw.utils.HttpUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
+import com.socks.library.KLog;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
-
-import static com.shtoone.shtw.R.id.spinner_sjqd_task_list_edit;
 
 /**
  * Created by Administrator on 2017/8/17.
  */
 
-public class TaskListEditActivity extends BaseActivity implements View.OnClickListener {
+public class TaskListEditActivity extends BaseActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private static final String TAG = TaskListEditActivity.class.getSimpleName();
     private Toolbar mToolbar;
@@ -45,6 +64,8 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     private PageStateLayout mPageStateLayout;
     private PtrFrameLayout mPtrFrameLayout;
     private TaskListImpQueryFragmenData.DataBean mDataBean;
+    private boolean isStartDateTime;
+    private String startDateTime;
     private Gson mGson;
     private EditText tv_renwuno;
     private EditText tv_jhfl;
@@ -55,24 +76,32 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     private TextView tv_person;
     private TextView tv_create_time;
     private EditText tv_remrak;
-    private MaterialSpinner spinnerDepart;
-    private MaterialSpinner spinner_jzbw;
-    private MaterialSpinner spinner_sjqd;
-    private MaterialSpinner spinner_taluodu;
-    private MaterialSpinner spinner_jzfs;
+    private TextView tv_depart;
+    private TextView tv_jzbw;
+    private TextView tv_sjqd;
+    private TextView tv_taluodu;
+    private TextView tv_jzfs;
     private TaskListEditActivityData data;
     private List<TaskListEditActivityData.DataBean> listData;
     private String url;
-    public int TYPE;
-    public static final int DESIGN_STRENGTH = 1;
-    public static final int DEPARTMENT = 2;
-    public static final int JIAOZHU_BUWEI = 3;
-    public static final int JIAOZHU_WAY = 4;
-    public static final int TALUODU = 5;
-    public static final int TASKLISTEDIT = 6;
-    private List<String> strengthIds;
-    private List<String> strengthNames;
-    private DesignStrengthData mDesignStrengthData;
+    private Button btn_save;
+    private Button btn_submit;
+    private String id;
+
+    private String renwuno;
+    private String jihuafangliang;
+    private String kaipan_time;
+    private String department;
+    private String jzbw;
+    private String sjqd;
+    private String gcmc;
+    private String taluodu;
+    private String kangdongdengji;
+    private String kangshendengji;
+    private String jzfs;
+    private String createperson;
+    private String createTime;
+    private String remark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,32 +117,47 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nsv_task_list_edit_activity);
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptr_task_list_edit_activity);
         mPageStateLayout = (PageStateLayout) findViewById(R.id.psl_task_list_edit_activity);
+        btn_save = (Button) findViewById(R.id.btn_save);
+        btn_submit = (Button) findViewById(R.id.btn_submit);
         //基础信息
         tv_renwuno = (EditText) findViewById(R.id.tv_renwuno_task_list_edit);
         tv_jhfl = (EditText) findViewById(R.id.tv_fangliang_task_list_edit);
         tv_kaipan_time = (EditText) findViewById(R.id.tv_time_task_list_edit);
-        spinnerDepart = (MaterialSpinner) findViewById(R.id.spinner_depart_task_list_edit);
-        spinner_jzbw = (MaterialSpinner) findViewById(R.id.spinner_jzbw_task_list_edit);
-        spinner_sjqd = (MaterialSpinner) findViewById(spinner_sjqd_task_list_edit);
-        spinner_taluodu = (MaterialSpinner) findViewById(R.id.spinner_taluodu_task_list_edit);
-        spinner_jzfs = (MaterialSpinner) findViewById(R.id.spinner_jzfs_task_list_edit);
+        tv_depart = (TextView) findViewById(R.id.tv_depart_task_list_edit);
+        tv_jzbw = (TextView) findViewById(R.id.tv_jzbw_task_list_edit);
+        tv_sjqd = (TextView) findViewById(R.id.tv_sjqd_task_list_edit);
+        tv_taluodu = (TextView) findViewById(R.id.tv_taluodu_task_list_edit);
+        tv_jzfs = (TextView) findViewById(R.id.tv_jzfs_task_list_edit);
         tv_gcmc = (EditText) findViewById(R.id.tv_gcmc_task_list_edit);
         tv_kddj = (EditText) findViewById(R.id.tv_kddj_task_list_edit);
         tv_ksdj = (EditText) findViewById(R.id.tv_ksdj_task_list_edit);
         tv_person = (TextView) findViewById(R.id.tv_person_task_list_edit);
         tv_create_time = (TextView) findViewById(R.id.tv_create_time_task_list_edit);
         tv_remrak = (EditText) findViewById(R.id.tv_remrak_task_list_edit);
-        spinnerDepart.setOnClickListener(this);
-        spinner_jzbw.setOnClickListener(this);
-        spinner_sjqd.setOnClickListener(this);
-        spinner_taluodu.setOnClickListener(this);
-        spinner_jzfs.setOnClickListener(this);
 
-        //执行情况
-        TYPE = TASKLISTEDIT;
+        btn_save.setOnClickListener(this);
+        btn_submit.setOnClickListener(this);
+        tv_depart.setOnClickListener(this);
+        tv_jzbw.setOnClickListener(this);
+        tv_sjqd.setOnClickListener(this);
+        tv_taluodu.setOnClickListener(this);
+        tv_jzfs.setOnClickListener(this);
+
+        tv_kaipan_time.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        setStartDateTime();
+                        break;
+                }
+                return true;
+            }
+        });
+
 
     }
-
 
     private void initData() {
         listData = new ArrayList<>();
@@ -123,6 +167,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         setSupportActionBar(mToolbar);
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
+        Log.e(TAG, "----------initData-----------" );
     }
 
     @Override
@@ -137,36 +182,18 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     @Override
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
-        switch (TYPE){
-            case TASKLISTEDIT:
-//                String taskListEditData = URL.getRenwudanEditData(mDataBean.getId());
-//                Log.e(TAG,"url=:"+taskListEditData);
-//                return URL.getRenwudanEditData(mDataBean.getId());
-                url = URL.getRenwudanEditData("90780");
-                Log.e(TAG, "任务单编辑url=:"+url);
-                break;
-            case DESIGN_STRENGTH:
-                url = URL.getStrengthName("SJQD");
-                Log.e(TAG, "设计强度url=:"+url);
-                break;
-        }
+        //todo
+//        String taskListEditData = URL.getRenwudanEditData(mDataBean.getId());
+//        Log.e(TAG,"url=:"+taskListEditData);
+//        return URL.getRenwudanEditData(mDataBean.getId());
+        url = URL.getRenwudanEditData("90780");
+        Log.e(TAG, "任务单编辑url=:"+url);
 
         return url;
     }
 
     @Override
     public void onRefreshSuccess(String response) {
-        switch (TYPE){
-            case DESIGN_STRENGTH:
-                setStrengthQueryView(response);
-                break;
-            case TASKLISTEDIT:
-                setTaskListEditActivityView(response);
-                break;
-        }
-    }
-
-    public void setTaskListEditActivityView(String response){
         if (!TextUtils.isEmpty(response)) {
             JSONObject jsonObject = null;
             try {
@@ -199,6 +226,17 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
             //提示返回数据异常，展示错误页面
             mPageStateLayout.showError();
         }
+
+    }
+
+
+    @Override
+    public void loadMoreSuccess(String response) {
+        setTaskListEditActivityView(response);
+    }
+
+    public void setTaskListEditActivityView(String response){
+
     }
 
     @Override
@@ -227,19 +265,14 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         tv_person.setText(dataBean.getCreateperson());
         tv_create_time.setText(dataBean.getCreatetime());
         tv_remrak.setText(dataBean.getRemark());
+        if(!TextUtils.isEmpty(dataBean.getJzbw())){
+            tv_jzbw.setText(dataBean.getJzbw());
+            Log.e(TAG,"++++++++++++++++");
+        }
+        id = dataBean.getId();
 
-//        spinnerDepart.setItems();
-//        spinner_jzbw.setItems();
-//        spinner_sjqd.setItems();
-//        spinner_taluodu.setItems();
-//        spinner_jzfs.setItems();
     }
 
-//    public void getDesignStrengtht(){
-//        url = URL.getStrengthName("SJQD");
-//        refresh();
-//
-//    }
 
     private void setToolbarTitle() {
         if (null != mToolbar && null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
@@ -251,49 +284,243 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private void setStrengthQueryView(String response) {
-        mDesignStrengthData = new Gson().fromJson(response, DesignStrengthData.class);
-        strengthNames = new ArrayList<>();
-        strengthIds = new ArrayList<>();
-        for (DesignStrengthData.DataBean temp : mDesignStrengthData.getData()) {
-            strengthNames.add(temp.getTypename());
-            strengthIds.add(temp.getTypecode());
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            //保存
+            case R.id.btn_save:
+                renwuno = tv_renwuno.getText().toString().trim();
+                jihuafangliang = tv_jhfl.getText().toString().trim();
+                kaipan_time = tv_kaipan_time.getText().toString().trim();
+                department = tv_depart.getText().toString().trim();
+                jzbw = tv_jzbw.getText().toString().trim();
+                sjqd = tv_sjqd.getText().toString().trim();
+                gcmc = tv_gcmc.getText().toString().trim();
+                taluodu = tv_taluodu.getText().toString().trim();
+                kangdongdengji  = tv_kddj.getText().toString().trim();
+                kangshendengji   = tv_ksdj.getText().toString().trim();
+                jzfs = tv_jzfs.getText().toString().trim();
+                createperson  = tv_person.getText().toString().trim();
+                createTime  = tv_create_time.getText().toString().trim();
+                remark   = tv_remrak.getText().toString().trim();
+                if (!TextUtils.isEmpty(renwuno) && !TextUtils.isEmpty(jihuafangliang) && !TextUtils.isEmpty(createTime)&& !TextUtils.isEmpty(department) && !TextUtils.isEmpty(jzbw)&& !TextUtils.isEmpty(gcmc)) {
+                    //弹出对话框，确定提交
+                    new MaterialDialog.Builder(TaskListEditActivity.this)
+                            .title("确认")
+                            .content("请问您确定填写无误并提交吗？")
+                            .positiveText("确定")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    MaterialDialog progressDialog = new MaterialDialog.Builder(TaskListEditActivity.this)
+                                            .title("提交")
+                                            .content("正在提交中，请稍等……")
+                                            .progress(true, 0)
+                                            .progressIndeterminateStyle(true)
+                                            .cancelable(false)
+                                            .show();
+                                    taskEditSave(progressDialog);
+                                }
+                            })
+                            .negativeText("放弃")
+                            .show();
+                } else {
+                    if (TextUtils.isEmpty(renwuno)) {
+                        tv_renwuno.setError("任务编号不能为空");
+                    } else if (TextUtils.isEmpty(jihuafangliang)) {
+                        tv_jhfl.setError("计划方量不能为空");
+                    }else if (TextUtils.isEmpty(kaipan_time)) {
+                        tv_jhfl.setError("开盘时间不能为空");
+                    }else if (TextUtils.isEmpty(department)) {
+                        tv_jhfl.setError("所属机构不能为空");
+                    }else if (TextUtils.isEmpty(jzbw)) {
+                        tv_jzbw.setError("浇筑部位不能为空");
+                    }else if (TextUtils.isEmpty(gcmc)) {
+                        tv_jhfl.setError("工程名称不能为空");
+                    }
+                }
+                break;
+            //提交
+            case R.id.btn_submit:
+
+                break;
+
+            //所属机构
+            case R.id.tv_depart_task_list_edit:
+                Intent intent1 = new Intent(this,OrganizationActivity.class);
+                startActivityForResult(intent1,1);
+                break;
+
+            case R.id.tv_jzbw_task_list_edit:
+                Intent intent2 = new Intent(this,PourPositionActivity.class);
+                startActivityForResult(intent2,2);
+                break;
+
+            case R.id.tv_sjqd_task_list_edit:
+                Intent intent3 = new Intent(this,DesignStrengthActivity.class);
+                startActivityForResult(intent3,3);
+                break;
+
+            case R.id.tv_taluodu_task_list_edit:
+                Intent intent4 = new Intent(this,SlumpActivity.class);
+                startActivityForResult(intent4,4);
+                break;
+
+            case R.id.tv_jzfs_task_list_edit:
+                Intent intent5 = new Intent(this,PourWayActivity.class);
+                startActivityForResult(intent5,5);
+                break;
         }
-        Log.e(TAG,"strengthNames=:" + strengthNames);
-        Log.e(TAG,"strengthIds=:" + strengthIds);
-        ArrayAdapter<String> strengthAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strengthNames);
-        strengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_sjqd.setAdapter(strengthAdapter);
-        spinner_sjqd.setItems(strengthNames);
-        Log.e(TAG, "spinner_sjqd: "+ spinner_sjqd.getItems());
-        Log.e(TAG, "-----setStrengthQueryView----");
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1){
+            if (resultCode == 11){
+                tv_depart.setText(data.getExtras().getString("departName"));
+                Log.e("tv_depart",data.getStringExtra("departName"));
+            }
+        }if (requestCode == 2){
+            if (resultCode == 22){
+                tv_jzbw.setText(data.getExtras().getString("pourposition"));
+                Log.e("tv_jzbw",data.getStringExtra("pourposition"));
+
+            }
+        }else if (requestCode == 3){
+            if (resultCode == 33){
+                tv_sjqd.setText(data.getExtras().getString("designstrength"));
+                Log.e("tv_sjqd",data.getStringExtra("designstrength"));
+            }
+        }else if (requestCode == 4){
+            if (resultCode == 44){
+                tv_taluodu.setText(data.getExtras().getString("slumpdata"));
+                Log.e("tv_taluodu",data.getStringExtra("slumpdata"));
+
+            }
+        }else if (requestCode == 5){
+            if (resultCode == 55){
+                tv_jzfs.setText(data.getExtras().getString("pourway"));
+                Log.e("tv_jzfs",data.getStringExtra("pourway"));
+            }
+        }
+    }
+
+    private void taskEditSave(final MaterialDialog progressDialog) {
+
+        Map<String, String> paramsMap = new HashMap<String, String>();
+        paramsMap.put("isAdd","0");
+        paramsMap.put("id",id);
+        paramsMap.put("renwuno", renwuno);
+        paramsMap.put("jihuafangliang", jihuafangliang);
+        paramsMap.put("jzbw", jzbw);
+        paramsMap.put("shuinibiaohao ", sjqd);
+        paramsMap.put("gcmc ", gcmc);
+        paramsMap.put("tanluodu  ", taluodu);
+        paramsMap.put("kangdongdengji", kangdongdengji);
+        paramsMap.put("kangshendengji", kangshendengji);
+        paramsMap.put("jiaozhufangshi", jzfs);
+        paramsMap.put("createperson", createperson);
+        paramsMap.put("createtime", createTime);
+        paramsMap.put("remark", remark);
+
+        HttpUtils.postJsonRequest(URL.TASK_EDIT_SAVE, paramsMap, new HttpUtils.HttpListener() {
+            @Override
+            public void onSuccess(String response) {
+                progressDialog.dismiss();
+                KLog.json(response);
+                if (!TextUtils.isEmpty(response)) {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        TastyToast.makeText(getApplicationContext(), "解析异常！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    }
+
+                    if (jsonObject.optBoolean("success")) {
+
+                        BaseApplication.bus.post(new EventData(ConstantsUtils.REFRESH));
+                        TastyToast.makeText(getApplicationContext(), "上传成功!", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
+                    } else {
+                        TastyToast.makeText(getApplicationContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    }
+
+                } else {
+                    TastyToast.makeText(getApplicationContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                }
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                progressDialog.dismiss();
+                if (!NetworkUtils.isConnected(TaskListEditActivity.this)) {
+                    //提示网络异常,让用户点击设置网络，
+                    View view = TaskListEditActivity.this.getWindow().getDecorView();
+                    Snackbar.make(view, "当前网络已断开！", Snackbar.LENGTH_LONG)
+                            .setAction("设置网络", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // 跳转到系统的网络设置界面
+                                    NetworkUtils.openSetting(TaskListEditActivity.this);
+                                }
+                            }).show();
+                } else {
+                    //服务器异常，展示错误页面，点击刷新
+                    TastyToast.makeText(getApplicationContext(), "服务器异常！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                }
+            }
+        });
+    }
+
+    private void setStartDateTime() {
+        isStartDateTime = true;
+        showDatePicker();
+    }
+
+    private void showDatePicker() {
+        Calendar now = Calendar.getInstance();
+        if (isStartDateTime) {
+            now.add(Calendar.MONTH, -3);
+        }
+        DatePickerDialog dpd = DatePickerDialog.newInstance(TaskListEditActivity.this, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
+        dpd.vibrate(true);
+        dpd.dismissOnPause(false);
+        dpd.setAccentColor(Color.parseColor("#3F51B5"));
+        dpd.show(getFragmentManager(), "Datepickerdialog");
+    }
+
+    private void showTimePicker() {
+        Calendar now = Calendar.getInstance();
+        TimePickerDialog tpd = TimePickerDialog.newInstance(TaskListEditActivity.this, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), false);
+        tpd.vibrate(true);
+        tpd.dismissOnPause(false);
+        tpd.setAccentColor(Color.parseColor("#3F51B5"));
+        tpd.show(getFragmentManager(), "Timepickerdialog");
     }
 
     @Override
-    public void onClick(View v) {
-        spinnerDepart = (MaterialSpinner) findViewById(R.id.spinner_depart_task_list_edit);
-        spinner_jzbw = (MaterialSpinner) findViewById(R.id.spinner_jzbw_task_list_edit);
-        spinner_sjqd = (MaterialSpinner) findViewById(spinner_sjqd_task_list_edit);
-        spinner_taluodu = (MaterialSpinner) findViewById(R.id.spinner_taluodu_task_list_edit);
-        spinner_jzfs = (MaterialSpinner) findViewById(R.id.spinner_jzfs_task_list_edit);
-        switch (v.getId()){
-            case R.id.spinner_depart_task_list_edit:
-                TYPE = DEPARTMENT;
-                break;
-            case R.id.spinner_jzbw_task_list_edit:
-                TYPE = JIAOZHU_BUWEI;
-                break;
-            case spinner_sjqd_task_list_edit:
-                TYPE = DESIGN_STRENGTH;
-                refresh();
-                Log.e(TAG, "onClick:"+ spinner_sjqd_task_list_edit );
-                break;
-            case R.id.spinner_taluodu_task_list_edit:
-                TYPE = TALUODU;
-                break;
-            case R.id.spinner_jzfs_task_list_edit:
-                TYPE = JIAOZHU_WAY;
-                break;
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String monthString = (++monthOfYear) < 10 ? "0" + (monthOfYear) : "" + (monthOfYear);
+        String dayString = dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth;
+        String dateString = year + "-" + monthString + "-" + dayString + " ";
+        if (isStartDateTime) {
+            startDateTime = dateString;
+        }
+        showTimePicker();
+    }
+
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+        String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
+        String minuteString = minute < 10 ? "0" + minute : "" + minute;
+        String secondString = second < 10 ? "0" + second : "" + second;
+        String timeString = hourString + ":" + minuteString + ":" + secondString;
+        if (isStartDateTime) {
+            startDateTime = startDateTime + timeString;
+            tv_kaipan_time.setText(startDateTime);
         }
     }
 }

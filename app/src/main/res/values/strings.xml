@@ -106,4 +106,12 @@
     <string name="delete">删除</string>
     <string name="end">结束</string>
 
+    <string name="bufang">补方</string>
+    <string name="fangliang_zy">方量转移</string>
+
+    <string name="zhuanru">转入</string>
+    <string name="zhuanchu">转出</string>
+
+    <string name="pour_position">浇筑部位</string>
+
 </resources>

@@ -16,6 +16,7 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.adapter.TaskListDetailActivityRecylerView;
+import com.shtoone.shtw.adapter.TaskListDetailReportRecylerView;
 import com.shtoone.shtw.bean.TaskListDetailActivityData;
 import com.shtoone.shtw.bean.TaskListImpQueryFragmenData;
 import com.shtoone.shtw.ui.PageStateLayout;
@@ -62,9 +63,12 @@ public class TaskListDetailActivity extends BaseActivity {
 
     private TaskListDetailActivityData data;
     private RecyclerView mRecyclerView;
+    private RecyclerView rv_report;
     private LinearLayoutManager mLinearLayoutManager;
     private TaskListDetailActivityRecylerView mAdapter;
+    private TaskListDetailReportRecylerView mReportAdapter;
     private List<TaskListDetailActivityData.XGJLDataBean> listData;
+    private List<TaskListDetailActivityData.ZYJLDataBean> ZYlistData;
 
 
     @Override
@@ -82,6 +86,7 @@ public class TaskListDetailActivity extends BaseActivity {
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptr_task_list_detail_activity);
         mPageStateLayout = (PageStateLayout) findViewById(R.id.psl_task_list_detail_activity);
         mRecyclerView = (RecyclerView)findViewById(R.id.rv_task_list_fragment);
+        rv_report = (RecyclerView)findViewById(R.id.rv_report_task_list_fragment);
 
         //基础信息
         tv_depart = (TextView) findViewById(R.id.tv_depart_task_list_detail);
@@ -148,6 +153,7 @@ public class TaskListDetailActivity extends BaseActivity {
                     if (data.isSuccess()) {
                         mPageStateLayout.showContent();
                         listData.addAll(data.getXGJLData());
+                        ZYlistData.addAll(data.getZYJLData());
                         setAdapter();
                     } else {
                         //提示数据为空，展示空状态
@@ -211,6 +217,18 @@ public class TaskListDetailActivity extends BaseActivity {
         ScaleInAnimationAdapter mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
         mScaleInAnimationAdapter.setFirstOnly(true);
         mRecyclerView.setAdapter(mScaleInAnimationAdapter);
+
+        rv_report.setLayoutManager(mLinearLayoutManager);
+        rv_report.setNestedScrollingEnabled(false);
+        //设置动画与适配器
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter1 = new SlideInLeftAnimationAdapter(mReportAdapter = new TaskListDetailReportRecylerView(this, ZYlistData));
+        mSlideInLeftAnimationAdapter1.setFirstOnly(true);
+        mSlideInLeftAnimationAdapter1.setDuration(500);
+        mSlideInLeftAnimationAdapter1.setInterpolator(new OvershootInterpolator(.5f));
+        ScaleInAnimationAdapter mScaleInAnimationAdapter1 = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter1);
+        mScaleInAnimationAdapter.setFirstOnly(true);
+        rv_report.setAdapter(mScaleInAnimationAdapter1);
+
 
     }
 

@@ -1,5 +1,7 @@
 package com.shtoone.shtw.utils;
 
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -98,6 +100,8 @@ public class HttpUtils {
                 listener.onFailed(error);
             }
         });
+
+        Log.e("httputils", "request"+request);
         request.setRetryPolicy(new DefaultRetryPolicy(10 * 1000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
     }

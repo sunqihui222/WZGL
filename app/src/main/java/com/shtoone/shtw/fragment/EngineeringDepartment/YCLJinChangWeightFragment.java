@@ -19,12 +19,10 @@ import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
-import com.shtoone.shtw.activity.ProduceQueryDetailActivity;
 import com.shtoone.shtw.activity.YCLJinChangWeightFragmentActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.YCLJinChangWeightFragmentRecycleViewAdapter;
 import com.shtoone.shtw.bean.ParametersData;
-import com.shtoone.shtw.bean.ProduceQueryFragmentListData;
 import com.shtoone.shtw.bean.YCLJinChangWeightFragmentListData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
@@ -37,7 +35,6 @@ import com.squareup.otto.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,22 +48,22 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
 public class YCLJinChangWeightFragment extends BaseLazyFragment {
 
-    private Toolbar        mToolbar;
+    private Toolbar mToolbar;
     private PtrFrameLayout mPtrFrameLayout;
-    private RecyclerView   mRecyclerView;
+    private RecyclerView mRecyclerView;
     private YCLJinChangWeightFragmentRecycleViewAdapter mAdapter;
     private YCLJinChangWeightFragmentListData itemsData;
 
     private FloatingActionButton fab;
     private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
-    private Gson            mGson;
-    private boolean         isLoading;
+    private Gson mGson;
+    private boolean isLoading;
     private List<YCLJinChangWeightFragmentListData.DataEntity> listData;
 
-    private ParametersData          mParametersData;
-    private LinearLayoutManager     mLinearLayoutManager;
-    private int                     lastVisibleItemPosition;
+    private ParametersData mParametersData;
+    private LinearLayoutManager mLinearLayoutManager;
+    private int lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
 
     public static YCLJinChangWeightFragment newInstance() {
@@ -92,7 +89,6 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
         listData = new ArrayList<>();
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -238,7 +234,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
             currentPage = mParametersData.currentPage;
             equipmentID = mParametersData.equipmentID;
         }
-        return URL.getYCLJINCHANGquery(userGroupID,cailiaoname,equipmentID,tongjitype,startDateTime,endDateTime,currentPage);
+        return URL.getYCLJINCHANGquery(userGroupID, cailiaoname, equipmentID, tongjitype, startDateTime, endDateTime, currentPage);
     }
 
     @Override
@@ -376,7 +372,6 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
             }
         }
     }
-
 
 
     @Nullable

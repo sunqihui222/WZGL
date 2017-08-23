@@ -163,6 +163,14 @@
             android:name=".activity.MaterialListActivity"
             android:launchMode="singleTop" />
 
+        <activity android:name=".activity.PourPositionActivity"/>
+
+        <activity android:name=".activity.DesignStrengthActivity"/>
+
+        <activity android:name=".activity.SlumpActivity"/>
+
+        <activity android:name=".activity.PourWayActivity"/>
+
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"
