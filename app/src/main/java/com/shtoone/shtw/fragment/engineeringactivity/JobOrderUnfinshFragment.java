@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -17,9 +18,9 @@ import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.adapter.JobOrderUnfinshFragmentAdapter;
+import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.bean.JobOrderUnfinshData;
 import com.shtoone.shtw.bean.ParametersData;
-import com.shtoone.shtw.bean.YCLJinChangWeightFragmentListData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.utils.ConstantsUtils;
@@ -35,6 +36,7 @@ import java.util.List;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
 /**
  * Created by Administrator on 2017/8/22.
@@ -43,7 +45,6 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 public class JobOrderUnfinshFragment extends BaseLazyFragment{
 
 
-    private Toolbar        mToolbar;
     private PtrFrameLayout mPtrFrameLayout;
     private RecyclerView   mRecyclerView;
     private JobOrderUnfinshFragmentAdapter mAdapter;
@@ -81,6 +82,27 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        //设置动画与适配器
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new JobOrderUnfinshFragmentAdapter(_mActivity, listData));
+        mSlideInLeftAnimationAdapter.setDuration(500);
+        mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
+        mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
+        mRecyclerView.setAdapter(mScaleInAnimationAdapter);
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                // 实现局部界面刷新, 这个view就是被点击的item布局对象
+
+            }
+        });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -160,7 +182,6 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
-
         }
         String state = "0";
         if (null != listData) {
@@ -325,7 +346,6 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
     }
 
     private void initView(View view) {
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptrframelayout);
         mPageStateLayout = (PageStateLayout) view.findViewById(R.id.pagestatelayout);

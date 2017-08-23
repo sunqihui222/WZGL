@@ -403,6 +403,11 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 url = URL.getStrengthName("SJQD");
                 refresh();
                 break;
+
+            case ConstantsUtils.JOBORDERFINSH:
+                tv_DepartmentName.setVisibility(View.VISIBLE);
+
+                break;
         }
 
         if (mParametersData.handleType.equals("")) {

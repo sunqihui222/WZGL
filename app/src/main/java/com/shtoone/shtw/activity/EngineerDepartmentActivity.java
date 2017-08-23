@@ -19,6 +19,8 @@ import com.shtoone.shtw.fragment.concreteactivity.MaterialStatisticFragment;
 import com.shtoone.shtw.fragment.concreteactivity.OverproofFragment;
 import com.shtoone.shtw.fragment.concreteactivity.ProduceQueryFragment;
 import com.shtoone.shtw.fragment.engineeringactivity.JobOrderFragment;
+import com.shtoone.shtw.fragment.engineeringactivity.JobOrderUnfinshFragment;
+import com.shtoone.shtw.fragment.engineeringactivity.JobOrderfinshFragment;
 import com.shtoone.shtw.fragment.engineeringactivity.MaterialConsumeFragment;
 import com.shtoone.shtw.fragment.engineeringactivity.TaskListImpQueryFragment;
 import com.shtoone.shtw.fragment.mainactivity.YCLWeightHouseQuertFragment;
@@ -55,7 +57,7 @@ public class EngineerDepartmentActivity extends BaseActivity {
             mFragments[0] = findFragment(YCLJinChangWeightFragment.class);
             mFragments[1] = findFragment(MaterialConsumeFragment.class);
             mFragments[2] = findFragment(TaskListImpQueryFragment.class);
-            mFragments[3] = findFragment(JobOrderFragment.class);
+            mFragments[3] = findFragment(JobOrderfinshFragment.class);
         }
 
         initView();

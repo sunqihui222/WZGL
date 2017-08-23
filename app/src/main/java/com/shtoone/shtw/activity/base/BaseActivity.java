@@ -199,6 +199,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
             @Override
             public void onSuccess(String response) {
                 KLog.json(response);
+                Log.e("response",response);
                 onRefreshSuccess(response);
             }
 

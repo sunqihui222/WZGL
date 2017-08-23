@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shtoone.shtw.R;
+import com.shtoone.shtw.bean.JobOrderFinshData;
 import com.shtoone.shtw.bean.JobOrderUnfinshData;
+import com.shtoone.shtw.ui.MyProgressBar;
 
 import java.util.List;
 
@@ -18,12 +20,12 @@ import java.util.List;
  * Created by Administrator on 2017/8/22.
  */
 
-public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private Context                              context;
-    private OnItemClickListener                  mOnItemClickListener;
-    private List<JobOrderUnfinshData.DataEntity> itemsData;
-    private Resources                            mResources;
+    private Context                            context;
+    private OnItemClickListener                mOnItemClickListener;
+    private List<JobOrderFinshData.DataEntity> itemsData;
+    private Resources                          mResources;
 
     public enum ITEM_TYPE {
         TYPE_ITEM, TYPE_FOOTER
@@ -31,7 +33,7 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
 
 
 
-    public JobOrderUnfinshFragmentAdapter(Context context, List<JobOrderUnfinshData.DataEntity> itemsData) {
+    public JobOrderFinshFragmentAdapter(Context context, List<JobOrderFinshData.DataEntity> itemsData) {
         this.context = context;
         this.itemsData = itemsData;
         mResources = context.getResources();
@@ -43,10 +45,10 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == JobOrderUnfinshFragmentAdapter.ITEM_TYPE.TYPE_ITEM.ordinal()) {
-            return new JobOrderUnfinshFragmentAdapter.ItemViewHolder(LayoutInflater.from(context).inflate(R.layout.item_recyclerview_unproduced_job_order, parent, false));
-        } else if (viewType == JobOrderUnfinshFragmentAdapter.ITEM_TYPE.TYPE_FOOTER.ordinal()) {
-            return new JobOrderUnfinshFragmentAdapter.FootViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_item_foot, parent, false));
+        if (viewType == JobOrderFinshFragmentAdapter.ITEM_TYPE.TYPE_ITEM.ordinal()) {
+            return new JobOrderFinshFragmentAdapter.ItemViewHolder(LayoutInflater.from(context).inflate(R.layout.item_recyclerview_produced_job_order, parent, false));
+        } else if (viewType == JobOrderFinshFragmentAdapter.ITEM_TYPE.TYPE_FOOTER.ordinal()) {
+            return new JobOrderFinshFragmentAdapter.FootViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_item_foot, parent, false));
         }
         return null;
     }
@@ -56,11 +58,11 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
             if (holder instanceof ItemViewHolder){
                 ItemViewHolder mItemViewHolder = (ItemViewHolder) holder;
 
-                JobOrderUnfinshData.DataEntity item = itemsData.get(position);
+                JobOrderFinshData.DataEntity item = itemsData.get(position);
                 if (item.getZhuangtai().equals("0")){
-                    mItemViewHolder.tvState.setText("未配料");
+                    mItemViewHolder.tvState.setText("未生成");
                 }else if (item.getZhuangtai().equals("1")){
-                    mItemViewHolder.tvState.setText("已配料");
+                    mItemViewHolder.tvState.setText("已生成");
                 }else if (item.getZhuangtai().equals("2")){
                     mItemViewHolder.tvState.setText("生产中");
                 }else if (item.getZhuangtai().equals("3")){
@@ -69,14 +71,16 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
                     mItemViewHolder.tvState.setText("未提交");
                 }
                 mItemViewHolder.tvOpenDate.setText(item.getKaipanriqi());
-                mItemViewHolder.tvProjectName.setText(item.getGcmc());
                 mItemViewHolder.tvCastingParts.setText(item.getJzbw());
-                mItemViewHolder.tvCreateDate.setText(item.getCreatetime());
-                mItemViewHolder.tvCreatePerson.setText(item.getCreateperson());
+                mItemViewHolder.tvRealVolume.setText(item.getShijifangliang());
+                mItemViewHolder.tvjiecao.setText(item.getJiechao());
                 mItemViewHolder.tvTaskId.setText(item.getRenwuno());
                 mItemViewHolder.tvPeiBiNo.setText(item.getSgphbno());
                 mItemViewHolder.tvDesignStrength.setText(item.getShuinibiaohao());
                 mItemViewHolder.tvPlanVolume.setText(item.getJihuafangliang());
+                double v = Double.parseDouble(item.getBaifenbi()) * 100;
+                int jindu = (int)v;
+                mItemViewHolder.pb_jindu.setProgress(jindu);
 
                 if (mOnItemClickListener != null) {
                     mItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -108,9 +112,9 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
     @Override
     public int getItemViewType(int position) {
         if (getItemCount() > 4 && position + 1 == getItemCount()) {
-            return JobOrderUnfinshFragmentAdapter.ITEM_TYPE.TYPE_FOOTER.ordinal();
+            return JobOrderFinshFragmentAdapter.ITEM_TYPE.TYPE_FOOTER.ordinal();
         } else {
-            return JobOrderUnfinshFragmentAdapter.ITEM_TYPE.TYPE_ITEM.ordinal();
+            return JobOrderFinshFragmentAdapter.ITEM_TYPE.TYPE_ITEM.ordinal();
         }
     }
 
@@ -118,28 +122,28 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
 
         TextView tvState;
         TextView tvOpenDate;
-        TextView tvProjectName;
         TextView tvCastingParts;
-        TextView tvCreateDate;
-        TextView tvCreatePerson;
+        TextView tvRealVolume;
+        TextView tvjiecao;
         TextView tvTaskId;
         TextView tvPeiBiNo;
         TextView tvDesignStrength;
         TextView tvPlanVolume;
+        MyProgressBar pb_jindu;
         ImageView mImageView;
 
         public ItemViewHolder(View view) {
             super(view);
             tvState = (TextView) view.findViewById(R.id.tvState);
             tvOpenDate = (TextView) view.findViewById(R.id.tvOpenDate);
-            tvProjectName = (TextView) view.findViewById(R.id.tvProjectName);
             tvCastingParts = (TextView) view.findViewById(R.id.tvCastingParts);
-            tvCreateDate = (TextView) view.findViewById(R.id.tvCreateDate);
-            tvCreatePerson = (TextView) view.findViewById(R.id.tvCreatePerson);
+            tvRealVolume = (TextView) view.findViewById(R.id.tvRealVolume);
+            tvjiecao = (TextView) view.findViewById(R.id.tvjiecao);
             tvTaskId = (TextView) view.findViewById(R.id.tvTaskId);
             tvPeiBiNo = (TextView) view.findViewById(R.id.tvPeiBiNo);
             tvDesignStrength = (TextView) view.findViewById(R.id.tvDesignStrength);
             tvPlanVolume = (TextView) view.findViewById(R.id.tvPlanVolume);
+            pb_jindu = (MyProgressBar) view.findViewById(R.id.executeProgress);
             mImageView = (ImageView) view.findViewById(R.id.iv_right_item_rv_main_fragment);
         }
     }

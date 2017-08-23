@@ -7,19 +7,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.fragment.EngineeringDepartment.YCLChuChangWeightFragment;
 import com.shtoone.shtw.fragment.EngineeringDepartment.YCLJinChangWeightFragment;
+import com.shtoone.shtw.fragment.engineeringactivity.JobOrderUnfinshFragment;
+import com.shtoone.shtw.fragment.engineeringactivity.JobOrderfinshFragment;
 
 /**
  * Created by Administrator on 2017/8/18.
  */
 
-public class YCLWeightHousePagerAdapter extends FragmentPagerAdapter {
+public class JobOrderPagerAdapter extends FragmentPagerAdapter {
 
 
-    private String[] titleType = {"进场台账", "出场台账"};
+    private String[] titleType = {"未生产", "已生产"};
     private boolean isRegistered = false;
 
 
-    public YCLWeightHousePagerAdapter(FragmentManager fm) {
+    public JobOrderPagerAdapter(FragmentManager fm) {
         super(fm);
         if (!isRegistered) {
             BaseApplication.bus.register(this);
@@ -33,10 +35,10 @@ public class YCLWeightHousePagerAdapter extends FragmentPagerAdapter {
         Fragment fragment=null;
         switch (position){
             case  0:
-                fragment= YCLJinChangWeightFragment.newInstance();
+                fragment= JobOrderUnfinshFragment.newInstance();
                 break;
             case 1:
-                fragment= YCLChuChangWeightFragment.newInstance();
+                fragment= JobOrderfinshFragment.newInstance();
                 break;
         }
         return  fragment;
