@@ -163,6 +163,14 @@
             android:name=".activity.MaterialListActivity"
             android:launchMode="singleTop" />
 
+        <activity android:name=".activity.PourPositionActivity"/>
+
+        <activity android:name=".activity.DesignStrengthActivity"/>
+
+        <activity android:name=".activity.SlumpActivity"/>
+
+        <activity android:name=".activity.PourWayActivity"/>
+
         <activity
             android:name=".activity.base.FBProjectListActivity"
             android:launchMode="singleTop" />

@@ -44,6 +44,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -51,6 +52,8 @@ import java.util.List;
 import java.util.Map;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
+
+import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 
 /**
  * Created by Administrator on 2017/8/17.
@@ -102,6 +105,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     private String createperson;
     private String createTime;
     private String remark;
+    private String tasklistdetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +116,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView() {
-//        mDataBean = (TaskListImpQueryFragmenData.DataBean) getIntent().getSerializableExtra("tasklistdetail");
+        tasklistdetail = getIntent().getStringExtra("tasklistdetail");
         mToolbar = (Toolbar) findViewById(R.id.toolbar_toolbar);
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nsv_task_list_edit_activity);
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptr_task_list_edit_activity);
@@ -186,7 +190,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
 //        String taskListEditData = URL.getRenwudanEditData(mDataBean.getId());
 //        Log.e(TAG,"url=:"+taskListEditData);
 //        return URL.getRenwudanEditData(mDataBean.getId());
-        url = URL.getRenwudanEditData("90780");
+        url = URL.getRenwudanEditData(tasklistdetail);
         Log.e(TAG, "任务单编辑url=:"+url);
 
         return url;
@@ -265,6 +269,11 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         tv_person.setText(dataBean.getCreateperson());
         tv_create_time.setText(dataBean.getCreatetime());
         tv_remrak.setText(dataBean.getRemark());
+        tv_jzfs.setText(dataBean.getJiaozhufangshi());
+        tv_depart.setText(dataBean.getDepartname());
+        tv_sjqd.setText(dataBean.getShuinibiaohao());
+        tv_taluodu.setText(dataBean.getTanluodu());
+
         if(!TextUtils.isEmpty(dataBean.getJzbw())){
             tv_jzbw.setText(dataBean.getJzbw());
             Log.e(TAG,"++++++++++++++++");
@@ -304,7 +313,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
                 createperson  = tv_person.getText().toString().trim();
                 createTime  = tv_create_time.getText().toString().trim();
                 remark   = tv_remrak.getText().toString().trim();
-                if (!TextUtils.isEmpty(renwuno) && !TextUtils.isEmpty(jihuafangliang) && !TextUtils.isEmpty(createTime)&& !TextUtils.isEmpty(department) && !TextUtils.isEmpty(jzbw)&& !TextUtils.isEmpty(gcmc)) {
+                if (!TextUtils.isEmpty(renwuno) && !TextUtils.isEmpty(jihuafangliang) && !TextUtils.isEmpty(kaipan_time)&& !TextUtils.isEmpty(department) && !TextUtils.isEmpty(jzbw)&& !TextUtils.isEmpty(gcmc)) {
                     //弹出对话框，确定提交
                     new MaterialDialog.Builder(TaskListEditActivity.this)
                             .title("确认")
@@ -331,13 +340,13 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
                     } else if (TextUtils.isEmpty(jihuafangliang)) {
                         tv_jhfl.setError("计划方量不能为空");
                     }else if (TextUtils.isEmpty(kaipan_time)) {
-                        tv_jhfl.setError("开盘时间不能为空");
+                        tv_kaipan_time.setError("开盘时间不能为空");
                     }else if (TextUtils.isEmpty(department)) {
-                        tv_jhfl.setError("所属机构不能为空");
+                        tv_depart.setError("所属机构不能为空");
                     }else if (TextUtils.isEmpty(jzbw)) {
                         tv_jzbw.setError("浇筑部位不能为空");
                     }else if (TextUtils.isEmpty(gcmc)) {
-                        tv_jhfl.setError("工程名称不能为空");
+                        tv_gcmc.setError("工程名称不能为空");
                     }
                 }
                 break;
@@ -349,6 +358,10 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
             //所属机构
             case R.id.tv_depart_task_list_edit:
                 Intent intent1 = new Intent(this,OrganizationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
+                intent1.putExtras(bundle);
+                intent1.putExtra("type", "1");
                 startActivityForResult(intent1,1);
                 break;
 

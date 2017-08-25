@@ -719,12 +719,12 @@ public class URL {
     }
 
     /**
-     * 获取设计强度
+     * 获取数据字典(设计强度,塌落度,浇筑方式)
      */
-    public static final String STRENGTH_URL = BaseURL + "app.do?appTypes&typegroupcode=%1";
-    public static String getStrengthName(String typegroupcode) {
-        String url = STRENGTH_URL.replace("%1",typegroupcode);
-        Log.e(TAG, "设计强度查询 :" + url);
+    public static final String DATA_DIC_URL = BaseURL + "app.do?appTypes&typegroupcode=%1";
+    public static String getDataDictionary(String typegroupcode) {
+        String url = DATA_DIC_URL.replace("%1",typegroupcode);
+        Log.e(TAG, "数据字典查询 :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;
         }
@@ -943,6 +943,24 @@ public class URL {
         Log.e("原材料出场数据详情查询",url);
         return url;
     }
+
+    /**
+     * 获取浇筑部位
+     */
+    public static final String POUR_POSITION_URL = BaseURL + "appWZproject.do?AppjzbwList&departId=%1";
+    public static String getPourPosData(String departId) {
+        String url = POUR_POSITION_URL.replace("%1",departId);
+        Log.e(TAG, "浇筑部位查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
+    }
+
+    /**
+     * 任务单编辑上传
+     */
+    public static final String TASK_EDIT_SAVE = BaseURL + "appWZproject.do?AppWZRenwudanEdit";
 
     /**
      * 工程进度查询查询

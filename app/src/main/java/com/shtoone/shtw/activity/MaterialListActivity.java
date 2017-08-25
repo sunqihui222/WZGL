@@ -13,29 +13,20 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.adapter.MaterialTreeListViewAdapter;
-import com.shtoone.shtw.adapter.OrganizationTreeListViewAdapter;
-import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.MaterialData;
 import com.shtoone.shtw.bean.MaterialListData;
-import com.shtoone.shtw.bean.OrganizationActivityData;
-import com.shtoone.shtw.bean.OrganizationBean;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.ui.treeview.Node;
 import com.shtoone.shtw.ui.treeview.TreeListViewAdapter;
-import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -45,16 +36,16 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class MaterialListActivity extends BaseActivity {
 
-    private Toolbar                                   mToolbar;
-    private ListView                                  treeListView;
-    private LinearLayout                              ll_container;
-    private PageStateLayout                           mPageStateLayout;
-    private MaterialListData                          data;
-    private List<MaterialData>                        treeNodes;
-    private String                                    type;
+    private Toolbar mToolbar;
+    private ListView treeListView;
+    private LinearLayout ll_container;
+    private PageStateLayout mPageStateLayout;
+    private MaterialListData data;
+    private List<MaterialData> treeNodes;
+    private String type;
     private MaterialTreeListViewAdapter<MaterialData> mAdapter;
-    private PtrFrameLayout                            mPtrFrameLayout;
-    private ParametersData                              mParametersData;
+    private PtrFrameLayout mPtrFrameLayout;
+    private ParametersData mParametersData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,9 +135,9 @@ public class MaterialListActivity extends BaseActivity {
             return;
         }
 
-        String cailiaono=null;
-        String cailiaoname=null;
-        String parentnode=null;
+        String cailiaono = null;
+        String cailiaoname = null;
+        String parentnode = null;
 
         treeNodes.clear();
 
@@ -160,7 +151,7 @@ public class MaterialListActivity extends BaseActivity {
 
             parentnode = mDataBean.getParentnode();
             cailiaoname = mDataBean.getCailiaoname();
-            treeNodes.add(new MaterialData(cailiaono,  parentnode,cailiaoname));
+            treeNodes.add(new MaterialData(cailiaono, parentnode, cailiaoname));
         }
 
         try {
@@ -173,14 +164,14 @@ public class MaterialListActivity extends BaseActivity {
             @Override
             public void onClick(Node node, int position) {
 
-                if (node.isLeaf()){
+                if (node.isLeaf()) {
                     mParametersData.cailiaoname = node.getName();
                     mParametersData.cailiaono = node.getId();
                     BaseApplication.bus.post(mParametersData);
                     Intent intent = new Intent();
-                    intent.putExtra("cailiaoname",node.getName());
-                    intent.putExtra("cailiaono",node.getId());
-                    setResult(15,intent);
+                    intent.putExtra("cailiaoname", node.getName());
+                    intent.putExtra("cailiaono", node.getId());
+                    setResult(15, intent);
                     onBackPressed();
                 }
             }

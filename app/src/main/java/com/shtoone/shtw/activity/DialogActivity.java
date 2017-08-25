@@ -400,7 +400,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                  break;
             case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
                 ms_select_strength.setVisibility(View.VISIBLE);
-                url = URL.getStrengthName("SJQD");
+                url = URL.getDataDictionary("SJQD");
                 refresh();
                 break;
 
