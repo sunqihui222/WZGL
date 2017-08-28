@@ -20,12 +20,12 @@ import java.util.List;
  * Created by Administrator on 2017/8/15.
  */
 
-public class WZProjectProgressQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class WZProjectProgressQueryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context                                      context;
-    private  OnItemClickListener                         mOnItemClickListener;
-    private  List<WZProjectProgressQueryData.DataEntity> itemsData;
-    private  Resources                                   mResources;
+    private Context context;
+    private OnItemClickListener mOnItemClickListener;
+    private List<WZProjectProgressQueryData.DataEntity> itemsData;
+    private Resources mResources;
 
     public enum ITEM_TYPE {
         TYPE_ITEM, TYPE_FOOTER
@@ -59,23 +59,22 @@ public class WZProjectProgressQueryAdapter extends RecyclerView.Adapter<Recycler
             mItemViewHolder.cv.setCardBackgroundColor(position % 2 == 0 ? mResources.getColor(R.color.material_teal_50) : mResources.getColor(R.color.material_blue_50));
 
             WZProjectProgressQueryData.DataEntity item = itemsData.get(position);
-            mItemViewHolder.tv_no.setText(item.getId()+"");
+            mItemViewHolder.tv_no.setText(item.getId() + "");
             mItemViewHolder.tv_name.setText(item.getProjectName());
             mItemViewHolder.tv_sheji.setText(String.valueOf(item.getShejifangliang()));
             mItemViewHolder.tv_shiji.setText(String.valueOf(item.getShijifangliang()));
             double v = item.getJindu() * 100;
-            int jindu = (int)v;
+            int jindu = (int) v;
             mItemViewHolder.pb_progress.setProgress(jindu);
-            if (item.getProjectType()==0){
+            if (item.getProjectType() == 0) {
                 mItemViewHolder.tv_projecttype.setText("单位工程");
-            }else if (item.getProjectType()==1){
+            } else if (item.getProjectType() == 1) {
                 mItemViewHolder.tv_projecttype.setText("分部工程");
-            }else if (item.getProjectType()==2){
+            } else if (item.getProjectType() == 2) {
                 mItemViewHolder.tv_projecttype.setText("分项工程");
-            }else if (item.getProjectType()==3){
+            } else if (item.getProjectType() == 3) {
                 mItemViewHolder.tv_projecttype.setText("浇筑部位");
             }
-
 
 
             if (mOnItemClickListener != null) {
@@ -113,18 +112,18 @@ public class WZProjectProgressQueryAdapter extends RecyclerView.Adapter<Recycler
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
-        CardView      cv;
-        TextView      tv_no;
-        TextView      tv_name;
-        TextView      tv_sheji;
-        TextView      tv_shiji;
+        CardView cv;
+        TextView tv_no;
+        TextView tv_name;
+        TextView tv_sheji;
+        TextView tv_shiji;
         MyProgressBar pb_progress;
-        TextView      tv_projecttype;
+        TextView tv_projecttype;
 
         public ItemViewHolder(View view) {
             super(view);
             cv = (CardView) view.findViewById(R.id.cv_item_recyclerview_wzprogress_query_fragment);
-            tv_no = (TextView)view.findViewById(R.id.tv_no_item_recyclerview_wzprogress_query_fragment);
+            tv_no = (TextView) view.findViewById(R.id.tv_no_item_recyclerview_wzprogress_query_fragment);
             tv_name = (TextView) view.findViewById(R.id.tv_name_item_recyclerview_wzprogress_query_fragment);
             tv_sheji = (TextView) view.findViewById(R.id.tv_sheji_item_recyclerview_wzprogress_query_fragment);
             tv_shiji = (TextView) view.findViewById(R.id.tv_shiji_item_recyclerview_wzprogress_query_fragment);

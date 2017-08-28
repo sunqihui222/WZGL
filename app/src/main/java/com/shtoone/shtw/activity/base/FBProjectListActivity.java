@@ -34,16 +34,16 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class FBProjectListActivity extends BaseActivity {
 
-    private Toolbar                                    mToolbar;
-    private ListView                                   treeListView;
-    private LinearLayout                               ll_container;
-    private PageStateLayout                            mPageStateLayout;
-    private FENBUProjectData                              data;
-    private List<FBProjectData>                        treeNodes;
-    private String                                     type;
+    private Toolbar mToolbar;
+    private ListView treeListView;
+    private LinearLayout ll_container;
+    private PageStateLayout mPageStateLayout;
+    private FENBUProjectData data;
+    private List<FBProjectData> treeNodes;
+    private String type;
     private FBProjectTreeListViewAdapter<FBProjectData> mAdapter;
-    private PtrFrameLayout                             mPtrFrameLayout;
-    private ParametersData                             mParametersData;
+    private PtrFrameLayout mPtrFrameLayout;
+    private ParametersData mParametersData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +82,11 @@ public class FBProjectListActivity extends BaseActivity {
 
     @Override
     public String createRefreshULR() {
-
-
         return URL.FB_PROJECT;
     }
 
     @Override
     public boolean isCanDoRefresh() {
-
         return false;
     }
 
@@ -133,9 +130,9 @@ public class FBProjectListActivity extends BaseActivity {
             return;
         }
 
-        String projectNo=null;
-        String projectName=null;
-        String parentNo=null;
+        String projectNo = null;
+        String projectName = null;
+        String parentNo = null;
 
         treeNodes.clear();
 
@@ -149,7 +146,7 @@ public class FBProjectListActivity extends BaseActivity {
 
             parentNo = mDataBean.getParentNo();
             projectName = mDataBean.getProjectName();
-            treeNodes.add(new FBProjectData(projectNo,parentNo,projectName));
+            treeNodes.add(new FBProjectData(projectNo, parentNo, projectName));
         }
 
         try {
@@ -161,16 +158,10 @@ public class FBProjectListActivity extends BaseActivity {
         mAdapter.setOnTreeNodeClickListener(new TreeListViewAdapter.OnTreeNodeClickListener() {
             @Override
             public void onClick(Node node, int position) {
-
-
-
-                    mParametersData.projectno = node.getId();
-                    BaseApplication.bus.post(mParametersData);
-
-
+                mParametersData.projectno = node.getId();
+                BaseApplication.bus.post(mParametersData);
             }
         });
-
     }
 
     @Override
