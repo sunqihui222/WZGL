@@ -29,7 +29,6 @@ public class JobOrderPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
         Fragment fragment=null;
         switch (position){
             case  0:

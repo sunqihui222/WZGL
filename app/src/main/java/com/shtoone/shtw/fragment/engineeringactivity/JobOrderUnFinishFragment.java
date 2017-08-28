@@ -53,8 +53,6 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
  */
 
 public class JobOrderUnFinishFragment extends BaseLazyFragment {
-
-
     private PtrFrameLayout mPtrFrameLayout;
     private RecyclerView mRecyclerView;
     private JobOrderUnfinshFragmentAdapter mAdapter;
