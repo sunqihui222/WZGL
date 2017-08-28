@@ -1,8 +1,11 @@
 package com.shtoone.shtw.fragment.engineeringactivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -19,11 +24,14 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.adapter.JobOrderUnfinshFragmentAdapter;
 import com.shtoone.shtw.adapter.OnItemClickListener;
+import com.shtoone.shtw.adapter.OnItemDelClickListener;
 import com.shtoone.shtw.bean.JobOrderUnfinshData;
 import com.shtoone.shtw.bean.ParametersData;
+import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.utils.ConstantsUtils;
+import com.shtoone.shtw.utils.HttpUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
 import com.socks.library.KLog;
@@ -31,8 +39,12 @@ import com.socks.library.KLog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
@@ -60,6 +72,7 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
     private LinearLayoutManager     mLinearLayoutManager;
     private int                     lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
+    private String id;
 
     public static JobOrderUnfinshFragment newInstance() {
         return new JobOrderUnfinshFragment();
@@ -75,17 +88,21 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
 
         mParametersData = (ParametersData) BaseApplication.parametersData.clone();
         mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
+        mParametersData.username = BaseApplication.parametersData.username;
         mParametersData.fromTo = ConstantsUtils.JOBORDERUNFINSH;
 
         mGson = new Gson();
         listData = new ArrayList<>();
+
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(_mActivity, TaskListNewEditActivity.class);
+                intent.putExtra("username",mParametersData.username);
+                startActivity(intent);
             }
         });
 
@@ -96,10 +113,71 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
         mRecyclerView.setAdapter(mScaleInAnimationAdapter);
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new OnItemDelClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 // 实现局部界面刷新, 这个view就是被点击的item布局对象
+                changeReadedState(view);
+                jump2TaskListDetailActivity(position);
+            }
+
+            @Override
+            public void onRightClick(View view, int position) {
+                if (!TextUtils.isEmpty(listData.get(position).getId())){
+                    //弹出对话框，确定提交
+                    id = listData.get(position).getId();
+                    new MaterialDialog.Builder(getActivity())
+                            .title("删除")
+                            .content("请问您确定无误删除吗？")
+                            .positiveText("确定")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
+                                            .title("删除")
+                                            .content("正在删除中，请稍等……")
+                                            .progress(true, 0)
+                                            .progressIndeterminateStyle(true)
+                                            .cancelable(false)
+                                            .show();
+                                    joborderDel(progressDialog,id);
+                                }
+                            })
+                            .negativeText("放弃")
+                            .show();
+
+
+                }
+
+            }
+
+            @Override
+            public void onBelowClick(View view, int position) {
+                if (!TextUtils.isEmpty(listData.get(position).getId())){
+                    //弹出对话框，确定提交
+                    id = listData.get(position).getId();
+                    new MaterialDialog.Builder(getActivity())
+                            .title("提交")
+                            .content("请问您确定提交吗？")
+                            .positiveText("确定")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
+                                            .title("提交")
+                                            .content("正在提交中，请稍等……")
+                                            .progress(true, 0)
+                                            .progressIndeterminateStyle(true)
+                                            .cancelable(false)
+                                            .show();
+                                    joborderSubmit(progressDialog,id,mParametersData.username);
+                                }
+                            })
+                            .negativeText("放弃")
+                            .show();
+
+
+                }
 
             }
         });
@@ -140,6 +218,131 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
 
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
+    }
+
+    private void joborderSubmit(final MaterialDialog progressDialog, String id,String name){
+
+
+        String url = null;
+        try {
+            url = URL.getJOBORDERSUBMIT(id, URLEncoder.encode(name,"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        HttpUtils.getRequest(url, new HttpUtils.HttpListener() {
+            @Override
+            public void onSuccess(String response) {
+                KLog.json(response);
+                progressDialog.dismiss();
+                if (!TextUtils.isEmpty(response)) {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        TastyToast.makeText(getContext(), "解析异常！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    }
+
+                    if (jsonObject.optBoolean("success")) {
+
+                        BaseApplication.bus.post(new EventData(ConstantsUtils.REFRESH));
+                        TastyToast.makeText(getContext(), "上传成功!", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
+                        mPtrFrameLayout.autoRefresh(true);
+                    } else {
+                        TastyToast.makeText(getContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    }
+
+                } else {
+                    TastyToast.makeText(getContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                }
+
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                progressDialog.dismiss();
+                if (!NetworkUtils.isConnected(getActivity())) {
+                    //提示网络异常,让用户点击设置网络，
+                    View view = getActivity().getWindow().getDecorView();
+                    Snackbar.make(view, "当前网络已断开！", Snackbar.LENGTH_LONG)
+                            .setAction("设置网络", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // 跳转到系统的网络设置界面
+                                    NetworkUtils.openSetting(getActivity());
+                                }
+                            }).show();
+                } else {
+                    //服务器异常，展示错误页面，点击刷新
+                    TastyToast.makeText(getActivity(), "服务器异常！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                }
+            }
+        });
+
+
+    }
+
+
+
+    private void joborderDel(final MaterialDialog progressDialog, String id) {
+
+        Map<String, String> paramsMap = new HashMap<String, String>();
+        try {
+            paramsMap.put("id", id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        HttpUtils.postRequest(URL.JOBORDER_UNFINSHDEL, paramsMap, new HttpUtils.HttpListener() {
+            @Override
+            public void onSuccess(String response) {
+                progressDialog.dismiss();
+
+                KLog.json(response);
+                if (!TextUtils.isEmpty(response)) {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        TastyToast.makeText(getContext(), "解析异常！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    }
+
+                    if (jsonObject.optBoolean("success")) {
+
+                        BaseApplication.bus.post(new EventData(ConstantsUtils.REFRESH));
+                        TastyToast.makeText(getContext(), "上传成功!", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
+                        mPtrFrameLayout.autoRefresh(true);
+                    } else {
+                        TastyToast.makeText(getContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    }
+
+                } else {
+                    TastyToast.makeText(getContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                }
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                progressDialog.dismiss();
+                if (!NetworkUtils.isConnected(getActivity())) {
+                    //提示网络异常,让用户点击设置网络，
+                    View view = getActivity().getWindow().getDecorView();
+                    Snackbar.make(view, "当前网络已断开！", Snackbar.LENGTH_LONG)
+                            .setAction("设置网络", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // 跳转到系统的网络设置界面
+                                    NetworkUtils.openSetting(getActivity());
+                                }
+                            }).show();
+                } else {
+                    //服务器异常，展示错误页面，点击刷新
+                    TastyToast.makeText(getActivity(), "服务器异常！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -365,5 +568,16 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
         BaseApplication.bus.unregister(this);
     }
 
+    private void changeReadedState(View view) {
+        //此处可以做一些修改点击过的item的样式，方便用户看出哪些已经点击查看过
+    }
+
+    private void jump2TaskListDetailActivity(int position) {
+        Intent intent = new Intent(_mActivity, TaskListEditActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("tasklistdetail",listData.get(position).getId());
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 
 }

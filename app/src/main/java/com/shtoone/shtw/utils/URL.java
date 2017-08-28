@@ -39,6 +39,7 @@ public class URL {
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
     public static final String BaseURL = "http://192.168.11.100:8080/jeecg/";
+    //public static final String BaseURL = "http://192.168.11.102:8081/gxzjzqms/";
 
     /**
      * 登录地址
@@ -1045,6 +1046,40 @@ public class URL {
             return url;
         }
         return null;
+    }
+
+    /**
+     * 任务单(浇筑令)删除
+     */
+    public static final String JOBORDER_UNFINSHDEL = BaseURL+"appWZproject.do?AppWzRenwudandel";
+
+    /**
+     * 任务单(浇筑令)提交
+     */
+    public static final String JOBORDER_SUBMIT = BaseURL+"appWZproject.do?AppRenwudanTiJiao&id=%1&username=%2";
+    public static String getJOBORDERSUBMIT(String id,String username) {
+        String url = JOBORDER_SUBMIT.replace("%1",id).replace("%2",username);
+        KLog.e(TAG, "任务单(浇筑令)提交 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        Log.e("任务单(浇筑令)提交",url);
+        return url;
+    }
+
+
+    /**
+     * 任务单(浇筑令)结束任务
+     */
+    public static final String JOBORDER_CANCEL = BaseURL+"appWZproject.do?AppWzRenwudanFinish&id=%1&username=%2";
+    public static String getJOBORDER_CANCEL(String id,String username) {
+        String url = JOBORDER_CANCEL.replace("%1",id).replace("%2",username);
+        KLog.e(TAG, "任务单(浇筑令)结束任务 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        Log.e("任务单(浇筑令)结束任务",url);
+        return url;
     }
 
 }

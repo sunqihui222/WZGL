@@ -2,6 +2,7 @@ package com.shtoone.shtw.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ import java.util.List;
 public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context                            context;
-    private OnItemClickListener                mOnItemClickListener;
+    private OnItemDelClickListener                mOnItemClickListener;
     private List<JobOrderFinshData.DataEntity> itemsData;
     private Resources                          mResources;
 
@@ -39,7 +40,7 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
         mResources = context.getResources();
     }
 
-    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+    public void setOnItemClickListener(OnItemDelClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
@@ -57,7 +58,7 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof ItemViewHolder){
                 ItemViewHolder mItemViewHolder = (ItemViewHolder) holder;
-
+                mItemViewHolder.cv.setCardBackgroundColor(position % 2 == 0 ? mResources.getColor(R.color.material_teal_50) : mResources.getColor(R.color.material_blue_50));
                 JobOrderFinshData.DataEntity item = itemsData.get(position);
                 if (item.getZhuangtai().equals("0")){
                     mItemViewHolder.tvState.setText("未生成");
@@ -92,6 +93,16 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
                     });
                 }
 
+                mItemViewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnItemClickListener!=null){
+                            int position = holder.getLayoutPosition();
+                            mOnItemClickListener.onRightClick(v,position);
+                        }
+                    }
+                });
+
             }
 
     }
@@ -119,21 +130,22 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        TextView tvState;
-        TextView tvOpenDate;
-        TextView tvCastingParts;
-        TextView tvRealVolume;
-        TextView tvjiecao;
-        TextView tvTaskId;
-        TextView tvPeiBiNo;
-        TextView tvDesignStrength;
-        TextView tvPlanVolume;
+        CardView      cv;
+        TextView      tvState;
+        TextView      tvOpenDate;
+        TextView      tvCastingParts;
+        TextView      tvRealVolume;
+        TextView      tvjiecao;
+        TextView      tvTaskId;
+        TextView      tvPeiBiNo;
+        TextView      tvDesignStrength;
+        TextView      tvPlanVolume;
         MyProgressBar pb_jindu;
-        ImageView mImageView;
+        ImageView     mImageView;
 
         public ItemViewHolder(View view) {
             super(view);
+            cv = (CardView) view.findViewById(R.id.cv_item_recyclerview_finsh_query_fragment);
             tvState = (TextView) view.findViewById(R.id.tvState);
             tvOpenDate = (TextView) view.findViewById(R.id.tvOpenDate);
             tvCastingParts = (TextView) view.findViewById(R.id.tvCastingParts);

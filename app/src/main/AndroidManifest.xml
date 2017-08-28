@@ -148,6 +148,8 @@
 
         <activity android:name=".fragment.engineeringactivity.TaskListEditActivity"/>
 
+        <activity android:name=".fragment.engineeringactivity.TaskListNewEditActivity"/>
+
 
         <activity
             android:name=".activity.YCLJinChangWeightFragmentActivity"

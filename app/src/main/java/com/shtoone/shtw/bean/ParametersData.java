@@ -39,6 +39,7 @@ public class ParametersData implements Cloneable, Serializable {
     public String states = "";
     public String parentno="";
     public String projectno = "";
+    public String username = "";
 
 
     public ParametersData() {

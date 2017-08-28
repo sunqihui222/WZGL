@@ -245,6 +245,7 @@ public class LoginActivity extends BaseActivity {
         BaseApplication.parametersData.userGroupID = userInfoData.getDepartId();
         BaseApplication.mDepartmentData.departmentID = userInfoData.getDepartId();
         BaseApplication.mDepartmentData.departmentName = userInfoData.getDepartName();
+        BaseApplication.parametersData.username = userInfoData.getUserFullName();
     }
 
     @Override

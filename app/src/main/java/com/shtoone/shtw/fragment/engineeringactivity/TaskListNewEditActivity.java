@@ -44,7 +44,6 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -59,9 +58,9 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
  * Created by Administrator on 2017/8/17.
  */
 
-public class TaskListEditActivity extends BaseActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class TaskListNewEditActivity extends BaseActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    private static final String TAG = TaskListEditActivity.class.getSimpleName();
+    private static final String TAG = TaskListNewEditActivity.class.getSimpleName();
     private Toolbar mToolbar;
     private NestedScrollView mNestedScrollView;
     private PageStateLayout mPageStateLayout;
@@ -106,6 +105,8 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     private String createTime;
     private String remark;
     private String tasklistdetail;
+    private String username;
+    private String departmentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
 
     private void initView() {
         tasklistdetail = getIntent().getStringExtra("tasklistdetail");
+         username = getIntent().getStringExtra("username");
         mToolbar = (Toolbar) findViewById(R.id.toolbar_toolbar);
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nsv_task_list_edit_activity);
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptr_task_list_edit_activity);
@@ -169,8 +171,8 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
         setSupportActionBar(mToolbar);
-        initPageStateLayout(mPageStateLayout);
-        initPtrFrameLayout(mPtrFrameLayout);
+       // initPageStateLayout(mPageStateLayout);
+       // initPtrFrameLayout(mPtrFrameLayout);
         Log.e(TAG, "----------initData-----------" );
     }
 
@@ -183,18 +185,18 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         return false;
     }
 
-    @Override
-    public String createRefreshULR() {
-        mPageStateLayout.showLoading();
-        //todo
-//        String taskListEditData = URL.getRenwudanEditData(mDataBean.getId());
-//        Log.e(TAG,"url=:"+taskListEditData);
-//        return URL.getRenwudanEditData(mDataBean.getId());
-        url = URL.getRenwudanEditData(tasklistdetail);
-        Log.e(TAG, "任务单编辑url=:"+url);
-
-        return url;
-    }
+//    @Override
+//    public String createRefreshULR() {
+//        mPageStateLayout.showLoading();
+//        //todo
+////        String taskListEditData = URL.getRenwudanEditData(mDataBean.getId());
+////        Log.e(TAG,"url=:"+taskListEditData);
+////        return URL.getRenwudanEditData(mDataBean.getId());
+//        url = URL.getRenwudanEditData(tasklistdetail);
+//        Log.e(TAG, "任务单编辑url=:"+url);
+//
+//        return url;
+//    }
 
     @Override
     public void onRefreshSuccess(String response) {
@@ -260,25 +262,25 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
 
         List<TaskListEditActivityData.DataBean> data = this.data.getData();
         TaskListEditActivityData.DataBean dataBean = data.get(0);
-        tv_renwuno.setText(dataBean.getRenwuno());
-        tv_jhfl.setText(dataBean.getJihuafangliang());
-        tv_kaipan_time.setText(dataBean.getKaipanriqi());
-        tv_gcmc.setText(dataBean.getGcmc());
-        tv_kddj.setText(dataBean.getKangdongdengji());
-        tv_ksdj.setText(dataBean.getKangshendengji());
-        tv_person.setText(dataBean.getCreateperson());
-        tv_create_time.setText(dataBean.getCreatetime());
-        tv_remrak.setText(dataBean.getRemark());
-        tv_jzfs.setText(dataBean.getJiaozhufangshi());
-        tv_depart.setText(dataBean.getDepartname());
-        tv_sjqd.setText(dataBean.getShuinibiaohao());
-        tv_taluodu.setText(dataBean.getTanluodu());
-
-        if(!TextUtils.isEmpty(dataBean.getJzbw())){
-            tv_jzbw.setText(dataBean.getJzbw());
-            Log.e(TAG,"++++++++++++++++");
-        }
-        id = dataBean.getId();
+//        tv_renwuno.setText(dataBean.getRenwuno());
+//        tv_jhfl.setText(dataBean.getJihuafangliang());
+//        tv_kaipan_time.setText(dataBean.getKaipanriqi());
+//        tv_gcmc.setText(dataBean.getGcmc());
+//        tv_kddj.setText(dataBean.getKangdongdengji());
+//        tv_ksdj.setText(dataBean.getKangshendengji());
+//        tv_person.setText(dataBean.getCreateperson());
+//        tv_create_time.setText(dataBean.getCreatetime());
+//        tv_remrak.setText(dataBean.getRemark());
+//        tv_jzfs.setText(dataBean.getJiaozhufangshi());
+//        tv_depart.setText(dataBean.getDepartname());
+//        tv_sjqd.setText(dataBean.getShuinibiaohao());
+//        tv_taluodu.setText(dataBean.getTanluodu());
+//
+//        if(!TextUtils.isEmpty(dataBean.getJzbw())){
+//            tv_jzbw.setText(dataBean.getJzbw());
+//            Log.e(TAG,"++++++++++++++++");
+//        }
+//        id = dataBean.getId();
 
     }
 
@@ -315,14 +317,14 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
                 remark   = tv_remrak.getText().toString().trim();
                 if (!TextUtils.isEmpty(renwuno) && !TextUtils.isEmpty(jihuafangliang) && !TextUtils.isEmpty(kaipan_time)&& !TextUtils.isEmpty(department) && !TextUtils.isEmpty(jzbw)&& !TextUtils.isEmpty(gcmc)) {
                     //弹出对话框，确定提交
-                    new MaterialDialog.Builder(TaskListEditActivity.this)
+                    new MaterialDialog.Builder(TaskListNewEditActivity.this)
                             .title("确认")
                             .content("请问您确定填写无误并提交吗？")
                             .positiveText("确定")
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    MaterialDialog progressDialog = new MaterialDialog.Builder(TaskListEditActivity.this)
+                                    MaterialDialog progressDialog = new MaterialDialog.Builder(TaskListNewEditActivity.this)
                                             .title("提交")
                                             .content("正在提交中，请稍等……")
                                             .progress(true, 0)
@@ -394,6 +396,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         if (requestCode == 1){
             if (resultCode == 15){
                 tv_depart.setText(data.getExtras().getString("departmentname"));
+                departmentId = data.getExtras().getString("departmentnno");
                 Log.e("tv_depart",data.getStringExtra("departmentname"));
             }
         }if (requestCode == 2){
@@ -424,8 +427,8 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     private void taskEditSave(final MaterialDialog progressDialog) {
 
         Map<String, String> paramsMap = new HashMap<String, String>();
-        paramsMap.put("isAdd","0");
-        paramsMap.put("id",id);
+        paramsMap.put("isAdd","1");
+ //       paramsMap.put("id",id);
         paramsMap.put("renwuno", renwuno);
         paramsMap.put("jihuafangliang", jihuafangliang);
         paramsMap.put("jzbw", jzbw);
@@ -438,6 +441,8 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         paramsMap.put("createperson", createperson);
         paramsMap.put("createtime", createTime);
         paramsMap.put("remark", remark);
+        paramsMap.put("username",username);
+        paramsMap.put("departid",departmentId);
 
         HttpUtils.postJsonRequest(URL.TASK_EDIT_SAVE, paramsMap, new HttpUtils.HttpListener() {
             @Override
@@ -457,6 +462,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
 
                         BaseApplication.bus.post(new EventData(ConstantsUtils.REFRESH));
                         TastyToast.makeText(getApplicationContext(), "上传成功!", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
+                        finish();
                     } else {
                         TastyToast.makeText(getApplicationContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     }
@@ -469,15 +475,15 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onFailed(VolleyError error) {
                 progressDialog.dismiss();
-                if (!NetworkUtils.isConnected(TaskListEditActivity.this)) {
+                if (!NetworkUtils.isConnected(TaskListNewEditActivity.this)) {
                     //提示网络异常,让用户点击设置网络，
-                    View view = TaskListEditActivity.this.getWindow().getDecorView();
+                    View view = TaskListNewEditActivity.this.getWindow().getDecorView();
                     Snackbar.make(view, "当前网络已断开！", Snackbar.LENGTH_LONG)
                             .setAction("设置网络", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     // 跳转到系统的网络设置界面
-                                    NetworkUtils.openSetting(TaskListEditActivity.this);
+                                    NetworkUtils.openSetting(TaskListNewEditActivity.this);
                                 }
                             }).show();
                 } else {
@@ -498,7 +504,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         if (isStartDateTime) {
             now.add(Calendar.MONTH, -3);
         }
-        DatePickerDialog dpd = DatePickerDialog.newInstance(TaskListEditActivity.this, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
+        DatePickerDialog dpd = DatePickerDialog.newInstance(TaskListNewEditActivity.this, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
         dpd.vibrate(true);
         dpd.dismissOnPause(false);
         dpd.setAccentColor(Color.parseColor("#3F51B5"));
@@ -507,7 +513,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
 
     private void showTimePicker() {
         Calendar now = Calendar.getInstance();
-        TimePickerDialog tpd = TimePickerDialog.newInstance(TaskListEditActivity.this, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), false);
+        TimePickerDialog tpd = TimePickerDialog.newInstance(TaskListNewEditActivity.this, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), false);
         tpd.vibrate(true);
         tpd.dismissOnPause(false);
         tpd.setAccentColor(Color.parseColor("#3F51B5"));

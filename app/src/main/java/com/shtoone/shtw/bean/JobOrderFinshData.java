@@ -10,7 +10,7 @@ public class JobOrderFinshData {
 
 
     /**
-     * data : [{"baifenbi":"100.00","shijifangliang":"216.00","jzbw":"K10+400～K10+425右侧25米","gcmc":"路基工程","jihuafangliang":"23.88","jiechao":"-192.12","sgphbno":"13333","shuinibiaohao":"C15","kaipanriqi":"2017-07-11","zhuangtai":"3","renwuno":"3123"},{"baifenbi":"100.00","shijifangliang":"216.00","jzbw":"K10+400～K10+425右侧25米","gcmc":"路基工程","jihuafangliang":"23.88","jiechao":"-192.12","sgphbno":"231231","shuinibiaohao":"C15","kaipanriqi":"2017-07-11","zhuangtai":"3","renwuno":"3123"},{"baifenbi":"100.00","shijifangliang":"6.00","shejifangliang":"","jzbw":"dDdDd2","gcmc":"测试11111","jihuafangliang":"2.12122","jiechao":"-3.88","sgphbno":"未配料","shuinibiaohao":"","kaipanriqi":"2017-07-13","zhuangtai":"3","renwuno":"23213"}]
+     * data : [{"id":"90777","baifenbi":"100.00","shijifangliang":"216.00","jzbw":"K10+400～K10+425右侧25米","gcmc":"路基工程","jihuafangliang":"23.88","jiechao":"-192.12","sgphbno":"13333","shuinibiaohao":"C15","kaipanriqi":"2017-07-11","zhuangtai":"2","renwuno":"3123"},{"id":"90777","baifenbi":"100.00","shijifangliang":"216.00","jzbw":"K10+400～K10+425右侧25米","gcmc":"路基工程","jihuafangliang":"23.88","jiechao":"-192.12","sgphbno":"231231","shuinibiaohao":"C15","kaipanriqi":"2017-07-11","zhuangtai":"2","renwuno":"3123"},{"id":"90773","baifenbi":"100.00","shijifangliang":"6.00","shejifangliang":"","jzbw":"dDdDd2","gcmc":"测试11111","jihuafangliang":"2.12122","jiechao":"-3.88","sgphbno":"未配料","shuinibiaohao":"","kaipanriqi":"2017-07-13","zhuangtai":"2","renwuno":"23213"},{"id":"10029","baifenbi":"100.00","shijifangliang":"100.00","shejifangliang":"","jzbw":"171-4#桩基","gcmc":"裕溪河特大桥","jihuafangliang":"41","jiechao":"-59.00","sgphbno":"123312","shuinibiaohao":"C30水下","kaipanriqi":"2017-07-07","zhuangtai":"2","renwuno":"20170228-7"},{"id":"10029","baifenbi":"100.00","shijifangliang":"100.00","shejifangliang":"","jzbw":"171-4#桩基","gcmc":"裕溪河特大桥","jihuafangliang":"41","jiechao":"-59.00","sgphbno":"test123","shuinibiaohao":"C30水下","kaipanriqi":"2017-07-07","zhuangtai":"2","renwuno":"20170228-7"},{"id":"10029","baifenbi":"100.00","shijifangliang":"100.00","shejifangliang":"","jzbw":"171-4#桩基","gcmc":"裕溪河特大桥","jihuafangliang":"41","jiechao":"-59.00","sgphbno":"1234","shuinibiaohao":"C30水下","kaipanriqi":"2017-07-07","zhuangtai":"2","renwuno":"20170228-7"},{"id":"10029","baifenbi":"100.00","shijifangliang":"100.00","shejifangliang":"","jzbw":"171-4#桩基","gcmc":"裕溪河特大桥","jihuafangliang":"41","jiechao":"-59.00","sgphbno":"123456","shuinibiaohao":"C30水下","kaipanriqi":"2017-07-07","zhuangtai":"2","renwuno":"20170228-7"},{"id":"10029","baifenbi":"100.00","shijifangliang":"100.00","shejifangliang":"","jzbw":"171-4#桩基","gcmc":"裕溪河特大桥","jihuafangliang":"41","jiechao":"-59.00","sgphbno":"132333","shuinibiaohao":"C30水下","kaipanriqi":"2017-07-07","zhuangtai":"2","renwuno":"20170228-7"}]
      * success : true
      */
 
@@ -35,6 +35,7 @@ public class JobOrderFinshData {
 
     public static class DataEntity {
         /**
+         * id : 90777
          * baifenbi : 100.00
          * shijifangliang : 216.00
          * jzbw : K10+400～K10+425右侧25米
@@ -44,10 +45,11 @@ public class JobOrderFinshData {
          * sgphbno : 13333
          * shuinibiaohao : C15
          * kaipanriqi : 2017-07-11
-         * zhuangtai : 3
+         * zhuangtai : 2
          * renwuno : 3123
          */
 
+        private String id;
         private String baifenbi;
         private String shijifangliang;
         private String jzbw;
@@ -59,6 +61,10 @@ public class JobOrderFinshData {
         private String kaipanriqi;
         private String zhuangtai;
         private String renwuno;
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public void setBaifenbi(String baifenbi) {
             this.baifenbi = baifenbi;
@@ -102,6 +108,10 @@ public class JobOrderFinshData {
 
         public void setRenwuno(String renwuno) {
             this.renwuno = renwuno;
+        }
+
+        public String getId() {
+            return id;
         }
 
         public String getBaifenbi() {
