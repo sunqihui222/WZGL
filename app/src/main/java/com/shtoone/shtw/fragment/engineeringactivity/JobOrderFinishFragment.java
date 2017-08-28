@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +21,10 @@ import com.google.gson.Gson;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
-import com.shtoone.shtw.adapter.JobOrderUnfinshFragmentAdapter;
-import com.shtoone.shtw.adapter.OnItemClickListener;
+import com.shtoone.shtw.activity.DialogActivity;
+import com.shtoone.shtw.adapter.JobOrderFinshFragmentAdapter;
 import com.shtoone.shtw.adapter.OnItemDelClickListener;
-import com.shtoone.shtw.bean.JobOrderUnfinshData;
+import com.shtoone.shtw.bean.JobOrderFinshData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
@@ -35,6 +34,7 @@ import com.shtoone.shtw.utils.HttpUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
 import com.socks.library.KLog;
+import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,9 +42,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
@@ -54,61 +52,61 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
  * Created by Administrator on 2017/8/22.
  */
 
-public class JobOrderUnfinshFragment extends BaseLazyFragment{
-
+public class JobOrderFinishFragment extends BaseLazyFragment {
 
     private PtrFrameLayout mPtrFrameLayout;
-    private RecyclerView   mRecyclerView;
-    private JobOrderUnfinshFragmentAdapter mAdapter;
-    private JobOrderUnfinshData itemsData;
+    private RecyclerView mRecyclerView;
+    private JobOrderFinshFragmentAdapter mAdapter;
+    private JobOrderFinshData itemsData;
+
     private FloatingActionButton fab;
     private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
-    private Gson            mGson;
-    private boolean         isLoading;
-    private List<JobOrderUnfinshData.DataEntity> listData;
+    private Gson mGson;
+    private boolean isLoading;
+    private List<JobOrderFinshData.DataEntity> listData;
 
-    private ParametersData          mParametersData;
-    private LinearLayoutManager     mLinearLayoutManager;
-    private int                     lastVisibleItemPosition;
+
+    private ParametersData mParametersData;
+    private LinearLayoutManager mLinearLayoutManager;
+    private int lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
     private String id;
 
-    public static JobOrderUnfinshFragment newInstance() {
-        return new JobOrderUnfinshFragment();
+    public static JobOrderFinishFragment newInstance() {
+        return new JobOrderFinishFragment();
     }
 
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
-
         initData();
     }
 
     private void initData() {
-
         mParametersData = (ParametersData) BaseApplication.parametersData.clone();
         mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
-        mParametersData.username = BaseApplication.parametersData.username;
-        mParametersData.fromTo = ConstantsUtils.JOBORDERUNFINSH;
+        mParametersData.fromTo = ConstantsUtils.JOBORDERFINSH;
 
         mGson = new Gson();
         listData = new ArrayList<>();
-
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(_mActivity, TaskListNewEditActivity.class);
-                intent.putExtra("username",mParametersData.username);
+
+                Intent intent = new Intent(_mActivity, DialogActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
 
 
         //设置动画与适配器
-        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new JobOrderUnfinshFragmentAdapter(_mActivity, listData));
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new JobOrderFinshFragmentAdapter(_mActivity, listData));
         mSlideInLeftAnimationAdapter.setDuration(500);
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
@@ -117,43 +115,13 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
             @Override
             public void onItemClick(View view, int position) {
                 // 实现局部界面刷新, 这个view就是被点击的item布局对象
-                changeReadedState(view);
-                jump2TaskListDetailActivity(position);
+
             }
 
             @Override
             public void onRightClick(View view, int position) {
-                if (!TextUtils.isEmpty(listData.get(position).getId())){
-                    //弹出对话框，确定提交
-                    id = listData.get(position).getId();
-                    new MaterialDialog.Builder(getActivity())
-                            .title("删除")
-                            .content("请问您确定无误删除吗？")
-                            .positiveText("确定")
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
-                                            .title("删除")
-                                            .content("正在删除中，请稍等……")
-                                            .progress(true, 0)
-                                            .progressIndeterminateStyle(true)
-                                            .cancelable(false)
-                                            .show();
-                                    joborderDel(progressDialog,id);
-                                }
-                            })
-                            .negativeText("放弃")
-                            .show();
 
-
-                }
-
-            }
-
-            @Override
-            public void onBelowClick(View view, int position) {
-                if (!TextUtils.isEmpty(listData.get(position).getId())){
+                if (!TextUtils.isEmpty(listData.get(position).getId())) {
                     //弹出对话框，确定提交
                     id = listData.get(position).getId();
                     new MaterialDialog.Builder(getActivity())
@@ -170,7 +138,7 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
                                             .progressIndeterminateStyle(true)
                                             .cancelable(false)
                                             .show();
-                                    joborderSubmit(progressDialog,id,mParametersData.username);
+                                    joborderCancelSubmit(progressDialog, id, mParametersData.username);
                                 }
                             })
                             .negativeText("放弃")
@@ -178,6 +146,10 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
 
 
                 }
+            }
+
+            @Override
+            public void onBelowClick(View view, int position) {
 
             }
         });
@@ -220,12 +192,11 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
         initPtrFrameLayout(mPtrFrameLayout);
     }
 
-    private void joborderSubmit(final MaterialDialog progressDialog, String id,String name){
-
+    private void joborderCancelSubmit(final MaterialDialog progressDialog, String id, String username) {
 
         String url = null;
         try {
-            url = URL.getJOBORDERSUBMIT(id, URLEncoder.encode(name,"utf-8"));
+            url = URL.getJOBORDER_CANCEL(id, URLEncoder.encode(username, "utf-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -279,70 +250,6 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
             }
         });
 
-
-    }
-
-
-
-    private void joborderDel(final MaterialDialog progressDialog, String id) {
-
-        Map<String, String> paramsMap = new HashMap<String, String>();
-        try {
-            paramsMap.put("id", id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        HttpUtils.postRequest(URL.JOBORDER_UNFINSHDEL, paramsMap, new HttpUtils.HttpListener() {
-            @Override
-            public void onSuccess(String response) {
-                progressDialog.dismiss();
-
-                KLog.json(response);
-                if (!TextUtils.isEmpty(response)) {
-                    JSONObject jsonObject = null;
-                    try {
-                        jsonObject = new JSONObject(response);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        TastyToast.makeText(getContext(), "解析异常！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
-                    }
-
-                    if (jsonObject.optBoolean("success")) {
-
-                        BaseApplication.bus.post(new EventData(ConstantsUtils.REFRESH));
-                        TastyToast.makeText(getContext(), "上传成功!", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
-                        mPtrFrameLayout.autoRefresh(true);
-                    } else {
-                        TastyToast.makeText(getContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
-                    }
-
-                } else {
-                    TastyToast.makeText(getContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
-                }
-            }
-
-            @Override
-            public void onFailed(VolleyError error) {
-                progressDialog.dismiss();
-                if (!NetworkUtils.isConnected(getActivity())) {
-                    //提示网络异常,让用户点击设置网络，
-                    View view = getActivity().getWindow().getDecorView();
-                    Snackbar.make(view, "当前网络已断开！", Snackbar.LENGTH_LONG)
-                            .setAction("设置网络", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // 跳转到系统的网络设置界面
-                                    NetworkUtils.openSetting(getActivity());
-                                }
-                            }).show();
-                } else {
-                    //服务器异常，展示错误页面，点击刷新
-                    TastyToast.makeText(getActivity(), "服务器异常！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
-                }
-            }
-        });
-
     }
 
     @Override
@@ -367,8 +274,8 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
         } else {
             return true;
         }
-    }
 
+    }
 
     @Override
     public String createRefreshULR() {
@@ -386,12 +293,12 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
         }
-        String state = "0";
+        String state = "1";
         if (null != listData) {
             listData.clear();
         }
 
-        return URL.getJobOrderUnfinsh(userGroupID,state,startDateTime,endDateTime,currentPage);
+        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage);
 
     }
 
@@ -408,8 +315,8 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
         }
-        String state = "0";
-        return URL.getJobOrderUnfinsh(userGroupID,state,startDateTime,endDateTime,currentPage);
+        String state = "1";
+        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage);
     }
 
     @Override
@@ -424,7 +331,7 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, JobOrderUnfinshData.class);
+                itemsData = mGson.fromJson(response, JobOrderFinshData.class);
                 if (null != itemsData) {
                     if (itemsData.getSuccess() && itemsData.getData().size() > 0) {
                         listData.addAll(itemsData.getData());
@@ -482,7 +389,7 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, JobOrderUnfinshData.class);
+                itemsData = mGson.fromJson(response, JobOrderFinshData.class);
                 if (null != itemsData) {
                     if (itemsData.getSuccess() && itemsData.getData().size() > 0) {
                         if (null != listData) {
@@ -530,6 +437,21 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
         mAdapter.notifyItemRemoved(mAdapter.getItemCount());
     }
 
+    @Subscribe
+    public void updateSearch(ParametersData mParametersData) {
+        if (mParametersData != null) {
+            if (mParametersData.fromTo == ConstantsUtils.JOBORDERFINSH) {
+                this.mParametersData.startDateTime = mParametersData.startDateTime;
+                this.mParametersData.endDateTime = mParametersData.endDateTime;
+                this.mParametersData.userGroupID = mParametersData.userGroupID;
+                KLog.e("mParametersData:" + mParametersData.startDateTime);
+                KLog.e("mParametersData:" + mParametersData.endDateTime);
+                KLog.e("mParametersData:" + mParametersData.userGroupID);
+                mPtrFrameLayout.autoRefresh(true);
+            }
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -537,10 +459,11 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
             BaseApplication.bus.register(this);
             isRegistered = true;
         }
-        View view = inflater.inflate(R.layout.fragment_joborder_unfinsh, container, false);
+        View view = inflater.inflate(R.layout.fragment_joborder_finsh, container, false);
         initView(view);
         return view;
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -567,17 +490,4 @@ public class JobOrderUnfinshFragment extends BaseLazyFragment{
         super.onDestroy();
         BaseApplication.bus.unregister(this);
     }
-
-    private void changeReadedState(View view) {
-        //此处可以做一些修改点击过的item的样式，方便用户看出哪些已经点击查看过
-    }
-
-    private void jump2TaskListDetailActivity(int position) {
-        Intent intent = new Intent(_mActivity, TaskListEditActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("tasklistdetail",listData.get(position).getId());
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
 }

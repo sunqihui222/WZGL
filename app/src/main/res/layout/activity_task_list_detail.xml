@@ -134,7 +134,7 @@
                                             style="@style/peibitongzhidanDetail"
                                             android:layout_weight="2.5"
                                             android:gravity="left|center_vertical"
-                                            android:paddingLeft="5dp"/>
+                                            android:paddingLeft="5dp" />
                                     </TableRow>
 
                                     <TableRow>

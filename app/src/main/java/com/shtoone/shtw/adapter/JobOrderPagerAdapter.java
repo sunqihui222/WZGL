@@ -5,10 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.shtoone.shtw.BaseApplication;
-import com.shtoone.shtw.fragment.EngineeringDepartment.YCLChuChangWeightFragment;
-import com.shtoone.shtw.fragment.EngineeringDepartment.YCLJinChangWeightFragment;
-import com.shtoone.shtw.fragment.engineeringactivity.JobOrderUnfinshFragment;
-import com.shtoone.shtw.fragment.engineeringactivity.JobOrderfinshFragment;
+import com.shtoone.shtw.fragment.engineeringactivity.JobOrderUnFinishFragment;
+import com.shtoone.shtw.fragment.engineeringactivity.JobOrderFinishFragment;
 
 /**
  * Created by Administrator on 2017/8/18.
@@ -35,10 +33,10 @@ public class JobOrderPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment=null;
         switch (position){
             case  0:
-                fragment= JobOrderUnfinshFragment.newInstance();
+                fragment= JobOrderUnFinishFragment.newInstance();
                 break;
             case 1:
-                fragment= JobOrderfinshFragment.newInstance();
+                fragment= JobOrderFinishFragment.newInstance();
                 break;
         }
         return  fragment;

@@ -374,10 +374,10 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
 
 
     private void jump2TaskListDetailActivity(int position) {
-        Intent intent = new Intent(_mActivity, TaskListEditActivity.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("tasklistdetail", listData.get(position));
-//        intent.putExtras(bundle);
+        Intent intent = new Intent(_mActivity, TaskListDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("tasklistdetail", listData.get(position));
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

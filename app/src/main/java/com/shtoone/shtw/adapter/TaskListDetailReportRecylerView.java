@@ -84,7 +84,7 @@ public class TaskListDetailReportRecylerView extends RecyclerView.Adapter<Recycl
         if (viewType == TaskListDetailReportRecylerView.ITEM_TYPE.TYPE_ITEM.ordinal()) {
             return new TaskListDetailReportRecylerView.ItemViewHolder(LayoutInflater.from(context).inflate(R.layout.item_recyclerview_report_tasklist_detail, parent, false));
         } else if (viewType == ProduceQueryFragmentRecyclerViewAdapter.ITEM_TYPE.TYPE_FOOTER.ordinal()) {
-            return new TaskListDetailReportRecylerView.FootViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_item_foot, parent, false));
+//            return new TaskListDetailReportRecylerView.FootViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_item_foot, parent, false));
         }
         return null;
     }

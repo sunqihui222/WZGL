@@ -21,11 +21,11 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 
 public class JobOrderFragment extends BaseLazyFragment {
 
-    private Toolbar            mToolbar;
+    private Toolbar mToolbar;
     private AHBottomNavigation bottomNavigation;
 
-    private TabLayout    mTabLayout;
-    private ViewPager    mViewPager;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
     private AppBarLayout mAppBarLayout;
     private JobOrderPagerAdapter mAdapter;
 
@@ -49,7 +49,6 @@ public class JobOrderFragment extends BaseLazyFragment {
         mTabLayout = (TabLayout) view.findViewById(R.id.tablayout_toolbar_tablayout);
         mViewPager = (ViewPager) view.findViewById(R.id.vp_jinchu_fragment);
     }
-
 
 
     @Override

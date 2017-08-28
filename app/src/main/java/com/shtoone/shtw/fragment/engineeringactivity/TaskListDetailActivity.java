@@ -65,6 +65,7 @@ public class TaskListDetailActivity extends BaseActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView rv_report;
     private LinearLayoutManager mLinearLayoutManager;
+    private LinearLayoutManager mLinearLayoutManager1;
     private TaskListDetailActivityRecylerView mAdapter;
     private TaskListDetailReportRecylerView mReportAdapter;
     private List<TaskListDetailActivityData.XGJLDataBean> listData;
@@ -111,6 +112,7 @@ public class TaskListDetailActivity extends BaseActivity {
 
     private void initData() {
         listData = new ArrayList<>();
+        ZYlistData = new ArrayList<>();
         mGson = new Gson();
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
@@ -218,7 +220,8 @@ public class TaskListDetailActivity extends BaseActivity {
         mScaleInAnimationAdapter.setFirstOnly(true);
         mRecyclerView.setAdapter(mScaleInAnimationAdapter);
 
-        rv_report.setLayoutManager(mLinearLayoutManager);
+        mLinearLayoutManager1 = new LinearLayoutManager(this);
+        rv_report.setLayoutManager(mLinearLayoutManager1);
         rv_report.setNestedScrollingEnabled(false);
         //设置动画与适配器
         SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter1 = new SlideInLeftAnimationAdapter(mReportAdapter = new TaskListDetailReportRecylerView(this, ZYlistData));
