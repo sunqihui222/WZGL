@@ -105,10 +105,7 @@ public class TaskListDetailActivity extends BaseActivity {
         tv_pan_count = (TextView) findViewById(R.id.tv_pan_task_list_detail);
         tv_zxjd = (TextView) findViewById(R.id.tv_zxjd_task_list_detail);
         tv_jiechao = (TextView) findViewById(R.id.tv_jiechao_task_list_detail);
-
-
     }
-
 
     private void initData() {
         listData = new ArrayList<>();
@@ -212,7 +209,8 @@ public class TaskListDetailActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
         //设置动画与适配器
-        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new TaskListDetailActivityRecylerView(this, listData));
+        mAdapter = new TaskListDetailActivityRecylerView(this, listData);
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter);
         mSlideInLeftAnimationAdapter.setFirstOnly(true);
         mSlideInLeftAnimationAdapter.setDuration(500);
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
@@ -224,15 +222,14 @@ public class TaskListDetailActivity extends BaseActivity {
         rv_report.setLayoutManager(mLinearLayoutManager1);
         rv_report.setNestedScrollingEnabled(false);
         //设置动画与适配器
-        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter1 = new SlideInLeftAnimationAdapter(mReportAdapter = new TaskListDetailReportRecylerView(this, ZYlistData));
+        mReportAdapter = new TaskListDetailReportRecylerView(this, ZYlistData);
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter1 = new SlideInLeftAnimationAdapter(mReportAdapter);
         mSlideInLeftAnimationAdapter1.setFirstOnly(true);
         mSlideInLeftAnimationAdapter1.setDuration(500);
         mSlideInLeftAnimationAdapter1.setInterpolator(new OvershootInterpolator(.5f));
         ScaleInAnimationAdapter mScaleInAnimationAdapter1 = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter1);
-        mScaleInAnimationAdapter.setFirstOnly(true);
+        mScaleInAnimationAdapter1.setFirstOnly(true);
         rv_report.setAdapter(mScaleInAnimationAdapter1);
-
-
     }
 
     private void setToolbarTitle() {

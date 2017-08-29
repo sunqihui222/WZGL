@@ -372,7 +372,6 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
         //此处可以做一些修改点击过的item的样式，方便用户看出哪些已经点击查看过
     }
 
-
     private void jump2TaskListDetailActivity(int position) {
         Intent intent = new Intent(_mActivity, TaskListDetailActivity.class);
         Bundle bundle = new Bundle();
