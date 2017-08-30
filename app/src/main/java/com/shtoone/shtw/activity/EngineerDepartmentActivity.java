@@ -44,7 +44,7 @@ public class EngineerDepartmentActivity extends BaseActivity {
             int showPosition = 0;
             loadMultipleRootFragment(R.id.fl_container_concrete_activity, showPosition, mFragments[0], mFragments[1], mFragments[2],mFragments[3]);
         } else {
-            mFragments[0] = findFragment(YCLJinChangWeightFragment.class);
+            mFragments[0] = findFragment(YCLWeightHouseQuertFragment.class);
             mFragments[1] = findFragment(MaterialConsumeFragment.class);
             mFragments[2] = findFragment(TaskListImpQueryFragment.class);
             mFragments[3] = findFragment(JobOrderFragment.class);

@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.bean.JobOrderUnfinshData;
+import com.shtoone.shtw.bean.UserInfoData;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
     private OnItemDelClickListener mOnItemClickListener;
     private List<JobOrderUnfinshData.DataEntity> itemsData;
     private Resources mResources;
+    private static UserInfoData mUserInfoData;
 
     public enum ITEM_TYPE {
         TYPE_ITEM, TYPE_FOOTER
@@ -31,6 +34,7 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
         this.context = context;
         this.itemsData = itemsData;
         mResources = context.getResources();
+        mUserInfoData = BaseApplication.mUserInfoData;
     }
 
     public void setOnItemClickListener(OnItemDelClickListener mOnItemClickListener) {
@@ -159,6 +163,11 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
             tvPlanVolume = (TextView) view.findViewById(R.id.tvPlanVolume);
             mDelImageView = (ImageView) view.findViewById(R.id.iv_right_item_rv_main_fragment);
             mSubmitImageView = (ImageView) view.findViewById(R.id.iv_blew_item_rv_main_fragment);
+
+            if (!mUserInfoData.getQuanxian().isWZGCB()){
+                mDelImageView.setVisibility(View.GONE);
+                mSubmitImageView.setVisibility(View.GONE);
+            }
         }
     }
 

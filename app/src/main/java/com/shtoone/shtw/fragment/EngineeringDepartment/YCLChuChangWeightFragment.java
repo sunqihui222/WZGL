@@ -51,22 +51,22 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
 public class YCLChuChangWeightFragment extends BaseLazyFragment {
 
-    private Toolbar                                     mToolbar;
-    private PtrFrameLayout                              mPtrFrameLayout;
-    private RecyclerView                                mRecyclerView;
+    private Toolbar mToolbar;
+    private PtrFrameLayout mPtrFrameLayout;
+    private RecyclerView mRecyclerView;
     private YCLChuChangWeightFragmentRecycleViewAdapter mAdapter;
-    private YCLChuChangWeightFragmentListData           itemsData;
+    private YCLChuChangWeightFragmentListData itemsData;
 
     private FloatingActionButton fab;
     private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
-    private Gson            mGson;
-    private boolean         isLoading;
+    private Gson mGson;
+    private boolean isLoading;
     private List<YCLChuChangWeightFragmentListData.DataEntity> listData;
 
-    private ParametersData          mParametersData;
-    private LinearLayoutManager     mLinearLayoutManager;
-    private int                     lastVisibleItemPosition;
+    private ParametersData mParametersData;
+    private LinearLayoutManager mLinearLayoutManager;
+    private int lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
 
     public static YCLChuChangWeightFragment newInstance() {
@@ -92,7 +92,6 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
         listData = new ArrayList<>();
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -196,7 +195,7 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
-        String states= "";
+        String states = "";
 
 
         if (null != mParametersData) {
@@ -216,7 +215,7 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
         }
 
 
-        return URL.getYCLCHUCHANGquery(userGroupID, cailiaoname, equipmentID, tongjitype, startDateTime, endDateTime, currentPage,states);
+        return URL.getYCLCHUCHANGquery(userGroupID, cailiaoname, equipmentID, tongjitype, startDateTime, endDateTime, currentPage, states);
 
 
     }
@@ -231,7 +230,7 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
-        String states= "";
+        String states = "";
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             cailiaoname = mParametersData.cailiaono;
@@ -242,7 +241,7 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
             equipmentID = mParametersData.equipmentID;
             states = mParametersData.states;
         }
-        return URL.getYCLCHUCHANGquery(userGroupID,cailiaoname,equipmentID,tongjitype,startDateTime,endDateTime,currentPage,states);
+        return URL.getYCLCHUCHANGquery(userGroupID, cailiaoname, equipmentID, tongjitype, startDateTime, endDateTime, currentPage, states);
     }
 
     @Override
@@ -373,7 +372,7 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
                 this.mParametersData.equipmentID = mParametersData.equipmentID;
                 this.mParametersData.cailiaono = mParametersData.cailiaono;
                 this.mParametersData.states = mParametersData.states;
-                this.mParametersData.userGroupID =mParametersData.userGroupID;
+                this.mParametersData.userGroupID = mParametersData.userGroupID;
                 KLog.e("mParametersData:" + mParametersData.startDateTime);
                 KLog.e("mParametersData:" + mParametersData.endDateTime);
                 KLog.e("mParametersData:" + mParametersData.dataType);
@@ -382,7 +381,6 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
             }
         }
     }
-
 
 
     @Nullable
@@ -408,7 +406,7 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
     }
 
     private void initView(View view) {
- //       mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
+        //       mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptrframelayout);
         mPageStateLayout = (PageStateLayout) view.findViewById(R.id.pagestatelayout);

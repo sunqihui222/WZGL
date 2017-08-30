@@ -35,17 +35,16 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
  * Created by Administrator on 2017/8/8.
  */
 
-public class YCLChuChangWeightFragmentActivity extends BaseActivity{
-
+public class YCLChuChangWeightFragmentActivity extends BaseActivity {
     private static final String TAG = ProduceQueryDetailActivity.class.getSimpleName();
-    private Toolbar                                           mToolbar;
-    private NestedScrollView                                  mNestedScrollView;
-    private PageStateLayout                                   mPageStateLayout;
-    private PtrFrameLayout                                    mPtrFrameLayout;
-    private YCLChuChangWeightFragmentDetailData               data;
-    private YCLChuChangWeightFragmentListData.DataEntity      mDataBean;
-    private Gson                                              mGson;
-    private RecyclerView                                      mRecyclerView;
+    private Toolbar mToolbar;
+    private NestedScrollView mNestedScrollView;
+    private PageStateLayout mPageStateLayout;
+    private PtrFrameLayout mPtrFrameLayout;
+    private YCLChuChangWeightFragmentDetailData data;
+    private YCLChuChangWeightFragmentListData.DataEntity mDataBean;
+    private Gson mGson;
+    private RecyclerView mRecyclerView;
     private YCLChuChangWeightFragmentDetailRecycleViewAdapter mAdapter;
 
     @Override
@@ -77,12 +76,10 @@ public class YCLChuChangWeightFragmentActivity extends BaseActivity{
     @Override
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
-        String jinchangDetailData = URL.getYclChuchangDetailData(mDataBean.getId()+"",mDataBean.getGuobangleibie(),mDataBean.getCailiaoNo(),mDataBean.getGongyingshangdanweibianma(),String.valueOf(mDataBean.getPici()),
-                mDataBean.getShebeibianhao(),mDataBean.getJcmin(),mDataBean.getJcmax(),String.valueOf(mDataBean.getCcmin()),String.valueOf(mDataBean.getCcmax()));
-        Log.e("guobangleibie",mDataBean.getGuobangleibie());
-        Log.e(TAG,"url=:"+jinchangDetailData);
-        return URL.getYclChuchangDetailData(mDataBean.getId()+"",mDataBean.getGuobangleibie(),mDataBean.getCailiaoNo(),mDataBean.getGongyingshangdanweibianma(),String.valueOf(mDataBean.getPici()),
-                mDataBean.getShebeibianhao(),mDataBean.getJcmin(),mDataBean.getJcmax(),String.valueOf(mDataBean.getCcmin()),String.valueOf(mDataBean.getCcmax()));
+        String url = URL.getYclChuchangDetailData(mDataBean.getId() + "", mDataBean.getGuobangleibie(), mDataBean.getCailiaoNo(), mDataBean.getGongyingshangdanweibianma(), String.valueOf(mDataBean.getPici()),
+                mDataBean.getShebeibianhao(), mDataBean.getJcmin(), mDataBean.getJcmax(), String.valueOf(mDataBean.getCcmin()), String.valueOf(mDataBean.getCcmax()));
+        Log.e(TAG, "url=:" + url);
+        return url;
     }
 
     @Override
@@ -121,9 +118,7 @@ public class YCLChuChangWeightFragmentActivity extends BaseActivity{
     }
 
     private void setAdapter() {
-
         // 设置显示数据
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         //设置动画与适配器
         SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new YCLChuChangWeightFragmentDetailRecycleViewAdapter(this, data.getData()));
@@ -148,8 +143,6 @@ public class YCLChuChangWeightFragmentActivity extends BaseActivity{
         }
     }
 
-
-
     private void initView() {
         mDataBean = (YCLChuChangWeightFragmentListData.DataEntity) getIntent().getSerializableExtra("chuchangquerydetail");
         mToolbar = (Toolbar) findViewById(R.id.toolbar_toolbar);
@@ -157,8 +150,6 @@ public class YCLChuChangWeightFragmentActivity extends BaseActivity{
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptr_jinchang_query_detail_activity);
         mPageStateLayout = (PageStateLayout) findViewById(R.id.psl_jinchang_query_detail_activity);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_jinchang_query_detail_activity);
-
-
     }
 
     private void setToolbarTitle() {
@@ -170,5 +161,4 @@ public class YCLChuChangWeightFragmentActivity extends BaseActivity{
             mToolbar.setTitle(sb.toString());
         }
     }
-
 }
