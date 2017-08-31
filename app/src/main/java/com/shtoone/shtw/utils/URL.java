@@ -38,8 +38,9 @@ public class URL {
     //中交集团二航局地址
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
-    public static final String BaseURL = "http://192.168.11.100:8080/jeecg/";
-    //public static final String BaseURL = "http://192.168.11.102:8081/gxzjzqms/";
+    public static final String BaseURL = "http://192.168.11.103:8080/jeecg/";
+
+//    public static final String BaseURL = "http://192.168.11.104:8082/gxzjzqms/";
 
     /**
      * 登录地址
@@ -66,21 +67,33 @@ public class URL {
     /**
      * 组织结构面板
      */
-    public static final String ORGANIZATION = BaseURL + "app.do?AppDepartTree&updateDepartTime=%1&funtype=%2&userGroupId=%3&type=%4";
+    public static final String ORGANIZATION = BaseURL + "app.do?AppDepartTree&updateDepartTime=%1&userGroupId=%2&type=%3";
 
     /**
      * 组织结构面板
      *
      * @param dateTime    时间
-     * @param type        部门类型（试验室或者拌合站）
+//     * @param type        部门类型（试验室或者拌合站）
      * @param userGroupID 组织ID
      * @param userRole    组织ID
      * @return 返回拼凑后的url
      */
-    public static String getOrganizationData(String dateTime, String type, String userGroupID, String userRole) {
+
+//    public static String getOrganizationData(String dateTime, String type, String userGroupID, String userRole) {
+//        dateTime = DateUtils.ChangeTimeToLong(dateTime);
+//        //如果开始时间大于结束时间，返回null
+//        String url = ORGANIZATION.replace("%1", dateTime).replace("%2", type).replace("%3", userGroupID).replace("%4", userRole);
+//        KLog.e(TAG, "组织结构URL :" + url);
+//        if (TextUtils.isEmpty(url)) {
+//            return null;
+//        }
+//        return url;
+//    }
+
+    public static String getOrganizationData(String dateTime, String userGroupID, String userRole) {
         dateTime = DateUtils.ChangeTimeToLong(dateTime);
         //如果开始时间大于结束时间，返回null
-        String url = ORGANIZATION.replace("%1", dateTime).replace("%2", type).replace("%3", userGroupID).replace("%4", userRole);
+        String url = ORGANIZATION.replace("%1", dateTime).replace("%2", userGroupID).replace("%3", userRole);
         KLog.e(TAG, "组织结构URL :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;

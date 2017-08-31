@@ -65,6 +65,10 @@ public abstract class BaseActivity extends SwipeBackActivity {
         getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_LEFT);
     }
 
+    public void showText(String text){
+        TastyToast.makeText(this, text, TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+    }
+
     protected void initToolbarBackNavigation(Toolbar toolbar) {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

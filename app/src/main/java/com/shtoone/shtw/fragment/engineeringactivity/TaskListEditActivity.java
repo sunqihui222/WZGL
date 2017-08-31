@@ -159,8 +159,6 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
                 return true;
             }
         });
-
-
     }
 
     private void initData() {
@@ -230,9 +228,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
             //提示返回数据异常，展示错误页面
             mPageStateLayout.showError();
         }
-
     }
-
 
     @Override
     public void loadMoreSuccess(String response) {
@@ -276,7 +272,6 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
 
         if(!TextUtils.isEmpty(dataBean.getJzbw())){
             tv_jzbw.setText(dataBean.getJzbw());
-            Log.e(TAG,"++++++++++++++++");
         }
         id = dataBean.getId();
 
@@ -336,17 +331,17 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
                             .show();
                 } else {
                     if (TextUtils.isEmpty(renwuno)) {
-                        tv_renwuno.setError("任务编号不能为空");
+                        showText("任务编号不能为空");
                     } else if (TextUtils.isEmpty(jihuafangliang)) {
-                        tv_jhfl.setError("计划方量不能为空");
+                        showText("计划方量不能为空");
                     }else if (TextUtils.isEmpty(kaipan_time)) {
-                        tv_kaipan_time.setError("开盘时间不能为空");
+                        showText("开盘时间不能为空");
                     }else if (TextUtils.isEmpty(department)) {
-                        tv_depart.setError("所属机构不能为空");
+                        showText("所属机构不能为空");
                     }else if (TextUtils.isEmpty(jzbw)) {
-                        tv_jzbw.setError("浇筑部位不能为空");
+                        showText("浇筑部位不能为空");
                     }else if (TextUtils.isEmpty(gcmc)) {
-                        tv_gcmc.setError("工程名称不能为空");
+                        showText("工程名称不能为空");
                     }
                 }
                 break;

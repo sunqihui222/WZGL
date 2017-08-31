@@ -110,7 +110,7 @@ public class YaLiJiDetailActivity extends BaseActivity {
         mUserInfoData = BaseApplication.mUserInfoData;
         if ("不合格".equals(mDataBean.getPDJG()) || "无效".equals(mDataBean.getPDJG())) {
             cv_handle.setVisibility(View.VISIBLE);
-            if (mUserInfoData.getQuanxian().isSyschaobiaoReal()) {
+            if (mUserInfoData.getQuanxian().isWZSYS()) {
                 bt_submit.setEnabled(true);
                 bt_reset.setEnabled(true);
             }
