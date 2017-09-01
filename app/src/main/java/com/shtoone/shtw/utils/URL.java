@@ -38,7 +38,7 @@ public class URL {
     //中交集团二航局地址
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
-    public static final String BaseURL = "http://192.168.11.103:8080/jeecg/";
+    public static final String BaseURL = "http://192.168.11.100:8080/jeecg/";
 
 //    public static final String BaseURL = "http://192.168.11.104:8082/gxzjzqms/";
 
@@ -722,9 +722,9 @@ public class URL {
      * @param detailID 详情ID
      * @return 返回拼凑后的url
      */
-    public static final String RENWUDAN_DETAIL_URL = BaseURL + "appWZproject.do?AppTaskListDetail&id=%1";
-    public static String getRenwudanDetailData(String id) {
-        String url = RENWUDAN_DETAIL_URL.replace("%1", id);
+    public static final String RENWUDAN_DETAIL_URL = BaseURL + "appWZproject.do?AppTaskListDetail&id=%1&biaoshi=%2";
+    public static String getRenwudanDetailData(String id,String biaoshi) {
+        String url = RENWUDAN_DETAIL_URL.replace("%1", id).replace("%2", biaoshi);
         KLog.e(TAG, "任务单详情查询 :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;

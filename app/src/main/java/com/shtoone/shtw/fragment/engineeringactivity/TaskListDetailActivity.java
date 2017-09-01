@@ -44,7 +44,8 @@ public class TaskListDetailActivity extends BaseActivity {
     private NestedScrollView mNestedScrollView;
     private PageStateLayout mPageStateLayout;
     private PtrFrameLayout mPtrFrameLayout;
-    private TaskListImpQueryFragmenData.DataBean mDataBean;
+    private String id;
+    private String biaoshi;
     private Gson mGson;
 
     private TextView tv_renwuno;
@@ -81,7 +82,8 @@ public class TaskListDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        mDataBean = (TaskListImpQueryFragmenData.DataBean) getIntent().getSerializableExtra("tasklistdetail");
+        id = getIntent().getStringExtra("idNumber");
+        biaoshi = getIntent().getStringExtra("biaoshi");
         mToolbar = (Toolbar) findViewById(R.id.toolbar_toolbar);
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nsv_task_list_detail_activity);
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptr_task_list_detail_activity);
@@ -130,9 +132,9 @@ public class TaskListDetailActivity extends BaseActivity {
     @Override
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
-        String taskListDetailData = URL.getRenwudanDetailData(mDataBean.getId());
+        String taskListDetailData = URL.getRenwudanDetailData(id,biaoshi);
         Log.e(TAG,"url=:"+taskListDetailData);
-        return URL.getRenwudanDetailData(mDataBean.getId());
+        return URL.getRenwudanDetailData(id,biaoshi);
     }
 
     @Override
