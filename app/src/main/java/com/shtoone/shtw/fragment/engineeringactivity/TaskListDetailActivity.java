@@ -111,6 +111,7 @@ public class TaskListDetailActivity extends BaseActivity {
 
     private void initData() {
         listData = new ArrayList<>();
+        ZYlistData = new ArrayList<>();
         mGson = new Gson();
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
@@ -218,7 +219,7 @@ public class TaskListDetailActivity extends BaseActivity {
         mScaleInAnimationAdapter.setFirstOnly(true);
         mRecyclerView.setAdapter(mScaleInAnimationAdapter);
 
-        rv_report.setLayoutManager(mLinearLayoutManager);
+ //       rv_report.setLayoutManager(mLinearLayoutManager);
         rv_report.setNestedScrollingEnabled(false);
         //设置动画与适配器
         SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter1 = new SlideInLeftAnimationAdapter(mReportAdapter = new TaskListDetailReportRecylerView(this, ZYlistData));
