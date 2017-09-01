@@ -13,14 +13,8 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.event.EventData;
-import com.shtoone.shtw.fragment.EngineeringDepartment.YCLChuChangWeightFragment;
 import com.shtoone.shtw.fragment.EngineeringDepartment.YCLJinChangWeightFragment;
-import com.shtoone.shtw.fragment.concreteactivity.MaterialStatisticFragment;
-import com.shtoone.shtw.fragment.concreteactivity.OverproofFragment;
-import com.shtoone.shtw.fragment.concreteactivity.ProduceQueryFragment;
 import com.shtoone.shtw.fragment.engineeringactivity.JobOrderFragment;
-import com.shtoone.shtw.fragment.engineeringactivity.JobOrderUnfinshFragment;
-import com.shtoone.shtw.fragment.engineeringactivity.JobOrderfinshFragment;
 import com.shtoone.shtw.fragment.engineeringactivity.MaterialConsumeFragment;
 import com.shtoone.shtw.fragment.engineeringactivity.TaskListImpQueryFragment;
 import com.shtoone.shtw.fragment.mainactivity.YCLWeightHouseQuertFragment;
@@ -28,10 +22,6 @@ import com.shtoone.shtw.fragment.mainactivity.YCLWeightHouseQuertFragment;
 import java.util.ArrayList;
 
 import me.yokeyword.fragmentation.SupportFragment;
-
-/**
- * Created by Administrator on 2017/8/15.
- */
 
 public class EngineerDepartmentActivity extends BaseActivity {
     private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
@@ -54,10 +44,10 @@ public class EngineerDepartmentActivity extends BaseActivity {
             int showPosition = 0;
             loadMultipleRootFragment(R.id.fl_container_concrete_activity, showPosition, mFragments[0], mFragments[1], mFragments[2],mFragments[3]);
         } else {
-            mFragments[0] = findFragment(YCLJinChangWeightFragment.class);
+            mFragments[0] = findFragment(YCLWeightHouseQuertFragment.class);
             mFragments[1] = findFragment(MaterialConsumeFragment.class);
             mFragments[2] = findFragment(TaskListImpQueryFragment.class);
-            mFragments[3] = findFragment(JobOrderfinshFragment.class);
+            mFragments[3] = findFragment(JobOrderFragment.class);
         }
 
         initView();

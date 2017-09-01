@@ -697,9 +697,9 @@ public class OverproofDetailActivity extends BaseActivity implements TimePickerD
         mScaleInAnimationAdapter.setFirstOnly(true);
         mRecyclerView.setAdapter(mScaleInAnimationAdapter);
 
-        Log.e(TAG,"isSyschaobiaoReal=:"+mUserInfoData.getQuanxian().isSyschaobiaoReal());
+        Log.e(TAG,"isSyschaobiaoReal=:"+mUserInfoData.getQuanxian().isWZBHZ());
         //设置处置部分是否显示
-        if (mUserInfoData.getQuanxian().isSyschaobiaoReal() && TextUtils.isEmpty(data.getHeadMsg().getWentiyuanyin())) {
+        if (mUserInfoData.getQuanxian().isWZBHZ() && TextUtils.isEmpty(data.getHeadMsg().getWentiyuanyin())) {
             bt_handle_submit.setEnabled(true);
             bt_handle_reset.setEnabled(true);
 
@@ -735,7 +735,7 @@ public class OverproofDetailActivity extends BaseActivity implements TimePickerD
         }
 
         //设置审批部分是否显示
-        if (mUserInfoData.getQuanxian().isHntchaobiaoSp() && TextUtils.isEmpty(data.getHeadMsg().getJianlishenpi())) {
+        if (mUserInfoData.getQuanxian().isWZBHZ() && TextUtils.isEmpty(data.getHeadMsg().getJianlishenpi())) {
             bt_examine_submit.setEnabled(true);
             bt_examine_reset.setEnabled(true);
 

@@ -91,7 +91,7 @@
     <string name="jinchang_data">过磅台账</string>
     <string name="chuchang_data">出厂过磅</string>
     <string name="renwudan_zxlist">任务单执行情况</string>
-    <string name="job_order">任务单</string>
+    <string name="job_order">浇筑令</string>
 
     <string name="material_consume">进出耗分析</string>
     <string name="peibi_tongzhin_cx">配比通知单查询</string>

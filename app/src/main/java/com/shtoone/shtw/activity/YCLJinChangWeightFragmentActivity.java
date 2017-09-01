@@ -36,16 +36,15 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
  * Created by Administrator on 2017/8/8.
  */
 
-public class YCLJinChangWeightFragmentActivity extends BaseActivity{
-
+public class YCLJinChangWeightFragmentActivity extends BaseActivity {
     private static final String TAG = ProduceQueryDetailActivity.class.getSimpleName();
-    private Toolbar                                      mToolbar;
-    private NestedScrollView                             mNestedScrollView;
-    private PageStateLayout                              mPageStateLayout;
-    private PtrFrameLayout                      mPtrFrameLayout;
+    private Toolbar mToolbar;
+    private NestedScrollView mNestedScrollView;
+    private PageStateLayout mPageStateLayout;
+    private PtrFrameLayout mPtrFrameLayout;
     private YCLJinChangWeightFragmentDetailData data;
     private YCLJinChangWeightFragmentListData.DataEntity mDataBean;
-    private Gson                                         mGson;
+    private Gson mGson;
     private RecyclerView mRecyclerView;
     private YCLJinChangWeightFragmentDetailRecycleViewAdapter mAdapter;
 
@@ -78,11 +77,10 @@ public class YCLJinChangWeightFragmentActivity extends BaseActivity{
     @Override
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
-        String jinchangDetailData = URL.getYclJinchangDetailData(mDataBean.getJinchuliaodanNo(),mDataBean.getCailiaoNo(),mDataBean.getGongyingshangdanweibianma(),String.valueOf(mDataBean.getPici()),
-                mDataBean.getShebeibianhao(),mDataBean.getJcmin(),mDataBean.getJcmax(),String.valueOf(mDataBean.getCcmin()),String.valueOf(mDataBean.getCcmax()));
-        Log.e(TAG,"url=:"+jinchangDetailData);
-        return URL.getYclJinchangDetailData(mDataBean.getJinchuliaodanNo(),mDataBean.getCailiaoNo(),mDataBean.getGongyingshangdanweibianma(),String.valueOf(mDataBean.getPici()),
-                mDataBean.getShebeibianhao(),mDataBean.getJcmin(),mDataBean.getJcmax(),String.valueOf(mDataBean.getCcmin()),String.valueOf(mDataBean.getCcmax()));
+        String url = URL.getYclJinchangDetailData(mDataBean.getJinchuliaodanNo(), mDataBean.getCailiaoNo(), mDataBean.getGongyingshangdanweibianma(), String.valueOf(mDataBean.getPici()),
+                mDataBean.getShebeibianhao(), mDataBean.getJcmin(), mDataBean.getJcmax(), String.valueOf(mDataBean.getCcmin()), String.valueOf(mDataBean.getCcmax()));
+        Log.e(TAG, "url=:" + url);
+        return url;
     }
 
     @Override
@@ -149,9 +147,8 @@ public class YCLJinChangWeightFragmentActivity extends BaseActivity{
     }
 
 
-
     private void initView() {
-//        mDataBean = (YCLJinChangWeightFragmentListData.DataEntity) getIntent().getSerializableExtra("jinchangquerydetail");
+        mDataBean = (YCLJinChangWeightFragmentListData.DataEntity) getIntent().getSerializableExtra("jinchangquerydetail");
         mToolbar = (Toolbar) findViewById(R.id.toolbar_toolbar);
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nsv_jinchang_query_detail_activity);
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptr_jinchang_query_detail_activity);
@@ -170,5 +167,4 @@ public class YCLJinChangWeightFragmentActivity extends BaseActivity{
             mToolbar.setTitle(sb.toString());
         }
     }
-
 }

@@ -25,15 +25,15 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
  * Created by Administrator on 2017/8/18.
  */
 
-public class YCLWeightHouseQuertFragment extends BaseLazyFragment{
+public class YCLWeightHouseQuertFragment extends BaseLazyFragment {
 
-    private Toolbar            mToolbar;
+    private Toolbar mToolbar;
     private AHBottomNavigation bottomNavigation;
 
-    private TabLayout    mTabLayout;
-    private ViewPager    mViewPager;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
     private AppBarLayout mAppBarLayout;
-    private YCLWeightHousePagerAdapter  mAdapter;
+    private YCLWeightHousePagerAdapter mAdapter;
 
     public static YCLWeightHouseQuertFragment newInstance() {
         return new YCLWeightHouseQuertFragment();

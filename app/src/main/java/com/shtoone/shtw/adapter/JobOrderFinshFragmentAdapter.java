@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.bean.JobOrderFinshData;
 import com.shtoone.shtw.bean.JobOrderUnfinshData;
+import com.shtoone.shtw.bean.UserInfoData;
 import com.shtoone.shtw.ui.MyProgressBar;
 
 import java.util.List;
@@ -21,23 +23,23 @@ import java.util.List;
  * Created by Administrator on 2017/8/22.
  */
 
-public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context                            context;
-    private OnItemDelClickListener                mOnItemClickListener;
+    private Context context;
+    private OnItemDelClickListener mOnItemClickListener;
     private List<JobOrderFinshData.DataEntity> itemsData;
-    private Resources                          mResources;
+    private Resources mResources;
+    private static UserInfoData mUserInfoData;
 
     public enum ITEM_TYPE {
         TYPE_ITEM, TYPE_FOOTER
     }
 
-
-
     public JobOrderFinshFragmentAdapter(Context context, List<JobOrderFinshData.DataEntity> itemsData) {
         this.context = context;
         this.itemsData = itemsData;
         mResources = context.getResources();
+        mUserInfoData = BaseApplication.mUserInfoData;
     }
 
     public void setOnItemClickListener(OnItemDelClickListener mOnItemClickListener) {
@@ -56,54 +58,54 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-            if (holder instanceof ItemViewHolder){
-                ItemViewHolder mItemViewHolder = (ItemViewHolder) holder;
-                mItemViewHolder.cv.setCardBackgroundColor(position % 2 == 0 ? mResources.getColor(R.color.material_teal_50) : mResources.getColor(R.color.material_blue_50));
-                JobOrderFinshData.DataEntity item = itemsData.get(position);
-                if (item.getZhuangtai().equals("0")){
-                    mItemViewHolder.tvState.setText("未生成");
-                }else if (item.getZhuangtai().equals("1")){
-                    mItemViewHolder.tvState.setText("已生成");
-                }else if (item.getZhuangtai().equals("2")){
-                    mItemViewHolder.tvState.setText("生产中");
-                }else if (item.getZhuangtai().equals("3")){
-                    mItemViewHolder.tvState.setText("已完成");
-                }else if (item.getZhuangtai().equals("-1")){
-                    mItemViewHolder.tvState.setText("未提交");
-                }
-                mItemViewHolder.tvOpenDate.setText(item.getKaipanriqi());
-                mItemViewHolder.tvCastingParts.setText(item.getJzbw());
-                mItemViewHolder.tvRealVolume.setText(item.getShijifangliang());
-                mItemViewHolder.tvjiecao.setText(item.getJiechao());
-                mItemViewHolder.tvTaskId.setText(item.getRenwuno());
-                mItemViewHolder.tvPeiBiNo.setText(item.getSgphbno());
-                mItemViewHolder.tvDesignStrength.setText(item.getShuinibiaohao());
-                mItemViewHolder.tvPlanVolume.setText(item.getJihuafangliang());
-                double v = Double.parseDouble(item.getBaifenbi()) * 100;
-                int jindu = (int)v;
-                mItemViewHolder.pb_jindu.setProgress(jindu);
+        if (holder instanceof ItemViewHolder) {
+            ItemViewHolder mItemViewHolder = (ItemViewHolder) holder;
+            mItemViewHolder.cv.setCardBackgroundColor(position % 2 == 0 ? mResources.getColor(R.color.material_teal_50) : mResources.getColor(R.color.material_blue_50));
+            JobOrderFinshData.DataEntity item = itemsData.get(position);
+            if (item.getZhuangtai().equals("0")) {
+                mItemViewHolder.tvState.setText("未生成");
+            } else if (item.getZhuangtai().equals("1")) {
+                mItemViewHolder.tvState.setText("已生成");
+            } else if (item.getZhuangtai().equals("2")) {
+                mItemViewHolder.tvState.setText("生产中");
+            } else if (item.getZhuangtai().equals("3")) {
+                mItemViewHolder.tvState.setText("已完成");
+            } else if (item.getZhuangtai().equals("-1")) {
+                mItemViewHolder.tvState.setText("未提交");
+            }
+            mItemViewHolder.tvOpenDate.setText(item.getKaipanriqi());
+            mItemViewHolder.tvCastingParts.setText(item.getJzbw());
+            mItemViewHolder.tvRealVolume.setText(item.getShijifangliang());
+            mItemViewHolder.tvjiecao.setText(item.getJiechao());
+            mItemViewHolder.tvTaskId.setText(item.getRenwuno());
+            mItemViewHolder.tvPeiBiNo.setText(item.getSgphbno());
+            mItemViewHolder.tvDesignStrength.setText(item.getShuinibiaohao());
+            mItemViewHolder.tvPlanVolume.setText(item.getJihuafangliang());
+            double v = Double.parseDouble(item.getBaifenbi()) * 100;
+            int jindu = (int) v;
+            mItemViewHolder.pb_jindu.setProgress(jindu);
 
-                if (mOnItemClickListener != null) {
-                    mItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            int position = holder.getLayoutPosition();
-                            mOnItemClickListener.onItemClick(holder.itemView, position);
-                        }
-                    });
-                }
-
-                mItemViewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
+            if (mOnItemClickListener != null) {
+                mItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mOnItemClickListener!=null){
-                            int position = holder.getLayoutPosition();
-                            mOnItemClickListener.onRightClick(v,position);
-                        }
+                        int position = holder.getLayoutPosition();
+                        mOnItemClickListener.onItemClick(holder.itemView, position);
                     }
                 });
-
             }
+
+            mItemViewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        int position = holder.getLayoutPosition();
+                        mOnItemClickListener.onRightClick(v, position);
+                    }
+                }
+            });
+
+        }
 
     }
 
@@ -130,18 +132,18 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
-        CardView      cv;
-        TextView      tvState;
-        TextView      tvOpenDate;
-        TextView      tvCastingParts;
-        TextView      tvRealVolume;
-        TextView      tvjiecao;
-        TextView      tvTaskId;
-        TextView      tvPeiBiNo;
-        TextView      tvDesignStrength;
-        TextView      tvPlanVolume;
+        CardView cv;
+        TextView tvState;
+        TextView tvOpenDate;
+        TextView tvCastingParts;
+        TextView tvRealVolume;
+        TextView tvjiecao;
+        TextView tvTaskId;
+        TextView tvPeiBiNo;
+        TextView tvDesignStrength;
+        TextView tvPlanVolume;
         MyProgressBar pb_jindu;
-        ImageView     mImageView;
+        ImageView mImageView;
 
         public ItemViewHolder(View view) {
             super(view);
@@ -157,6 +159,10 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
             tvPlanVolume = (TextView) view.findViewById(R.id.tvPlanVolume);
             pb_jindu = (MyProgressBar) view.findViewById(R.id.executeProgress);
             mImageView = (ImageView) view.findViewById(R.id.iv_right_item_rv_main_fragment);
+
+            if (!mUserInfoData.getQuanxian().isWZGCB()){
+                mImageView.setVisibility(View.GONE);
+            }
         }
     }
 

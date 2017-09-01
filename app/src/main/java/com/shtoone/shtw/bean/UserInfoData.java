@@ -10,43 +10,37 @@ import java.util.List;
 public class UserInfoData {
 
     /**
-     * userPhoneNum : 15972036794
-     * departName : 石银高速
-     * quanxian : {"hntchaobiaoReal":true,"hntchaobiaoSp":true,"syschaobiaoReal":true}
-     * xmmc : 徐宿淮盐试验室拌和站信息化物联网管理系统
-     * updateDepartTime : 2015-12-02 12:12:36
-     * departId : 297ee90c4447f8a4014447fbba1e0015
-     * userRole : 4
-     * userFullName : 上海同望
      * SMSGroup : []
-     * type : GL
+     * departId : 8a8ab0b246dc81120146dc8180ba0017
+     * departName : 广西交通工程质量安全质监站
+     * quanxian : {"WZBHZ":true,"WZGCB":true,"WZSYS":true}
      * success : true
+     * type : GL
+     * updateDepartTime : 2016-07-23 13:41:36
+     * userFullName : 上海同望
+     * userPhoneNum :
+     * userRole : 1
+     * xmmc : 项目APP
      */
 
-    private String userPhoneNum;
-    private String departName;
-    /**
-     * hntchaobiaoReal : true
-     * hntchaobiaoSp : true
-     * syschaobiaoReal : true
-     */
-
-    private QuanxianBean quanxian;
-    private String xmmc;
-    private String updateDepartTime;
     private String departId;
-    private String userRole;
-    private String userFullName;
-    private String type;
+    private String departName;
+    private QuanxianBean quanxian;
     private boolean success;
+    private String type;
+    private String updateDepartTime;
+    private String userFullName;
+    private String userPhoneNum;
+    private String userRole;
+    private String xmmc;
     private List<?> SMSGroup;
 
-    public String getUserPhoneNum() {
-        return userPhoneNum;
+    public String getDepartId() {
+        return departId;
     }
 
-    public void setUserPhoneNum(String userPhoneNum) {
-        this.userPhoneNum = userPhoneNum;
+    public void setDepartId(String departId) {
+        this.departId = departId;
     }
 
     public String getDepartName() {
@@ -65,44 +59,12 @@ public class UserInfoData {
         this.quanxian = quanxian;
     }
 
-    public String getXmmc() {
-        return xmmc;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setXmmc(String xmmc) {
-        this.xmmc = xmmc;
-    }
-
-    public String getUpdateDepartTime() {
-        return updateDepartTime;
-    }
-
-    public void setUpdateDepartTime(String updateDepartTime) {
-        this.updateDepartTime = updateDepartTime;
-    }
-
-    public String getDepartId() {
-        return departId;
-    }
-
-    public void setDepartId(String departId) {
-        this.departId = departId;
-    }
-
-    public String getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
-    }
-
-    public String getUserFullName() {
-        return userFullName;
-    }
-
-    public void setUserFullName(String userFullName) {
-        this.userFullName = userFullName;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public String getType() {
@@ -113,12 +75,44 @@ public class UserInfoData {
         this.type = type;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public String getUpdateDepartTime() {
+        return updateDepartTime;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setUpdateDepartTime(String updateDepartTime) {
+        this.updateDepartTime = updateDepartTime;
+    }
+
+    public String getUserFullName() {
+        return userFullName;
+    }
+
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
+    }
+
+    public String getUserPhoneNum() {
+        return userPhoneNum;
+    }
+
+    public void setUserPhoneNum(String userPhoneNum) {
+        this.userPhoneNum = userPhoneNum;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+
+    public String getXmmc() {
+        return xmmc;
+    }
+
+    public void setXmmc(String xmmc) {
+        this.xmmc = xmmc;
     }
 
     public List<?> getSMSGroup() {
@@ -130,32 +124,38 @@ public class UserInfoData {
     }
 
     public static class QuanxianBean {
-        private boolean hntchaobiaoReal;
-        private boolean hntchaobiaoSp;
-        private boolean syschaobiaoReal;
+        /**
+         * WZBHZ : true
+         * WZGCB : true
+         * WZSYS : true
+         */
 
-        public boolean isHntchaobiaoReal() {
-            return hntchaobiaoReal;
+        private boolean WZBHZ;
+        private boolean WZGCB;
+        private boolean WZSYS;
+
+        public boolean isWZBHZ() {
+            return WZBHZ;
         }
 
-        public void setHntchaobiaoReal(boolean hntchaobiaoReal) {
-            this.hntchaobiaoReal = hntchaobiaoReal;
+        public void setWZBHZ(boolean WZBHZ) {
+            this.WZBHZ = WZBHZ;
         }
 
-        public boolean isHntchaobiaoSp() {
-            return hntchaobiaoSp;
+        public boolean isWZGCB() {
+            return WZGCB;
         }
 
-        public void setHntchaobiaoSp(boolean hntchaobiaoSp) {
-            this.hntchaobiaoSp = hntchaobiaoSp;
+        public void setWZGCB(boolean WZGCB) {
+            this.WZGCB = WZGCB;
         }
 
-        public boolean isSyschaobiaoReal() {
-            return syschaobiaoReal;
+        public boolean isWZSYS() {
+            return WZSYS;
         }
 
-        public void setSyschaobiaoReal(boolean syschaobiaoReal) {
-            this.syschaobiaoReal = syschaobiaoReal;
+        public void setWZSYS(boolean WZSYS) {
+            this.WZSYS = WZSYS;
         }
     }
 }

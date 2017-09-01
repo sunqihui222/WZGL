@@ -58,20 +58,20 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 
 public class WZProjectProgressQueryFragment extends BaseLazyFragment {
 
-    private Toolbar                       mToolbar;
-    private PtrFrameLayout                mPtrFrameLayout;
-    private RecyclerView                  mRecyclerView;
+    private Toolbar mToolbar;
+    private PtrFrameLayout mPtrFrameLayout;
+    private RecyclerView mRecyclerView;
     private WZProjectProgressQueryAdapter mAdapter;
-    private WZProjectProgressQueryData    itemsData;
+    private WZProjectProgressQueryData itemsData;
     private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
-    private Gson            mGson;
-    private boolean         isLoading;
+    private Gson mGson;
+    private boolean isLoading;
     private List<WZProjectProgressQueryData.DataEntity> listData;
 
-    private ParametersData          mParametersData;
-    private LinearLayoutManager     mLinearLayoutManager;
-    private int                     lastVisibleItemPosition;
+    private ParametersData mParametersData;
+    private LinearLayoutManager mLinearLayoutManager;
+    private int lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
 
     public static WZProjectProgressQueryFragment newInstance() {
@@ -201,7 +201,6 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
         }
     }
 
-
     @Override
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
@@ -209,19 +208,14 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
         String parentno = "";
         String currentPage = "";
 
-
         if (null != mParametersData) {
-
             currentPage = mParametersData.currentPage;
             parentno = mParametersData.projectno;
-
         }
-
         if (null != listData) {
             listData.clear();
         }
-
-        return URL.getWZprojectprogress(parentno,currentPage);
+        return URL.getWZprojectprogress(parentno, currentPage);
     }
 
     @Override
@@ -231,13 +225,10 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
         String currentPage = "";
 
         if (null != mParametersData) {
-
             currentPage = mParametersData.currentPage;
             parentno = mParametersData.projectno;
-
         }
-
-        return URL.getWZprojectprogress(parentno,currentPage);
+        return URL.getWZprojectprogress(parentno, currentPage);
     }
 
     @Override
@@ -361,16 +352,11 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
-
-
-                this.mParametersData.projectno = mParametersData.projectno;
-                KLog.e("mParametersData:" + mParametersData.projectno);
-                mPtrFrameLayout.autoRefresh(true);
-
+            this.mParametersData.projectno = mParametersData.projectno;
+            KLog.e("mParametersData:" + mParametersData.projectno);
+            mPtrFrameLayout.autoRefresh(true);
         }
     }
-
-
 
     @Nullable
     @Override
@@ -383,15 +369,12 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
         View view = inflater.inflate(R.layout.fragment_wzprogress_query, container, false);
         initView(view);
         return view;
-
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
         //返回到看见此fragment时，fab显示
-
     }
 
     private void initView(View view) {
@@ -413,7 +396,6 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
         super.onDestroy();
         BaseApplication.bus.unregister(this);
     }
-
 
 
     private void changeReadedState(View view) {

@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +23,8 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
 import com.shtoone.shtw.adapter.JobOrderFinshFragmentAdapter;
-import com.shtoone.shtw.adapter.JobOrderUnfinshFragmentAdapter;
-import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.OnItemDelClickListener;
 import com.shtoone.shtw.bean.JobOrderFinshData;
-import com.shtoone.shtw.bean.JobOrderUnfinshData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
@@ -56,36 +52,34 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
  * Created by Administrator on 2017/8/22.
  */
 
-public class JobOrderfinshFragment extends BaseLazyFragment{
+public class JobOrderFinishFragment extends BaseLazyFragment {
 
     private PtrFrameLayout mPtrFrameLayout;
-    private RecyclerView   mRecyclerView;
+    private RecyclerView mRecyclerView;
     private JobOrderFinshFragmentAdapter mAdapter;
     private JobOrderFinshData itemsData;
 
     private FloatingActionButton fab;
     private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
-    private Gson            mGson;
-    private boolean         isLoading;
+    private Gson mGson;
+    private boolean isLoading;
     private List<JobOrderFinshData.DataEntity> listData;
 
 
-    private ParametersData          mParametersData;
-    private LinearLayoutManager     mLinearLayoutManager;
-    private int                     lastVisibleItemPosition;
+    private ParametersData mParametersData;
+    private LinearLayoutManager mLinearLayoutManager;
+    private int lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
     private String id;
 
-    public static JobOrderfinshFragment newInstance() {
-        return new JobOrderfinshFragment();
+    public static JobOrderFinishFragment newInstance() {
+        return new JobOrderFinishFragment();
     }
 
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
-
         initData();
-
     }
 
     private void initData() {
@@ -127,7 +121,7 @@ public class JobOrderfinshFragment extends BaseLazyFragment{
             @Override
             public void onRightClick(View view, int position) {
 
-                if (!TextUtils.isEmpty(listData.get(position).getId())){
+                if (!TextUtils.isEmpty(listData.get(position).getId())) {
                     //弹出对话框，确定提交
                     id = listData.get(position).getId();
                     new MaterialDialog.Builder(getActivity())
@@ -144,7 +138,7 @@ public class JobOrderfinshFragment extends BaseLazyFragment{
                                             .progressIndeterminateStyle(true)
                                             .cancelable(false)
                                             .show();
-                                    joborderCancelSubmit(progressDialog,id,mParametersData.username);
+                                    joborderCancelSubmit(progressDialog, id, mParametersData.username);
                                 }
                             })
                             .negativeText("放弃")
@@ -202,7 +196,7 @@ public class JobOrderfinshFragment extends BaseLazyFragment{
 
         String url = null;
         try {
-            url = URL.getJOBORDER_CANCEL(id, URLEncoder.encode(username,"utf-8"));
+            url = URL.getJOBORDER_CANCEL(id, URLEncoder.encode(username, "utf-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -304,7 +298,7 @@ public class JobOrderfinshFragment extends BaseLazyFragment{
             listData.clear();
         }
 
-        return URL.getJobOrderFinsh(userGroupID,state,startDateTime,endDateTime,currentPage);
+        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage);
 
     }
 
@@ -322,7 +316,7 @@ public class JobOrderfinshFragment extends BaseLazyFragment{
             currentPage = mParametersData.currentPage;
         }
         String state = "1";
-        return URL.getJobOrderFinsh(userGroupID,state,startDateTime,endDateTime,currentPage);
+        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage);
     }
 
     @Override
@@ -469,6 +463,7 @@ public class JobOrderfinshFragment extends BaseLazyFragment{
         initView(view);
         return view;
     }
+
     @Override
     public void onResume() {
         super.onResume();

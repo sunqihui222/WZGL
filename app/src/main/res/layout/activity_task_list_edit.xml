@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,19 +11,19 @@
         android:background="@color/material_grey_50"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar"/>
+        <include layout="@layout/toolbar" />
 
         <in.srain.cube.views.ptr.PtrFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
-                                                android:id="@+id/ptr_task_list_edit_activity"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:background="@color/lightest_gray"
-                                                cube_ptr:ptr_duration_to_close="200"
-                                                cube_ptr:ptr_duration_to_close_header="1000"
-                                                cube_ptr:ptr_keep_header_when_refresh="true"
-                                                cube_ptr:ptr_pull_to_fresh="false"
-                                                cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
-                                                cube_ptr:ptr_resistance="1.7">
+            android:id="@+id/ptr_task_list_edit_activity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/lightest_gray"
+            cube_ptr:ptr_duration_to_close="200"
+            cube_ptr:ptr_duration_to_close_header="1000"
+            cube_ptr:ptr_keep_header_when_refresh="true"
+            cube_ptr:ptr_pull_to_fresh="false"
+            cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+            cube_ptr:ptr_resistance="1.7">
 
             <com.shtoone.shtw.ui.PageStateLayout
                 android:id="@+id/psl_task_list_edit_activity"
@@ -68,7 +68,7 @@
                                         android:layout_width="8dp"
                                         android:layout_height="30dp"
                                         android:layout_alignParentStart="true"
-                                        android:background="#2fa881"/>
+                                        android:background="#2fa881" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
                                         android:text="任务单编辑"
                                         android:textColor="@color/material_green_400"
                                         android:textSize="18sp"
-                                        android:textStyle="bold"/>
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                                 <TableLayout
@@ -94,7 +94,7 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="任务编号："/>
+                                            android:text="任务编号：" />
 
                                         <FrameLayout
                                             style="@style/peibitongzhidanDetail"
@@ -105,7 +105,7 @@
                                                 android:id="@+id/tv_renwuno_task_list_edit"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:background="@drawable/rect_bg_stroke_table"/>
+                                                android:background="@drawable/rect_bg_stroke_table" />
                                         </FrameLayout>
                                     </TableRow>
 
@@ -116,7 +116,7 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="计划方量："/>
+                                            android:text="计划方量：" />
 
                                         <FrameLayout
                                             style="@style/peibitongzhidanDetail"
@@ -127,7 +127,7 @@
                                                 android:id="@+id/tv_fangliang_task_list_edit"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:background="@drawable/rect_bg_stroke_table"/>
+                                                android:background="@drawable/rect_bg_stroke_table" />
                                         </FrameLayout>
 
                                     </TableRow>
@@ -139,7 +139,7 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="开盘日期："/>
+                                            android:text="开盘日期：" />
 
                                         <FrameLayout
                                             style="@style/peibitongzhidanDetail"
@@ -150,7 +150,7 @@
                                                 android:id="@+id/tv_time_task_list_edit"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:background="@drawable/rect_bg_stroke_table"/>
+                                                android:background="@drawable/rect_bg_stroke_table" />
                                         </FrameLayout>
 
                                     </TableRow>
@@ -161,7 +161,7 @@
                                             style="@style/peibitongzhidanDetail"
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
-                                            android:text="所属机构："/>
+                                            android:text="所属机构：" />
 
                                         <TextView
                                             android:id="@+id/tv_depart_task_list_edit"
@@ -169,17 +169,18 @@
                                             android:layout_weight="2.5"
                                             android:gravity="left|center_vertical"
                                             android:onClick="true"
-                                            android:paddingLeft="5dp"/>
+                                            android:paddingLeft="5dp" />
 
                                     </TableRow>
 
                                     <TableRow>
+
                                         <TextView
                                             style="@style/peibitongzhidanDetail"
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="浇筑部位："/>
+                                            android:text="浇筑部位：" />
 
                                         <TextView
                                             android:id="@+id/tv_jzbw_task_list_edit"
@@ -187,7 +188,7 @@
                                             android:layout_weight="2.5"
                                             android:gravity="left|center_vertical"
                                             android:onClick="true"
-                                            android:paddingLeft="5dp"/>
+                                            android:paddingLeft="5dp" />
                                     </TableRow>
 
                                     <TableRow>
@@ -197,7 +198,7 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="设计强度："/>
+                                            android:text="设计强度：" />
 
                                         <TextView
                                             android:id="@+id/tv_sjqd_task_list_edit"
@@ -205,7 +206,7 @@
                                             android:layout_weight="2.5"
                                             android:gravity="left|center_vertical"
                                             android:onClick="true"
-                                            android:paddingLeft="5dp"/>
+                                            android:paddingLeft="5dp" />
                                     </TableRow>
 
                                     <TableRow>
@@ -215,7 +216,7 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="工程名称："/>
+                                            android:text="工程名称：" />
 
                                         <FrameLayout
                                             style="@style/peibitongzhidanDetail"
@@ -226,7 +227,7 @@
                                                 android:id="@+id/tv_gcmc_task_list_edit"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:background="@drawable/rect_bg_stroke_table"/>
+                                                android:background="@drawable/rect_bg_stroke_table" />
                                         </FrameLayout>
 
                                     </TableRow>
@@ -238,7 +239,7 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="塌落度："/>
+                                            android:text="塌落度：" />
 
                                         <TextView
                                             android:id="@+id/tv_taluodu_task_list_edit"
@@ -246,7 +247,7 @@
                                             android:layout_weight="2.5"
                                             android:gravity="left|center_vertical"
                                             android:onClick="true"
-                                            android:paddingLeft="5dp"/>
+                                            android:paddingLeft="5dp" />
                                     </TableRow>
 
                                     <TableRow>
@@ -256,7 +257,7 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="抗冻等级："/>
+                                            android:text="抗冻等级：" />
 
                                         <FrameLayout
                                             style="@style/peibitongzhidanDetail"
@@ -267,7 +268,7 @@
                                                 android:id="@+id/tv_kddj_task_list_edit"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:background="@drawable/rect_bg_stroke_table"/>
+                                                android:background="@drawable/rect_bg_stroke_table" />
                                         </FrameLayout>
 
                                     </TableRow>
@@ -279,7 +280,7 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="抗渗等级："/>
+                                            android:text="抗渗等级：" />
 
                                         <FrameLayout
                                             style="@style/peibitongzhidanDetail"
@@ -290,7 +291,7 @@
                                                 android:id="@+id/tv_ksdj_task_list_edit"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:background="@drawable/rect_bg_stroke_table"/>
+                                                android:background="@drawable/rect_bg_stroke_table" />
                                         </FrameLayout>
 
                                     </TableRow>
@@ -302,7 +303,7 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="浇筑方式："/>
+                                            android:text="浇筑方式：" />
 
                                         <TextView
                                             android:id="@+id/tv_jzfs_task_list_edit"
@@ -310,23 +311,24 @@
                                             android:layout_weight="2.5"
                                             android:gravity="left|center_vertical"
                                             android:onClick="true"
-                                            android:paddingLeft="5dp"/>
+                                            android:paddingLeft="5dp" />
                                     </TableRow>
 
                                     <TableRow>
+
                                         <TextView
                                             style="@style/peibitongzhidanDetail"
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="创建人："/>
+                                            android:text="创建人：" />
 
                                         <TextView
                                             android:id="@+id/tv_person_task_list_edit"
                                             style="@style/peibitongzhidanDetail"
                                             android:layout_weight="2.5"
                                             android:gravity="left|center_vertical"
-                                            android:paddingLeft="5dp"/>
+                                            android:paddingLeft="5dp" />
                                     </TableRow>
 
                                     <TableRow>
@@ -336,14 +338,14 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="创建时间："/>
+                                            android:text="创建时间：" />
 
                                         <TextView
                                             android:id="@+id/tv_create_time_task_list_edit"
                                             style="@style/peibitongzhidanDetail"
                                             android:layout_weight="2.5"
                                             android:gravity="left|center_vertical"
-                                            android:paddingLeft="5dp"/>
+                                            android:paddingLeft="5dp" />
                                     </TableRow>
 
                                     <TableRow>
@@ -353,7 +355,7 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
-                                            android:text="备注："/>
+                                            android:text="备注：" />
 
                                         <FrameLayout
                                             style="@style/peibitongzhidanDetail"
@@ -364,7 +366,7 @@
                                                 android:id="@+id/tv_remrak_task_list_edit"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:background="@drawable/rect_bg_stroke_table"/>
+                                                android:background="@drawable/rect_bg_stroke_table" />
                                         </FrameLayout>
 
                                     </TableRow>
@@ -383,14 +385,14 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="保存"/>
+                                android:text="保存" />
 
                             <Button
                                 android:id="@+id/btn_submit"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="提交"/>
+                                android:text="提交" />
                         </LinearLayout>
                     </LinearLayout>
                 </android.support.v4.widget.NestedScrollView>

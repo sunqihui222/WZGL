@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
@@ -72,7 +73,7 @@ public class OrganizationActivity extends BaseActivity {
 
     private void initData() {
         type = getIntent().getStringExtra("type");
-        KLog.e("type:::" + type);
+        Log.e("type:::" , type);
         mParametersData = BaseApplication.parametersData;
         mDepartmentData = (DepartmentData) getIntent().getSerializableExtra(ConstantsUtils.DEPARTMENT);
         KLog.e("mDepartmentData:::" + mDepartmentData.departmentName);
@@ -132,7 +133,7 @@ public class OrganizationActivity extends BaseActivity {
             userGroupID = mParametersData.userGroupID;
             mUserRole = BaseApplication.mUserInfoData.getUserRole();
         }
-        return URL.getOrganizationData(dateTime, type, userGroupID, mUserRole);
+        return URL.getOrganizationData(dateTime, userGroupID, mUserRole);
     }
 
     @Override
