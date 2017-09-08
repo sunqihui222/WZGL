@@ -26,8 +26,6 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.fragment.EngineeringDepartment.WZProjectProgressQueryFragment;
-import com.shtoone.shtw.fragment.EngineeringDepartment.YCLChuChangWeightFragment;
-import com.shtoone.shtw.fragment.engineeringactivity.TaskListImpQueryFragment;
 import com.shtoone.shtw.fragment.mainactivity.ConcreteFragment;
 import com.shtoone.shtw.fragment.mainactivity.LaboratoryFragment;
 import com.shtoone.shtw.fragment.mainactivity.StorageFragment;

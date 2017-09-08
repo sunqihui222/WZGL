@@ -57,7 +57,6 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
  */
 
 public class WZProjectProgressQueryFragment extends BaseLazyFragment {
-
     private Toolbar mToolbar;
     private PtrFrameLayout mPtrFrameLayout;
     private RecyclerView mRecyclerView;
@@ -80,13 +79,10 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
 
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
-
         initData();
-
     }
 
     private void initData() {
-
         mParametersData = (ParametersData) BaseApplication.parametersData.clone();
         mParametersData.userGroupID = mDepartmentData.departmentID;
         mParametersData = (ParametersData) BaseApplication.parametersData.clone();
@@ -113,20 +109,6 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
         listData = new ArrayList<>();
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(_mActivity, FBProjectListActivity.class);
-////                Bundle bundle = new Bundle();
-////                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
-////                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//        });
-
 
         //设置动画与适配器
         SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new WZProjectProgressQueryAdapter(_mActivity, listData));

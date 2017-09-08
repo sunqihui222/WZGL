@@ -48,7 +48,7 @@ public class LaboratoryActivity extends BaseActivity {
             mFragments[2] = LaboratoryStatisticFragment.newInstance();
             mFragments[3] = PeiliaoTongzhidanFragment.newInstance();
             int showPosition = 0;
-            loadMultipleRootFragment(R.id.fl_container_laboratory_activity, showPosition, mFragments[0], mFragments[1], mFragments[2]);
+            loadMultipleRootFragment(R.id.fl_container_laboratory_activity, showPosition, mFragments[0], mFragments[1], mFragments[2],mFragments[3]);
         } else {
             mFragments[0] = findFragment(YaLiJiFragment.class);
             mFragments[1] = findFragment(WannengjiFragment.class);
@@ -70,7 +70,7 @@ public class LaboratoryActivity extends BaseActivity {
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.yaliji, R.drawable.ic_yaliji, R.color.white);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.wannengji, R.drawable.ic_wannengji, R.color.material_yellow_100);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.statistic, R.drawable.ic_statistic, R.color.material_green_100);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.peibi, R.drawable.ic_statistic, R.color.material_green_100);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.peiliao, R.drawable.ic_yaliji, R.color.white);
         bottomNavigationItems.add(item1);
         bottomNavigationItems.add(item2);
         bottomNavigationItems.add(item3);
