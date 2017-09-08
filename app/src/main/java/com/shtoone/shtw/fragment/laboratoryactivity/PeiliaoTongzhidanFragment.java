@@ -21,6 +21,7 @@ import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.PeiliaoTongzhidanFragmentRVAdapter;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.bean.PeiliaoTongzhidanFragmentListData;
 import com.shtoone.shtw.event.EventData;
@@ -41,6 +42,8 @@ import java.util.List;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
+
+import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 
 /**
  * Created by Administrator on 2017/8/8.
@@ -102,8 +105,13 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
     }
 
     private void initData() {
-        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.PEILIAOTONGZHIDAN);
+            mParametersData = (ParametersData) BaseApplication.parametersData.clone();
+            mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
+        }
+//        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
+//        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
         mParametersData.fromTo = ConstantsUtils.PEILIAOTONGZHIDAN;
         mGson = new Gson();
         listData = new ArrayList<>();

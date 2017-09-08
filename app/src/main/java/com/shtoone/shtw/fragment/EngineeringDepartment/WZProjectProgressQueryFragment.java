@@ -28,6 +28,7 @@ import com.shtoone.shtw.activity.base.FBProjectListActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.WZProjectProgressQueryAdapter;
 import com.shtoone.shtw.adapter.YCLJinChangWeightFragmentRecycleViewAdapter;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.bean.WZProjectProgressQueryData;
 import com.shtoone.shtw.bean.YCLJinChangWeightFragmentListData;
@@ -83,11 +84,17 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     }
 
     private void initData() {
-        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-        mParametersData.userGroupID = mDepartmentData.departmentID;
-        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-        mParametersData.userGroupID = mDepartmentData.departmentID;
-        mParametersData.fromTo = ConstantsUtils.WZPROGRESS;
+        if (null != BaseApplication.parametersData) {
+            mParametersData = (ParametersData) BaseApplication.parametersData.clone();
+            mParametersData.fromTo = ConstantsUtils.WZPROGRESS;
+        }
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.WZPROGRESS);
+
+        }
+        BaseApplication.mDepartmentData.departmentID = BaseApplication.mUserInfoData.getDepartId();
+        BaseApplication.mDepartmentData.departmentName = BaseApplication.mUserInfoData.getDepartName();
+
 
         mGson = new Gson();
         setToolbarTitle();

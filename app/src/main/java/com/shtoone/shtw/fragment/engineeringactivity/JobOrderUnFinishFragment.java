@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -23,6 +24,7 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.adapter.JobOrderUnfinshFragmentAdapter;
 import com.shtoone.shtw.adapter.OnItemDelClickListener;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.JobOrderUnfinshData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.bean.UserInfoData;
@@ -48,6 +50,8 @@ import java.util.Map;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
+
+import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 
 /**
  * Created by Administrator on 2017/8/22.
@@ -83,9 +87,13 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
     }
 
     private void initData() {
-        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
-        mParametersData.username = BaseApplication.parametersData.username;
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.JOBORDERUNFINSH);
+            mParametersData = (ParametersData) BaseApplication.parametersData.clone();
+            mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
+            mParametersData.username = BaseApplication.mDepartmentData.departmentName;
+        }
+
         mParametersData.fromTo = ConstantsUtils.JOBORDERUNFINSH;
 
         mGson = new Gson();
@@ -127,27 +135,33 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
                 @Override
                 public void onRightClick(View view, int position) {
                     if (!TextUtils.isEmpty(listData.get(position).getId())) {
-                        //弹出对话框，确定提交
-                        id = listData.get(position).getId();
-                        new MaterialDialog.Builder(getActivity())
-                                .title("删除")
-                                .content("请问您确定无误删除吗？")
-                                .positiveText("确定")
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
-                                                .title("删除")
-                                                .content("正在删除中，请稍等……")
-                                                .progress(true, 0)
-                                                .progressIndeterminateStyle(true)
-                                                .cancelable(false)
-                                                .show();
-                                        joborderDel(progressDialog, id);
-                                    }
-                                })
-                                .negativeText("放弃")
-                                .show();
+                        if (listData.get(position).getZhuangtai().equals("-1"))
+                        {
+                            //弹出对话框，确定提交
+                            id = listData.get(position).getId();
+                            new MaterialDialog.Builder(getActivity())
+                                    .title("删除")
+                                    .content("请问您确定无误删除吗？")
+                                    .positiveText("确定")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
+                                                    .title("删除")
+                                                    .content("正在删除中，请稍等……")
+                                                    .progress(true, 0)
+                                                    .progressIndeterminateStyle(true)
+                                                    .cancelable(false)
+                                                    .show();
+                                            joborderDel(progressDialog, id);
+                                        }
+                                    })
+                                    .negativeText("放弃")
+                                    .show();
+                        }else {
+                            Toast.makeText(getContext(),"只有未提交能够删除",Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                 }
@@ -155,27 +169,33 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
                 @Override
                 public void onBelowClick(View view, int position) {
                     if (!TextUtils.isEmpty(listData.get(position).getId())) {
-                        //弹出对话框，确定提交
-                        id = listData.get(position).getId();
-                        new MaterialDialog.Builder(getActivity())
-                                .title("提交")
-                                .content("请问您确定提交吗？")
-                                .positiveText("确定")
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
-                                                .title("提交")
-                                                .content("正在提交中，请稍等……")
-                                                .progress(true, 0)
-                                                .progressIndeterminateStyle(true)
-                                                .cancelable(false)
-                                                .show();
-                                        joborderSubmit(progressDialog, id, mParametersData.username);
-                                    }
-                                })
-                                .negativeText("放弃")
-                                .show();
+                        if (listData.get(position).getZhuangtai().equals("-1"))
+                        {
+                            //弹出对话框，确定提交
+                            id = listData.get(position).getId();
+                            new MaterialDialog.Builder(getActivity())
+                                    .title("提交")
+                                    .content("请问您确定提交吗？")
+                                    .positiveText("确定")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
+                                                    .title("提交")
+                                                    .content("正在提交中，请稍等……")
+                                                    .progress(true, 0)
+                                                    .progressIndeterminateStyle(true)
+                                                    .cancelable(false)
+                                                    .show();
+                                            joborderSubmit(progressDialog, id, mParametersData.username);
+                                        }
+                                    })
+                                    .negativeText("放弃")
+                                    .show();
+                        }else {
+                            Toast.makeText(getContext(),"任务单已提交过",Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                 }

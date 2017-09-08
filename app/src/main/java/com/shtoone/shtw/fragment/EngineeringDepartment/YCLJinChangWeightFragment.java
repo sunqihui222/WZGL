@@ -22,6 +22,7 @@ import com.shtoone.shtw.activity.DialogActivity;
 import com.shtoone.shtw.activity.YCLJinChangWeightFragmentActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.YCLJinChangWeightFragmentRecycleViewAdapter;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.bean.YCLJinChangWeightFragmentListData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
@@ -41,6 +42,8 @@ import java.util.List;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
+
+import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 
 /**
  * Created by Administrator on 2017/8/7.
@@ -78,11 +81,12 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
     }
 
     private void initData() {
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.YCLJINCHANG);
+            mParametersData = (ParametersData) BaseApplication.parametersData.clone();
+            mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
+        }
 
-        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
-        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
         mParametersData.fromTo = ConstantsUtils.YCLJINCHANG;
 
         mGson = new Gson();
