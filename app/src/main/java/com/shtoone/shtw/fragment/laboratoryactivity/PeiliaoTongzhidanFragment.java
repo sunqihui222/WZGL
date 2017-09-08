@@ -131,12 +131,12 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
         mRecyclerView.setAdapter(mScaleInAnimationAdapter);
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                jump2DetailActivity(position);
-            }
-        });
+//        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                jump2DetailActivity(position);
+//            }
+//        });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -218,7 +218,7 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         }
 
         //用于测试
-        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
+//        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
 
         if (null != listData) {
             listData.clear();

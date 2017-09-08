@@ -1,7 +1,9 @@
 package com.shtoone.shtw.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +14,9 @@ import android.widget.TextView;
 
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.bean.PeiliaoTongzhidanFragmentListData;
+import com.shtoone.shtw.fragment.engineeringactivity.TaskListDetailActivity;
+import com.shtoone.shtw.fragment.laboratoryactivity.LilunPeihebiDetailActivity;
+import com.shtoone.shtw.fragment.laboratoryactivity.PeiliaoTongzhidanDetailActivity;
 
 import java.util.List;
 
@@ -37,9 +42,9 @@ public class PeiliaoTongzhidanFragmentRVAdapter extends RecyclerView.Adapter<Rec
         Log.e(TAG, "itemsData=: "+ itemsData.toString() );
     }
 
-    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
-        this.mOnItemClickListener = mOnItemClickListener;
-    }
+//    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+//        this.mOnItemClickListener = mOnItemClickListener;
+//    }
 
     @Override
     public int getItemCount() {
@@ -63,8 +68,33 @@ public class PeiliaoTongzhidanFragmentRVAdapter extends RecyclerView.Adapter<Rec
         }
     }
 
+    private void jump1DetailActivity(int position) {
+        Intent intent = new Intent(context, PeiliaoTongzhidanDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("PeiliaoTongzhidanDetail", itemsData.get(position));
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+
+    private void jump2DetailActivity(int position) {
+        Intent intent = new Intent(context, LilunPeihebiDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("PeiliaoTongzhidanDetail", itemsData.get(position));
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+
+    private void jump3DetailActivity(int position) {
+        Intent intent = new Intent(context, TaskListDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("idNumber", itemsData.get(position).getRenwuNo());
+        bundle.putSerializable("biaoshi", "1");
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof PeiliaoTongzhidanFragmentRVAdapter.ItemViewHolder) {
             PeiliaoTongzhidanFragmentRVAdapter.ItemViewHolder mItemViewHolder = (PeiliaoTongzhidanFragmentRVAdapter.ItemViewHolder) holder;
             mItemViewHolder.cv.setCardBackgroundColor(position % 2 == 0 ? mResources.getColor(R.color.material_teal_50) : mResources.getColor(R.color.material_blue_50));
@@ -78,15 +108,36 @@ public class PeiliaoTongzhidanFragmentRVAdapter extends RecyclerView.Adapter<Rec
             mItemViewHolder.tv_renwudanNo.setText(item.getRenwuNo());
             mItemViewHolder.tv_jzbw.setText(item.getJzbw());
 
-            if (mOnItemClickListener != null) {
-                mItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int position = holder.getLayoutPosition();
-                        mOnItemClickListener.onItemClick(holder.itemView, position);
-                    }
-                });
-            }
+            mItemViewHolder.tv_noticeNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    jump1DetailActivity(holder.getLayoutPosition());
+                }
+            });
+
+            mItemViewHolder.tv_phbNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    jump2DetailActivity(holder.getLayoutPosition());
+                }
+            });
+
+            mItemViewHolder.tv_renwudanNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    jump3DetailActivity(holder.getLayoutPosition());
+                }
+            });
+
+//            if (mOnItemClickListener != null) {
+//                mItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        int position = holder.getLayoutPosition();
+//                        mOnItemClickListener.onItemClick(holder.itemView, position);
+//                    }
+//                });
+//            }
         }
     }
 

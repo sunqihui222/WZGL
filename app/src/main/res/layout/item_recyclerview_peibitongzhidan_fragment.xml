@@ -45,7 +45,8 @@
         <TextView
             android:id="@+id/tv1_item_recyclerview_peiliaotongzhidan"
             style="@style/RecyclerViewItemTextTheme"
-            android:layout_width="wrap_content"
+            android:textColor="@color/cpb_green"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/tv1"
             android:layout_toRightOf="@+id/tv1" />
@@ -94,7 +95,8 @@
         <TextView
             android:id="@+id/tv4_item_recyclerview_peiliaotongzhidan"
             style="@style/RecyclerViewItemTextTheme"
-            android:layout_width="wrap_content"
+            android:textColor="@color/cpb_green"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/tv4"
             android:layout_toRightOf="@+id/tv4" />
@@ -126,7 +128,8 @@
         <TextView
             android:id="@+id/tv6_item_recyclerview_peiliaotongzhidan"
             style="@style/RecyclerViewItemTextTheme"
-            android:layout_width="wrap_content"
+            android:textColor="@color/cpb_green"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/tv6"
             android:layout_toRightOf="@+id/tv6" />
