@@ -105,9 +105,6 @@ public class StorageFragment extends BaseLazyFragment {
     }
 
     private void initData() {
-        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
-        mParametersData.fromTo = ConstantsUtils.STORAGEFRAGMENT;
         mGson = new Gson();
         listData = new ArrayList<>();
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
@@ -246,7 +243,7 @@ public class StorageFragment extends BaseLazyFragment {
             materialID = mParametersData.materialID;
 
         }
-        departmentID = "8a8ab0b246dc81120146dc8180ba0017";
+//        departmentID = "8a8ab0b246dc81120146dc8180ba0017";
         if (null != listData) {
             listData.clear();
         }

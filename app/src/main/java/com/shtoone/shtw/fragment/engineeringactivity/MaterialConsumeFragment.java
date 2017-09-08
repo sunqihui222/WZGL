@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.MaterialConsumeFragmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.event.EventData;
@@ -64,6 +65,7 @@ public class MaterialConsumeFragment extends BaseLazyFragment{
     private Gson mGson;
     private MaterialConsumeFragmentData data;
     private Typeface mTf;
+    private DepartmentData mDepartmentData;
 
     public static MaterialConsumeFragment newInstance() {
         return new MaterialConsumeFragment();
@@ -99,9 +101,14 @@ public class MaterialConsumeFragment extends BaseLazyFragment{
 
     private void initData() {
         mGson = new Gson();
-        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
-        mParametersData.fromTo = ConstantsUtils.MATERIALCONSUME;
+        if (null != BaseApplication.parametersData) {
+            mParametersData = (ParametersData) BaseApplication.parametersData.clone();
+            mParametersData.fromTo = ConstantsUtils.STORAGEFRAGMENT;
+        }
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.MATERIALCONSUME);
+        }
+
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
 //        initToolbarMenu(mToolbar);
@@ -308,8 +315,8 @@ public class MaterialConsumeFragment extends BaseLazyFragment{
     }
 
     private void setToolbarTitle() {
-        if (null != mToolbar && null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
-            StringBuffer sb = new StringBuffer(BaseApplication.mDepartmentData.departmentName + " > ");
+        if (null != mToolbar && null != mDepartmentData && !TextUtils.isEmpty(mDepartmentData.departmentName)) {
+            StringBuffer sb = new StringBuffer(mDepartmentData.departmentName + " > ");
             sb.append(getString(R.string.engineering_department) + " > ");
             sb.append(getString(R.string.material_consume)).trimToSize();
             mToolbar.setTitle(sb.toString());

@@ -22,6 +22,7 @@ import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.TaskListImpQueryFragmentRecyclerViewAdapter;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.bean.TaskListImpQueryFragmenData;
 import com.shtoone.shtw.event.EventData;
@@ -65,6 +66,7 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
     private LinearLayoutManager mLinearLayoutManager;
     private int lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
+    private DepartmentData mDepartmentData;
 
     public static TaskListImpQueryFragment newInstance() {
         return new TaskListImpQueryFragment();
@@ -102,9 +104,18 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
     }
 
     private void initData() {
-        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
-        mParametersData.fromTo = ConstantsUtils.TASKLISTIMPQUERYFRAGMENT;
+//        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
+//        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
+//        mParametersData.fromTo = ConstantsUtils.TASKLISTIMPQUERYFRAGMENT;
+
+        if (null != BaseApplication.parametersData) {
+            mParametersData = (ParametersData) BaseApplication.parametersData.clone();
+            mParametersData.fromTo = ConstantsUtils.STORAGEFRAGMENT;
+        }
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.TASKLISTIMPQUERYFRAGMENT);
+        }
+
         mGson = new Gson();
         listData = new ArrayList<>();
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
@@ -424,8 +435,8 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
     }
 
     private void setToolbarTitle() {
-        if (null != mToolbar && null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
-            StringBuffer sb = new StringBuffer(BaseApplication.mDepartmentData.departmentName + " > ");
+        if (null != mToolbar && null != mDepartmentData && !TextUtils.isEmpty(mDepartmentData.departmentName)){
+            StringBuffer sb = new StringBuffer(mDepartmentData.departmentName + " > ");
             sb.append(getString(R.string.engineering_department) + " > ");
             sb.append(getString(R.string.renwudan_zx)).trimToSize();
             mToolbar.setTitle(sb.toString());
