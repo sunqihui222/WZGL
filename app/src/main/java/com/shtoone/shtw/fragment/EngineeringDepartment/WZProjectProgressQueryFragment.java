@@ -352,9 +352,12 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
-            this.mParametersData.projectno = mParametersData.projectno;
-            KLog.e("mParametersData:" + mParametersData.projectno);
-            mPtrFrameLayout.autoRefresh(true);
+            if (mParametersData.fromTo == ConstantsUtils.WZPROGRESS){
+                this.mParametersData.projectno = mParametersData.projectno;
+                KLog.e("mParametersData:" + mParametersData.projectno);
+                mPtrFrameLayout.autoRefresh(true);
+            }
+
         }
     }
 

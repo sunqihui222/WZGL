@@ -95,6 +95,7 @@
 
     <string name="material_consume">进出耗分析</string>
     <string name="peibi_tongzhin_cx">配比通知单查询</string>
+    <string name="peibi">配比</string>
     <string name="lilun_peihebi_cx">理论配合比查询</string>
     <string name="renwudan_zx">任务单执行</string>
 

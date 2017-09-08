@@ -48,6 +48,7 @@ public class HttpUtils {
             }
         });
         request.setRetryPolicy(new DefaultRetryPolicy(10 * 1000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        Log.e("url",url);
         queue.add(request);
     }
 
