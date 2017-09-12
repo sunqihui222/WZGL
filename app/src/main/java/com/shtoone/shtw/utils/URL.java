@@ -38,9 +38,9 @@ public class URL {
     //中交集团二航局地址
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
-    public static final String BaseURL = "http://192.168.11.100:8080/jeecg/";
+    public static final String BaseURL = "http://192.168.1.107:8080/jeecg/";
 
-//    public static final String BaseURL = "http://192.168.11.104:8082/gxzjzqms/";
+//    public static final String BaseURL = "http://192.168.0.141:8082/gxzjzqms/";
 
     /**
      * 登录地址
@@ -765,13 +765,13 @@ public class URL {
     /**
      * 进磅list数据
      */
-    public static final String ENTER_POUNDS_LIST = BaseURL + "AppGB.do?JinChangGB&jinchangshijian1=%1&chuchangshijian1=%2&orgcode=%3&pageNo=%4&maxPageItems=%5&pici=%6&cheliangbianhao=%7&gprsbianhao=%8&cailiaono=%9";
+    public static final String ENTER_POUNDS_LIST = BaseURL + "AppGB.do?JinChangGB&jinchangshijian1=%1&chuchangshijian1=%2&departid=%3&pageNo=%4&maxPageItems=%5&pici=%6&cheliangbianhao=%7&gprsbianhao=%8&cailiaono=%9";
 
-    public static String getEnterPoundsListData(String jinchangshijian1, String chuchangshijian1, String orgcode, String pageNo, String maxPageItems, String pici, String cheliangbianhao, String gprsbianhao, String cailiaono) {
+    public static String getEnterPoundsListData(String jinchangshijian1, String chuchangshijian1, String departid, String pageNo, String maxPageItems, String pici, String cheliangbianhao, String gprsbianhao, String cailiaono) {
         jinchangshijian1 = DateUtils.ChangeTimeToLong(jinchangshijian1);
         chuchangshijian1 = DateUtils.ChangeTimeToLong(chuchangshijian1);
         if (Integer.valueOf(jinchangshijian1) <= Integer.valueOf(chuchangshijian1)) {
-            String url = ENTER_POUNDS_LIST.replace("%1", jinchangshijian1).replace("%2", chuchangshijian1).replace("%3", orgcode).replace("%4", pageNo)
+            String url = ENTER_POUNDS_LIST.replace("%1", jinchangshijian1).replace("%2", chuchangshijian1).replace("%3", departid).replace("%4", pageNo)
                     .replace("%5", maxPageItems).replace("%6", pici).replace("%7", cheliangbianhao).replace("%8", gprsbianhao).replace("%9", cailiaono);
             Log.e(TAG, "磅房管理进磅list数据" + url);
             if (TextUtils.isEmpty(url)) {
@@ -785,14 +785,14 @@ public class URL {
     /**
      * 出磅List数据
      */
-    public static final String PIAY_POUNDS_LIST = BaseURL + "AppGB.do?ChuChangGB&jinchangshijian1=%1&chuchangshijian1=%2&orgcode=%3&pageNo=%4&maxPageItems=%5&cheliangbianhao=%6&gprsbianhao=%7&states=%8&cailiaono=%9";
+    public static final String PIAY_POUNDS_LIST = BaseURL + "AppGB.do?ChuChangGB&jinchangshijian1=%1&chuchangshijian1=%2&departid=%3&pageNo=%4&maxPageItems=%5&cheliangbianhao=%6&gprsbianhao=%7&states=%8&cailiaono=%9";
 
-    public static String getPlayPoundsListData(String jinchangshijian1, String chuchangshijian1, String orgcode, String pageNo, String maxPageItems, String pici,
+    public static String getPlayPoundsListData(String jinchangshijian1, String chuchangshijian1, String departid, String pageNo, String maxPageItems, String pici,
                                                String cheliangbianhao, String gprsbianhao, String cailiaono, String states) {
         jinchangshijian1 = DateUtils.ChangeTimeToLong(jinchangshijian1);
         chuchangshijian1 = DateUtils.ChangeTimeToLong(chuchangshijian1);
         if (Integer.valueOf(jinchangshijian1) <= Integer.valueOf(chuchangshijian1)) {
-            String url = PIAY_POUNDS_LIST.replace("%1", jinchangshijian1).replace("%2", chuchangshijian1).replace("%3", orgcode).replace("%4", pageNo)
+            String url = PIAY_POUNDS_LIST.replace("%1", jinchangshijian1).replace("%2", chuchangshijian1).replace("%3", departid).replace("%4", pageNo)
                     .replace("%5", maxPageItems).replace("%6", cheliangbianhao).replace("%7", gprsbianhao).replace("%8", states).replace("%9", cailiaono);
             Log.e(TAG, "磅房管理出磅list数据" + url);
             if (TextUtils.isEmpty(url)) {

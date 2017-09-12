@@ -55,9 +55,9 @@ public class PlayPoundsRecycleViewAdapter extends RecyclerView.Adapter<RecyclerV
 
             PlayPoundsListData.DataBean item = itemData.get(position);
             mItemViewHolder.tvWaagName.setText(item.getBanhezhanminchen());
-            mItemViewHolder.tvMaterialName.setText(item.getCailiaoName());
+            mItemViewHolder.tvMaterialName.setText(item.getCailiaoname());
             mItemViewHolder.tvEnterpoundTimes.setText(item.getChuchangshijian());
-            mItemViewHolder.tvProviderName.setText(item.getGongyingshangName());
+            mItemViewHolder.tvProviderName.setText(item.getGongyingshangname());
             if (item.getGuobangleibie().equals("1")){
                 mItemViewHolder.tvWaagType.setText(item.getRemark());
                 mItemViewHolder.tvWaagType.setTextColor(Color.GREEN);

@@ -54,9 +54,9 @@ public class EnterPoundsRecycleViewAdapter extends RecyclerView.Adapter<Recycler
 
             EnterPoundsListData.DataBean item = itemData.get(position);
             mItemViewHolder.tvWaagName.setText(item.getBanhezhanminchen());
-            mItemViewHolder.tvMaterialName.setText(item.getCailiaoName());
+            mItemViewHolder.tvMaterialName.setText(item.getCailiaoname());
             mItemViewHolder.tvEnterpoundTimes.setText(item.getJinchangshijian());
-            mItemViewHolder.tvProviderName.setText(item.getGongyingshangName());
+            mItemViewHolder.tvProviderName.setText(item.getGongyingshangname());
 
             if (mOnItemClickListener != null) {
                 mItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {

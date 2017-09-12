@@ -91,7 +91,7 @@ public class EnterPoundsQueryDetailActivity extends BaseActivity {
     private void initDate() {
         mGson = new Gson();
         mDataBean = (EnterPoundsListData.DataBean) getIntent().getSerializableExtra("enterdetail");
-        identificationId = mDataBean.getId();
+        identificationId = Integer.parseInt(mDataBean.getId());
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
         setSupportActionBar(mToolbar);

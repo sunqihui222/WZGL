@@ -95,7 +95,7 @@ public class PlayPoundsQueryDetailActivity extends BaseActivity {
     private void initDate() {
         mGson = new Gson();
         mDataBean = (PlayPoundsListData.DataBean) getIntent().getSerializableExtra("playdetail");
-        identificationId = mDataBean.getId();
+        identificationId = Integer.parseInt(mDataBean.getId());
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
         setSupportActionBar(mToolbar);
