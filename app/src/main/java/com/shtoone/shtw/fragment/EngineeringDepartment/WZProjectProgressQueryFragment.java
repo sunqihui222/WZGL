@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -361,6 +362,7 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     public void onResume() {
         super.onResume();
         //返回到看见此fragment时，fab显示
+        Log.e("onResume","WZProjectProgress");
     }
 
     private void initView(View view) {
@@ -374,6 +376,7 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     public void onPause() {
         super.onPause();
         //防止屏幕旋转后重画时fab显示
+        Log.e("onPause","WZProjectProgress");
 
     }
 

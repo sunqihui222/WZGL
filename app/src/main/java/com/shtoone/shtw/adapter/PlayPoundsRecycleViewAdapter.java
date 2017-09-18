@@ -17,11 +17,11 @@ import java.util.List;
 
 public class PlayPoundsRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Context context;
-    private List<PlayPoundsListData.DataBean> itemData;
+    private List<PlayPoundsListData.DataEntity> itemData;
     private Resources mResources;
     private OnItemClickListener mOnItemClickListener;
 
-    public PlayPoundsRecycleViewAdapter(Context context, List<PlayPoundsListData.DataBean> itemData){
+    public PlayPoundsRecycleViewAdapter(Context context, List<PlayPoundsListData.DataEntity> itemData){
         super();
         this.context = context;
         this.itemData = itemData;
@@ -53,16 +53,16 @@ public class PlayPoundsRecycleViewAdapter extends RecyclerView.Adapter<RecyclerV
             ItemViewHolder mItemViewHolder = (ItemViewHolder) holder;
             mItemViewHolder.cv.setCardBackgroundColor(position % 2 == 0 ? mResources.getColor(R.color.material_teal_50) : mResources.getColor(R.color.material_blue_50));
 
-            PlayPoundsListData.DataBean item = itemData.get(position);
+            PlayPoundsListData.DataEntity item = itemData.get(position);
             mItemViewHolder.tvWaagName.setText(item.getBanhezhanminchen());
             mItemViewHolder.tvMaterialName.setText(item.getCailiaoname());
             mItemViewHolder.tvEnterpoundTimes.setText(item.getChuchangshijian());
             mItemViewHolder.tvProviderName.setText(item.getGongyingshangname());
             if (item.getGuobangleibie().equals("1")){
-                mItemViewHolder.tvWaagType.setText(item.getRemark());
+                mItemViewHolder.tvWaagType.setText("调拨");
                 mItemViewHolder.tvWaagType.setTextColor(Color.GREEN);
             }else if(item.getGuobangleibie().equals("0")){
-                mItemViewHolder.tvWaagType.setText(item.getRemark());
+                mItemViewHolder.tvWaagType.setText("不合格出场");
                 mItemViewHolder.tvWaagType.setTextColor(Color.RED);
             }
             if (mOnItemClickListener != null) {

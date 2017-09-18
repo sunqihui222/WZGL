@@ -73,14 +73,13 @@ public class YCLJinChangWeightFragmentDetailRecycleViewAdapter extends RecyclerV
             mItemViewHolder.tv11.setText(String.valueOf(item.getChengzhongpiancha()));
             mItemViewHolder.tv12.setText(item.getSibangyuan());
             mItemViewHolder.tv13.setText(String.valueOf(item.getRemark()));
-            mItemViewHolder.tv_pici.setText(String.valueOf(item.getPici()));
 
-            //            if (null==item.getPici()){
-            //                mItemViewHolder.tv_pici.setText("");
-            //            }
-            //            else{
-            //                mItemViewHolder.tv_pizhong.setText(item.getPici()+"");
-            //            }
+            if (String.valueOf(item.getPici()).equals("null")){
+                mItemViewHolder.tv_pici.setText("");
+            }
+            else{
+                mItemViewHolder.tv_pici.setText(item.getPici()+"");
+            }
 
 
             if (mOnItemClickListener != null) {

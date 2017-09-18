@@ -52,7 +52,7 @@ public class PlayPoundsQuery extends BaseLazyFragment {
     private LinearLayoutManager mLinearLayoutManager;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
     private SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter;
-    private List<PlayPoundsListData.DataBean> listDatas;
+    private List<PlayPoundsListData.DataEntity> listDatas;
     private PlayPoundsRecycleViewAdapter mAdapter;
     private PlayPoundsListData enterPoundsListData;
     private int lastVisibleItemPosition;
@@ -269,7 +269,7 @@ public class PlayPoundsQuery extends BaseLazyFragment {
             if (jsonObject.optBoolean("success")) {
                 enterPoundsListData = mGson.fromJson(response, PlayPoundsListData.class);
                 if (null != enterPoundsListData) {
-                    if (enterPoundsListData.isSuccess() && enterPoundsListData.getData().size() > 0) {
+                    if (enterPoundsListData.getSuccess() && enterPoundsListData.getData().size() > 0) {
                         listDatas.addAll(enterPoundsListData.getData());
                         if (null != listDatas) {
                             if (listDatas.size() > 0) {
@@ -315,7 +315,7 @@ public class PlayPoundsQuery extends BaseLazyFragment {
             if (jsonObject.optBoolean("success")) {
                 enterPoundsListData = mGson.fromJson(response, PlayPoundsListData.class);
                 if (null != enterPoundsListData) {
-                    if (enterPoundsListData.isSuccess() && enterPoundsListData.getData().size() > 0) {
+                    if (enterPoundsListData.getSuccess() && enterPoundsListData.getData().size() > 0) {
                         if (null != listDatas) {
                             listDatas.addAll(enterPoundsListData.getData());
                             if (listDatas.size() > 0) {

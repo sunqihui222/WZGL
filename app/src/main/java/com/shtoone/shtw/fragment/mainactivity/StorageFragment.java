@@ -115,7 +115,7 @@ public class StorageFragment extends BaseLazyFragment {
             mParametersData.fromTo = ConstantsUtils.STORAGEFRAGMENT;
         }
         if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
-            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.CONCRETEFRAGMENT);
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.STORAGEFRAGMENT);
         }
 
         setToolbarTitle();
@@ -241,6 +241,7 @@ public class StorageFragment extends BaseLazyFragment {
             currentPage = mParametersData.currentPage;
             maxPageItems = mParametersData.maxPageItems;
             materialID = mParametersData.materialID;
+//            materialID = mParametersData.cailiaono;
 
         }
 //        departmentID = "8a8ab0b246dc81120146dc8180ba0017";
@@ -262,13 +263,14 @@ public class StorageFragment extends BaseLazyFragment {
         String materialID ="";
         if (null != mParametersData) {
             departmentID = mParametersData.userGroupID;
-            cailiaomingcheng = mParametersData.cailiaomingcheng;
+//            cailiaomingcheng = mParametersData.cailiaomingcheng;
             currentPage = mParametersData.currentPage;
             maxPageItems = mParametersData.maxPageItems;
-            materialID = mParametersData.materialID;
+            materialID= mParametersData.materialID;
+ //           materialID = mParametersData.cailiaono;
         }
-        Log.e(TAG, "库存主页更多url=:" + URL.getStorageListData(departmentID, cailiaomingcheng, currentPage, maxPageItems));
-        return URL.getStorageListData(departmentID, cailiaomingcheng, currentPage, maxPageItems);
+        Log.e(TAG, "库存主页更多url=:" + URL.getStorageListData(departmentID, materialID, currentPage, maxPageItems));
+        return URL.getStorageListData(departmentID, materialID, currentPage, maxPageItems);
     }
 
     @Override
@@ -408,6 +410,7 @@ public class StorageFragment extends BaseLazyFragment {
             if (mParametersData.fromTo == ConstantsUtils.STORAGEFRAGMENT) {
                 fab.show();
                 this.mParametersData = mParametersData;
+                this.mParametersData.materialID = mParametersData.materialID;
                 mPtrFrameLayout.autoRefresh(true);
             }
         }

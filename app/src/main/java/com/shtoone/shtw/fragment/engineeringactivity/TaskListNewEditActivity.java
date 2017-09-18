@@ -87,7 +87,6 @@ public class TaskListNewEditActivity extends BaseActivity implements View.OnClic
     private List<TaskListEditActivityData.DataBean> listData;
     private String url;
     private Button btn_save;
-    private Button btn_submit;
     private String id;
 
     private String renwuno;
@@ -124,7 +123,6 @@ public class TaskListNewEditActivity extends BaseActivity implements View.OnClic
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptr_task_list_edit_activity);
         mPageStateLayout = (PageStateLayout) findViewById(R.id.psl_task_list_edit_activity);
         btn_save = (Button) findViewById(R.id.btn_save);
-        btn_submit = (Button) findViewById(R.id.btn_submit);
         //基础信息
         tv_renwuno = (EditText) findViewById(R.id.tv_renwuno_task_list_edit);
         tv_jhfl = (EditText) findViewById(R.id.tv_fangliang_task_list_edit);
@@ -142,7 +140,6 @@ public class TaskListNewEditActivity extends BaseActivity implements View.OnClic
         tv_remrak = (EditText) findViewById(R.id.tv_remrak_task_list_edit);
 
         btn_save.setOnClickListener(this);
-        btn_submit.setOnClickListener(this);
         tv_depart.setOnClickListener(this);
         tv_jzbw.setOnClickListener(this);
         tv_sjqd.setOnClickListener(this);
@@ -352,10 +349,8 @@ public class TaskListNewEditActivity extends BaseActivity implements View.OnClic
                     }
                 }
                 break;
-            //提交
-            case R.id.btn_submit:
 
-                break;
+
 
             //所属机构
             case R.id.tv_depart_task_list_edit:

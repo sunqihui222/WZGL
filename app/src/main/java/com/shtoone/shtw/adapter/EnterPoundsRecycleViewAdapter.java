@@ -16,11 +16,11 @@ import java.util.List;
 
 public class EnterPoundsRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
-    private List<EnterPoundsListData.DataBean> itemData;
+    private List<EnterPoundsListData.DataEntity> itemData;
     private Resources mResources;
     private OnItemClickListener mOnItemClickListener;
 
-    public EnterPoundsRecycleViewAdapter(Context context, List<EnterPoundsListData.DataBean> itemData){
+    public EnterPoundsRecycleViewAdapter(Context context, List<EnterPoundsListData.DataEntity> itemData){
         super();
         this.context = context;
         this.itemData = itemData;
@@ -52,7 +52,7 @@ public class EnterPoundsRecycleViewAdapter extends RecyclerView.Adapter<Recycler
             ItemViewHolder mItemViewHolder = (ItemViewHolder) holder;
             mItemViewHolder.cv.setCardBackgroundColor(position % 2 == 0 ? mResources.getColor(R.color.material_teal_50) : mResources.getColor(R.color.material_blue_50));
 
-            EnterPoundsListData.DataBean item = itemData.get(position);
+            EnterPoundsListData.DataEntity item = itemData.get(position);
             mItemViewHolder.tvWaagName.setText(item.getBanhezhanminchen());
             mItemViewHolder.tvMaterialName.setText(item.getCailiaoname());
             mItemViewHolder.tvEnterpoundTimes.setText(item.getJinchangshijian());

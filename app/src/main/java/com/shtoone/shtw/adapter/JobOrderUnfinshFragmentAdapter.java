@@ -14,6 +14,7 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.bean.JobOrderUnfinshData;
 import com.shtoone.shtw.bean.UserInfoData;
+import com.shtoone.shtw.ui.SlantedTextView;
 
 import java.util.List;
 
@@ -77,25 +78,17 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
             mItemViewHolder.tvPeiBiNo.setText(item.getSgphbno());
             mItemViewHolder.tvDesignStrength.setText(item.getShuinibiaohao());
             mItemViewHolder.tvPlanVolume.setText(item.getJihuafangliang());
-            mItemViewHolder.mDelImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (mOnItemClickListener != null) {
-                        int position = holder.getLayoutPosition();
-                        mOnItemClickListener.onRightClick(v, position);
-                    }
-                }
-            });
-            mItemViewHolder.mSubmitImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnItemClickListener != null) {
-                        int position = holder.getLayoutPosition();
-                        mOnItemClickListener.onBelowClick(v, position);
-                    }
-                }
-            });
+            if (item.getZhuangtai().equals("0")) {
+                mItemViewHolder.stv_ischeck.setText("未配料");
+            } else if (item.getZhuangtai().equals("1")) {
+                mItemViewHolder.stv_ischeck.setText("已配料");
+            } else if (item.getZhuangtai().equals("2")) {
+                mItemViewHolder.stv_ischeck.setText("生产中");
+            } else if (item.getZhuangtai().equals("3")) {
+                mItemViewHolder.stv_ischeck.setText("已完成");
+            } else if (item.getZhuangtai().equals("-1")) {
+                mItemViewHolder.stv_ischeck.setText("未提交");
+            }
 
             if (mOnItemClickListener != null) {
                 mItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +96,15 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
                     public void onClick(View v) {
                         int position = holder.getLayoutPosition();
                         mOnItemClickListener.onItemClick(holder.itemView, position);
+                    }
+                });
+
+                mItemViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        int position = holder.getLayoutPosition();
+                        mOnItemClickListener.onLongItemClick(holder.itemView, position);
+                        return true;
                     }
                 });
             }
@@ -134,19 +136,18 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        TextView tvState;
-        TextView tvOpenDate;
-        TextView tvProjectName;
-        TextView tvCastingParts;
-        TextView tvCreateDate;
-        TextView tvCreatePerson;
-        TextView tvTaskId;
-        TextView tvPeiBiNo;
-        TextView tvDesignStrength;
-        TextView tvPlanVolume;
-        ImageView mDelImageView;
-        ImageView mSubmitImageView;
+        CardView        cv;
+        TextView        tvState;
+        TextView        tvOpenDate;
+        TextView        tvProjectName;
+        TextView        tvCastingParts;
+        TextView        tvCreateDate;
+        TextView        tvCreatePerson;
+        TextView        tvTaskId;
+        TextView        tvPeiBiNo;
+        TextView        tvDesignStrength;
+        TextView        tvPlanVolume;
+        SlantedTextView stv_ischeck;
 
         public ItemViewHolder(View view) {
             super(view);
@@ -161,13 +162,8 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
             tvPeiBiNo = (TextView) view.findViewById(R.id.tvPeiBiNo);
             tvDesignStrength = (TextView) view.findViewById(R.id.tvDesignStrength);
             tvPlanVolume = (TextView) view.findViewById(R.id.tvPlanVolume);
-            mDelImageView = (ImageView) view.findViewById(R.id.iv_right_item_rv_main_fragment);
-            mSubmitImageView = (ImageView) view.findViewById(R.id.iv_blew_item_rv_main_fragment);
+            stv_ischeck = (SlantedTextView) view.findViewById(R.id.stv_ischeck);
 
-            if (!mUserInfoData.getQuanxian().isWZGCB()){
-                mDelImageView.setVisibility(View.GONE);
-                mSubmitImageView.setVisibility(View.GONE);
-            }
         }
     }
 

@@ -394,9 +394,10 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
                 break;
             case ConstantsUtils.STORAGEFRAGMENT:
-                ms_select_material.setVisibility(View.VISIBLE);
-                url = URL.getStorageMaterialName();
-                refresh();
+ //               ms_select_material.setVisibility(View.VISIBLE);
+ //               url = URL.getStorageMaterialName();
+                tv_MaterialName.setVisibility(View.VISIBLE);
+ //               refresh();
                  break;
             case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
                 ms_select_strength.setVisibility(View.VISIBLE);
@@ -847,6 +848,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
                 tv_MaterialName.setText(data.getExtras().getString("cailiaoname"));
                 mParametersData.cailiaono=data.getExtras().getString("cailiaono");
+                mParametersData.materialID = data.getExtras().getString("cailiaono");
                 Log.e("tv_MaterialName",data.getStringExtra("cailiaoname"));
 
             }
