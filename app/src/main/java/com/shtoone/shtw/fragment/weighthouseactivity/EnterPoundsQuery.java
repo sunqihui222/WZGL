@@ -52,7 +52,7 @@ public class EnterPoundsQuery extends BaseFragment {
     private RecyclerView mRecyclerView;
     private Gson mGson;
     private EnterPoundsListData enterPoundsListData;
-    private List<EnterPoundsListData.DataBean> listDatas;
+    private List<EnterPoundsListData.DataEntity> listDatas;
     private LinearLayoutManager mLinearLayoutManager;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
     private SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter;
@@ -263,7 +263,7 @@ public class EnterPoundsQuery extends BaseFragment {
             if (jsonObject.optBoolean("success")) {
                 enterPoundsListData = mGson.fromJson(response, EnterPoundsListData.class);
                 if (null != enterPoundsListData) {
-                    if (enterPoundsListData.isSuccess() && enterPoundsListData.getData().size() > 0) {
+                    if (enterPoundsListData.getSuccess() && enterPoundsListData.getData().size() > 0) {
                         listDatas.addAll(enterPoundsListData.getData());
                         if (null != listDatas) {
                             if (listDatas.size() > 0) {
@@ -309,7 +309,7 @@ public class EnterPoundsQuery extends BaseFragment {
             if (jsonObject.optBoolean("success")) {
                 enterPoundsListData = mGson.fromJson(response, EnterPoundsListData.class);
                 if (null != enterPoundsListData) {
-                    if (enterPoundsListData.isSuccess() && enterPoundsListData.getData().size() > 0) {
+                    if (enterPoundsListData.getSuccess() && enterPoundsListData.getData().size() > 0) {
                         if (null != listDatas) {
                             listDatas.addAll(enterPoundsListData.getData());
                             if (listDatas.size() > 0) {

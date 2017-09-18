@@ -64,13 +64,12 @@ public class YCLChuChangWeightFragmentRecycleViewAdapter extends RecyclerView.Ad
             mItemViewHolder.tv_provider.setText(item.getGongyingshangName());
             mItemViewHolder.tv_pizhong.setText(item.getPizhong()+"");
             mItemViewHolder.tv_maozhong.setText(item.getMaozhong()+"");
-            mItemViewHolder.tv_pici.setText(String.valueOf(item.getPici()));
-//            if (null==item.getPici()){
-//                mItemViewHolder.tv_pici.setText("");
-//            }
-//            else{
-//                mItemViewHolder.tv_pizhong.setText(item.getPici()+"");
-//            }
+            if (String.valueOf(item.getPici()).equals("null")){
+                mItemViewHolder.tv_pici.setText("");
+            }
+            else{
+                mItemViewHolder.tv_pizhong.setText(item.getPici()+"");
+            }
 
             mItemViewHolder.tv_jingzhong.setText(item.getJingzhong()+"");
 

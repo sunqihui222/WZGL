@@ -42,9 +42,9 @@ public class PeiliaoTongzhidanFragmentRVAdapter extends RecyclerView.Adapter<Rec
         Log.e(TAG, "itemsData=: "+ itemsData.toString() );
     }
 
-//    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
-//        this.mOnItemClickListener = mOnItemClickListener;
-//    }
+    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
 
     @Override
     public int getItemCount() {
@@ -88,6 +88,7 @@ public class PeiliaoTongzhidanFragmentRVAdapter extends RecyclerView.Adapter<Rec
         Intent intent = new Intent(context, TaskListDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("idNumber", itemsData.get(position).getRenwuNo());
+        itemsData.get(position);
         bundle.putSerializable("biaoshi", "1");
         intent.putExtras(bundle);
         context.startActivity(intent);
@@ -108,36 +109,36 @@ public class PeiliaoTongzhidanFragmentRVAdapter extends RecyclerView.Adapter<Rec
             mItemViewHolder.tv_renwudanNo.setText(item.getRenwuNo());
             mItemViewHolder.tv_jzbw.setText(item.getJzbw());
 
-            mItemViewHolder.tv_noticeNo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    jump1DetailActivity(holder.getLayoutPosition());
-                }
-            });
+//            mItemViewHolder.tv_noticeNo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    jump1DetailActivity(holder.getLayoutPosition());
+//                }
+//            });
+//
+//            mItemViewHolder.tv_phbNo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    jump2DetailActivity(holder.getLayoutPosition());
+//                }
+//            });
+//
+//            mItemViewHolder.tv_renwudanNo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    jump3DetailActivity(holder.getLayoutPosition());
+//                }
+//            });
 
-            mItemViewHolder.tv_phbNo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    jump2DetailActivity(holder.getLayoutPosition());
-                }
-            });
-
-            mItemViewHolder.tv_renwudanNo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    jump3DetailActivity(holder.getLayoutPosition());
-                }
-            });
-
-//            if (mOnItemClickListener != null) {
-//                mItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        int position = holder.getLayoutPosition();
-//                        mOnItemClickListener.onItemClick(holder.itemView, position);
-//                    }
-//                });
-//            }
+            if (mOnItemClickListener != null) {
+                mItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = holder.getLayoutPosition();
+                        mOnItemClickListener.onItemClick(holder.itemView, position);
+                    }
+                });
+            }
         }
     }
 

@@ -43,6 +43,11 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BATTERY_STATS" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -180,6 +185,13 @@
         <activity
             android:name=".activity.EngineerDepartmentActivity"
             android:launchMode="singleTop" />
+
+        <activity android:name=".fragment.laboratoryactivity.PeiliaoFenLieActivity"
+                    android:launchMode="singleTop"
+            />
+
+        <activity android:name=".fragment.laboratoryactivity.PeiliaoTongzhidanQrcodeActivity"
+                  android:launchMode="singleTop"/>
 
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver

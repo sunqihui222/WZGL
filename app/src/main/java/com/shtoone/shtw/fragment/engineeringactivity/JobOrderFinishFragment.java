@@ -126,8 +126,7 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
             }
 
             @Override
-            public void onRightClick(View view, int position) {
-
+            public void onLongItemClick(View view, int position) {
                 if (!TextUtils.isEmpty(listData.get(position).getId())) {
                     if (listData.get(position).getZhuangtai().equals("2"))
                     {
@@ -158,10 +157,6 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
                 }
             }
 
-            @Override
-            public void onBelowClick(View view, int position) {
-
-            }
         });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

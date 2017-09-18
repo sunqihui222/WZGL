@@ -378,7 +378,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            >
 
                             <Button
                                 android:id="@+id/btn_save"
@@ -387,12 +389,6 @@
                                 android:layout_weight="1"
                                 android:text="保存" />
 
-                            <Button
-                                android:id="@+id/btn_submit"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="提交" />
                         </LinearLayout>
                     </LinearLayout>
                 </android.support.v4.widget.NestedScrollView>

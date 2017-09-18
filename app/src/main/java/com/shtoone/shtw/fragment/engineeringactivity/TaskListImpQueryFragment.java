@@ -110,7 +110,7 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
 
         if (null != BaseApplication.parametersData) {
             mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-            mParametersData.fromTo = ConstantsUtils.STORAGEFRAGMENT;
+            mParametersData.fromTo = ConstantsUtils.TASKLISTIMPQUERYFRAGMENT;
         }
         if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
             mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.TASKLISTIMPQUERYFRAGMENT);

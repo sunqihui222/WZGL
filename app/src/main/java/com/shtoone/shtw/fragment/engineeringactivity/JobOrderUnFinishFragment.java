@@ -1,6 +1,8 @@
 package com.shtoone.shtw.fragment.engineeringactivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -34,6 +38,7 @@ import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.HttpUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
+import com.shtoone.shtw.utils.ScreenUtils;
 import com.shtoone.shtw.utils.URL;
 import com.socks.library.KLog;
 
@@ -51,6 +56,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
+import static com.shtoone.shtw.BaseApplication.context;
 import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 
 /**
@@ -74,7 +80,9 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
     private int lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
     private String id;
+    private String zhuangtai;
     private UserInfoData mUserInfoData;
+    private PopupWindow mPopTop;
 
     public static JobOrderUnFinishFragment newInstance() {
         return new JobOrderUnFinishFragment();
@@ -103,19 +111,19 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mUserInfoData = BaseApplication.mUserInfoData;
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mUserInfoData.getQuanxian().isWZGCB()) {
-                    fab.setVisibility(View.VISIBLE);
-                    Intent intent = new Intent(_mActivity, TaskListNewEditActivity.class);
-                    intent.putExtra("username", mParametersData.username);
-                    startActivity(intent);
-                } else {
-                    fab.setVisibility(View.GONE);
-                }
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mUserInfoData.getQuanxian().isWZGCB()) {
+//                    fab.setVisibility(View.VISIBLE);
+//                    Intent intent = new Intent(_mActivity, TaskListNewEditActivity.class);
+//                    intent.putExtra("username", mParametersData.username);
+//                    startActivity(intent);
+//                } else {
+//                    fab.setVisibility(View.GONE);
+//                }
+//            }
+//        });
 
         //设置动画与适配器
         SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new JobOrderUnfinshFragmentAdapter(_mActivity, listData));
@@ -124,42 +132,18 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
         mRecyclerView.setAdapter(mScaleInAnimationAdapter);
         if (mUserInfoData.getQuanxian().isWZGCB()) {
+
+
             mAdapter.setOnItemClickListener(new OnItemDelClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
                     // 实现局部界面刷新, 这个view就是被点击的item布局对象
-                    changeReadedState(view);
-                    jump2TaskListDetailActivity(position);
-                }
-
-                @Override
-                public void onRightClick(View view, int position) {
                     if (!TextUtils.isEmpty(listData.get(position).getId())) {
-                        if (listData.get(position).getZhuangtai().equals("-1"))
-                        {
-                            //弹出对话框，确定提交
-                            id = listData.get(position).getId();
-                            new MaterialDialog.Builder(getActivity())
-                                    .title("删除")
-                                    .content("请问您确定无误删除吗？")
-                                    .positiveText("确定")
-                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
-                                                    .title("删除")
-                                                    .content("正在删除中，请稍等……")
-                                                    .progress(true, 0)
-                                                    .progressIndeterminateStyle(true)
-                                                    .cancelable(false)
-                                                    .show();
-                                            joborderDel(progressDialog, id);
-                                        }
-                                    })
-                                    .negativeText("放弃")
-                                    .show();
-                        }else {
-                            Toast.makeText(getContext(),"只有未提交能够删除",Toast.LENGTH_SHORT).show();
+
+                        if (listData.get(position).getZhuangtai().equals("-1")){
+
+                            changeReadedState(view);
+                            jump2TaskListDetailActivity(position);
                         }
 
                     }
@@ -167,38 +151,15 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
                 }
 
                 @Override
-                public void onBelowClick(View view, int position) {
+                public void onLongItemClick(View view, int position) {
                     if (!TextUtils.isEmpty(listData.get(position).getId())) {
-                        if (listData.get(position).getZhuangtai().equals("-1"))
-                        {
-                            //弹出对话框，确定提交
-                            id = listData.get(position).getId();
-                            new MaterialDialog.Builder(getActivity())
-                                    .title("提交")
-                                    .content("请问您确定提交吗？")
-                                    .positiveText("确定")
-                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
-                                                    .title("提交")
-                                                    .content("正在提交中，请稍等……")
-                                                    .progress(true, 0)
-                                                    .progressIndeterminateStyle(true)
-                                                    .cancelable(false)
-                                                    .show();
-                                            joborderSubmit(progressDialog, id, mParametersData.username);
-                                        }
-                                    })
-                                    .negativeText("放弃")
-                                    .show();
-                        }else {
-                            Toast.makeText(getContext(),"任务单已提交过",Toast.LENGTH_SHORT).show();
-                        }
-
+                        zhuangtai = listData.get(position).getZhuangtai();
+                        id = listData.get(position).getId();
+                        setMyPop(view);
                     }
-
                 }
+
+
             });
         }
 
@@ -592,5 +553,122 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
         bundle.putString("tasklistdetail", listData.get(position).getId());
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    private void setMyPop(View view){
+        mPopTop = new PopupWindow(context);
+        int w = ScreenUtils.getScreenWidth(context);
+        int h = ScreenUtils.getScreenHeight(context);
+        mPopTop.setWidth(w / 2);
+        mPopTop.setHeight(RecyclerView.LayoutParams.WRAP_CONTENT);
+        mPopTop.setFocusable(true);////获取焦点
+        mPopTop.setTouchable(true);
+        mPopTop.setOutsideTouchable(true);//设置popupwindow外部可点击
+        //    mPopTop.update();// 刷新状态
+        ColorDrawable dw = new ColorDrawable(0000000000);// 实例化一个ColorDrawable颜色为半透明
+        mPopTop.setBackgroundDrawable(dw);// 点back键和其他地方使其消失,设置了这个才能触发OnDismisslistener ，设置其他控件变化等操作
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View conentView = inflater.inflate(R.layout.pop_top, null);
+        setContentViewClickListener(conentView);
+        mPopTop.setContentView(conentView);
+        mPopTop.showAsDropDown(view, ScreenUtils.getScreenWidth(context)/4, 0);
+    }
+
+    private void setContentViewClickListener(View conentView){
+        LinearLayout lin_newedit = (LinearLayout) conentView
+                .findViewById(R.id.lin_newedit);
+        LinearLayout lin_submit = (LinearLayout) conentView
+                .findViewById(R.id.lin_submit);
+
+        LinearLayout lin_delete = (LinearLayout) conentView
+                .findViewById(R.id.lin_delete);
+
+        lin_newedit.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                if (mUserInfoData.getQuanxian().isWZGCB()) {
+
+                    Intent intent = new Intent(_mActivity, TaskListNewEditActivity.class);
+                    intent.putExtra("username", mParametersData.username);
+                    startActivity(intent);
+                }
+
+                mPopTop.dismiss();
+            }
+        });
+
+        lin_submit.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (zhuangtai.equals("-1"))
+                {
+                    //弹出对话框，确定提交
+
+                    new MaterialDialog.Builder(getActivity())
+                            .title("提交")
+                            .content("请问您确定提交吗？")
+                            .positiveText("确定")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
+                                            .title("提交")
+                                            .content("正在提交中，请稍等……")
+                                            .progress(true, 0)
+                                            .progressIndeterminateStyle(true)
+                                            .cancelable(false)
+                                            .show();
+                                    joborderSubmit(progressDialog, id, mParametersData.username);
+                                }
+                            })
+                            .negativeText("放弃")
+                            .show();
+                }else {
+                    Toast.makeText(getContext(),"任务单已提交过",Toast.LENGTH_SHORT).show();
+                }
+                mPopTop.dismiss();
+
+
+            }
+        });
+
+        lin_delete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                if (zhuangtai.equals("-1"))
+                {
+                    //弹出对话框，确定提交
+
+                    new MaterialDialog.Builder(getActivity())
+                            .title("删除")
+                            .content("请问您确定无误删除吗？")
+                            .positiveText("确定")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
+                                            .title("删除")
+                                            .content("正在删除中，请稍等……")
+                                            .progress(true, 0)
+                                            .progressIndeterminateStyle(true)
+                                            .cancelable(false)
+                                            .show();
+                                    joborderDel(progressDialog, id);
+                                }
+                            })
+                            .negativeText("放弃")
+                            .show();
+                }else {
+                    Toast.makeText(getContext(),"只有未提交能够删除",Toast.LENGTH_SHORT).show();
+                }
+
+                mPopTop.dismiss();
+            }
+        });
+
     }
 }

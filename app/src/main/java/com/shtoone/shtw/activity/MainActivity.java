@@ -103,6 +103,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }, 250);
             }
         });
+
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation_main_activity);
     }
 
@@ -145,6 +146,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, boolean wasSelected) {
+                BaseApplication.parametersData.cailiaono = "";
+                BaseApplication.parametersData.materialID = "";
                 showHideFragment(mFragments[position], mFragments[bottomNavigationPreposition]);
                 bottomNavigationPreposition = position;
 
@@ -157,6 +160,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
                     mAnimator.start();
                 }
+
+
             }
         });
         bottomNavigation.setCurrentItem(0);

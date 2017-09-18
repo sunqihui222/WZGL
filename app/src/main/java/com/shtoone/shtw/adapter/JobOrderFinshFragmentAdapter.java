@@ -16,6 +16,7 @@ import com.shtoone.shtw.bean.JobOrderFinshData;
 import com.shtoone.shtw.bean.JobOrderUnfinshData;
 import com.shtoone.shtw.bean.UserInfoData;
 import com.shtoone.shtw.ui.MyProgressBar;
+import com.shtoone.shtw.ui.SlantedTextView;
 
 import java.util.List;
 
@@ -81,6 +82,13 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
             mItemViewHolder.tvPeiBiNo.setText(item.getSgphbno());
             mItemViewHolder.tvDesignStrength.setText(item.getShuinibiaohao());
             mItemViewHolder.tvPlanVolume.setText(item.getJihuafangliang());
+            if (item.getZhuangtai().equals("2")){
+                mItemViewHolder.stv_ischeck.setText("生产中");
+            }else if (item.getZhuangtai().equals("3")){
+                mItemViewHolder.stv_ischeck.setText("已完成");
+            }
+
+
             double v = Double.parseDouble(item.getBaifenbi()) * 100;
             int jindu = (int) v;
             mItemViewHolder.pb_jindu.setProgress(jindu);
@@ -93,17 +101,17 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
                         mOnItemClickListener.onItemClick(holder.itemView, position);
                     }
                 });
+
+                mItemViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        int position = holder.getLayoutPosition();
+                        mOnItemClickListener.onLongItemClick(holder.itemView, position);
+                        return true;
+                    }
+                });
             }
 
-            mItemViewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnItemClickListener != null) {
-                        int position = holder.getLayoutPosition();
-                        mOnItemClickListener.onRightClick(v, position);
-                    }
-                }
-            });
 
         }
 
@@ -132,18 +140,18 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        TextView tvState;
-        TextView tvOpenDate;
-        TextView tvCastingParts;
-        TextView tvRealVolume;
-        TextView tvjiecao;
-        TextView tvTaskId;
-        TextView tvPeiBiNo;
-        TextView tvDesignStrength;
-        TextView tvPlanVolume;
-        MyProgressBar pb_jindu;
-        ImageView mImageView;
+        CardView        cv;
+        TextView        tvState;
+        TextView        tvOpenDate;
+        TextView        tvCastingParts;
+        TextView        tvRealVolume;
+        TextView        tvjiecao;
+        TextView        tvTaskId;
+        TextView        tvPeiBiNo;
+        TextView        tvDesignStrength;
+        TextView        tvPlanVolume;
+        MyProgressBar   pb_jindu;
+        SlantedTextView stv_ischeck;
 
         public ItemViewHolder(View view) {
             super(view);
@@ -158,11 +166,8 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
             tvDesignStrength = (TextView) view.findViewById(R.id.tvDesignStrength);
             tvPlanVolume = (TextView) view.findViewById(R.id.tvPlanVolume);
             pb_jindu = (MyProgressBar) view.findViewById(R.id.executeProgress);
-            mImageView = (ImageView) view.findViewById(R.id.iv_right_item_rv_main_fragment);
+            stv_ischeck = (SlantedTextView) view.findViewById(R.id.stv_ischeck);
 
-            if (!mUserInfoData.getQuanxian().isWZGCB()){
-                mImageView.setVisibility(View.GONE);
-            }
         }
     }
 

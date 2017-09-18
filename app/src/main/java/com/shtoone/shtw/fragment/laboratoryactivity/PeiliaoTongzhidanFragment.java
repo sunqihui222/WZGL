@@ -139,12 +139,12 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
         mRecyclerView.setAdapter(mScaleInAnimationAdapter);
-//        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                jump2DetailActivity(position);
-//            }
-//        });
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                jump2DetailActivity(position);
+            }
+        });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -251,7 +251,7 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
             maxPageItems = mParametersData.maxPageItems;
         }
         //用于测试
-        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
+        //userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
         return URL.getPeiliaotongzhidan(userGroupID, startDateTime, endDateTime, currentPage,maxPageItems );
     }
 
@@ -379,7 +379,7 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
 
     //进入ProduceQueryDetailActivity
     private void jump2DetailActivity(int position) {
-        Intent intent = new Intent(_mActivity, PeiliaoTongzhidanDetailActivity.class);
+        Intent intent = new Intent(_mActivity, PeiliaoFenLieActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("PeiliaoTongzhidanDetail", listData.get(position));
         intent.putExtras(bundle);

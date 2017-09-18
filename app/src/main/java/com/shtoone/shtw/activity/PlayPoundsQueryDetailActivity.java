@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.bm.library.Info;
+import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.shtoone.shtw.R;
@@ -37,11 +40,13 @@ public class PlayPoundsQueryDetailActivity extends BaseActivity {
     private TextView tvProvider, tvWaag, tvWeighman, tvEnterTime, tvPlayTime, tvSilo, tvPici, tvOrderNo, tvPlate, tvRemark;//基本信息
     private TextView tvMaterial, tvRoughWeight, tvPiZhong, tvKouZhong, tvKouLv, tvNetWeight,tvDeviation;//材料明细
     private ImageView ivJCGKPicname,ivJCCPPicname,ivJCHCPPicname,ivJCBFPicname;//进场情况
+    private PhotoView img2;
     private ImageView ivCCGKPicname,ivCCCPPicname,ivCCHCPPicname,ivCCBFPicname;//出场情况
     private TextView tvName;
     private Gson mGson;
-    private PlayPoundsListData.DataBean mDataBean;
+    private PlayPoundsListData.DataEntity mDataBean;
     private int identificationId;
+    Info mRectF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +87,7 @@ public class PlayPoundsQueryDetailActivity extends BaseActivity {
 
         //进场情况
         ivJCGKPicname = (ImageView)findViewById(R.id.ivJCGKPicname);
+        img2 = (PhotoView) findViewById(R.id.img2);
         ivJCCPPicname = (ImageView)findViewById(R.id.ivJCCPPicname);
         ivJCHCPPicname = (ImageView)findViewById(R.id.ivJCHCPPicname);
         ivJCBFPicname = (ImageView)findViewById(R.id.ivJCBFPicname);
@@ -94,8 +100,8 @@ public class PlayPoundsQueryDetailActivity extends BaseActivity {
 
     private void initDate() {
         mGson = new Gson();
-        mDataBean = (PlayPoundsListData.DataBean) getIntent().getSerializableExtra("playdetail");
-        identificationId = mDataBean.getId();
+        mDataBean = (PlayPoundsListData.DataEntity) getIntent().getSerializableExtra("playdetail");
+        identificationId = Integer.parseInt(mDataBean.getId());
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
         setSupportActionBar(mToolbar);
@@ -120,7 +126,7 @@ public class PlayPoundsQueryDetailActivity extends BaseActivity {
 
     private void setViewData(){
         //基本信息
-        PlayPoundsDetailData.DataBean data = playPoundsDetailData.getData();
+        final PlayPoundsDetailData.DataBean data = playPoundsDetailData.getData();
         tvProvider.setText(data.getGongyingshangname());
         tvWaag.setText(data.getBanhezhanminchen());//地磅名称
         tvWeighman.setText(data.getSibangyuan());//司磅员
@@ -147,31 +153,275 @@ public class PlayPoundsQueryDetailActivity extends BaseActivity {
 
 
         //进场情况
-        if (data.getJCGKPic().trim() != null){
+        if (!TextUtils.isEmpty(data.getJCGKPic().trim()) ){
             Glide.with(getApplicationContext()).load(URL.BaseURL + data.getJCGKPic()).crossFade().into(ivJCGKPicname);
+            //设置不可以双指缩放移动放大等操作，跟普通的image一模一样,默认情况下就是disenable()状态
+
+            ivJCGKPicname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    img2.setVisibility(View.VISIBLE);
+
+                    //获取img1的信息
+                    //                   mRectF = ivJCGKPicname.getInfo();
+                    mRectF = PhotoView.getImageViewInfo(ivJCGKPicname);
+                    //让img2从img1的位置变换到他本身的位置
+                    Glide.with(getApplicationContext()).load(URL.BaseURL + data.getJCGKPic()).crossFade().into(img2);
+                    img2.animaFrom(mRectF);
+                }
+            });
+
+            // 需要启动缩放需要手动开启
+            img2.enable();
+            img2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 让img2从自身位置变换到原来img1图片的位置大小
+                    img2.animaTo(mRectF, new Runnable() {
+                        @Override
+                        public void run() {
+                            img2.setVisibility(View.GONE);
+                            ivJCGKPicname.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            });
+
+
         }
-        if (data.getJCCPPic().trim() != null){
+        if (!TextUtils.isEmpty(data.getJCCPPic().trim())){
             Glide.with(getApplicationContext()).load(URL.BaseURL + data.getJCCPPic()).crossFade().into(ivJCCPPicname);
+            ivJCCPPicname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    img2.setVisibility(View.VISIBLE);
+
+                    //获取img1的信息
+                    //                   mRectF = ivJCGKPicname.getInfo();
+                    mRectF = PhotoView.getImageViewInfo(ivJCCPPicname);
+                    //让img2从img1的位置变换到他本身的位置
+                    Glide.with(getApplicationContext()).load(URL.BaseURL + data.getJCCPPic()).crossFade().into(img2);
+                    img2.animaFrom(mRectF);
+                }
+            });
+
+            // 需要启动缩放需要手动开启
+            img2.enable();
+            img2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 让img2从自身位置变换到原来img1图片的位置大小
+                    img2.animaTo(mRectF, new Runnable() {
+                        @Override
+                        public void run() {
+                            img2.setVisibility(View.GONE);
+                            ivJCCPPicname.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            });
+
+
         }
-        if (data.getJCHCPPic().trim() != null){
+        if (!TextUtils.isEmpty(data.getJCHCPPic().trim())){
             Glide.with(getApplicationContext()).load(URL.BaseURL + data.getJCHCPPic()).crossFade().into(ivJCHCPPicname);
+            ivJCHCPPicname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    img2.setVisibility(View.VISIBLE);
+
+                    //获取img1的信息
+                    //                   mRectF = ivJCGKPicname.getInfo();
+                    mRectF = PhotoView.getImageViewInfo(ivJCHCPPicname);
+                    //让img2从img1的位置变换到他本身的位置
+                    Glide.with(getApplicationContext()).load(URL.BaseURL + data.getJCHCPPic()).crossFade().into(img2);
+                    img2.animaFrom(mRectF);
+                }
+            });
+
+            // 需要启动缩放需要手动开启
+            img2.enable();
+            img2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 让img2从自身位置变换到原来img1图片的位置大小
+                    img2.animaTo(mRectF, new Runnable() {
+                        @Override
+                        public void run() {
+                            img2.setVisibility(View.GONE);
+                            ivJCHCPPicname.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            });
+
         }
-       if (URL.BaseURL + data.getJCBFPic().trim() != null){
-           Glide.with(getApplicationContext()).load(URL.BaseURL + data.getJCBFPic()).crossFade().into(ivJCBFPicname);
-       }
+        if (!TextUtils.isEmpty(data.getJCBFPic().trim())){
+            Glide.with(getApplicationContext()).load(URL.BaseURL + data.getJCBFPic()).crossFade().into(ivJCBFPicname);
+            ivJCBFPicname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    img2.setVisibility(View.VISIBLE);
+
+                    //获取img1的信息
+                    //                   mRectF = ivJCGKPicname.getInfo();
+                    mRectF = PhotoView.getImageViewInfo(ivJCBFPicname);
+                    //让img2从img1的位置变换到他本身的位置
+                    Glide.with(getApplicationContext()).load(URL.BaseURL + data.getJCBFPic()).crossFade().into(img2);
+                    img2.animaFrom(mRectF);
+                }
+            });
+
+            // 需要启动缩放需要手动开启
+            img2.enable();
+            img2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 让img2从自身位置变换到原来img1图片的位置大小
+                    img2.animaTo(mRectF, new Runnable() {
+                        @Override
+                        public void run() {
+                            img2.setVisibility(View.GONE);
+                            ivJCBFPicname.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            });
+
+        }
 
         //出场情况
-        if (data.getCCGKPic().trim() != null){
+        if (!TextUtils.isEmpty(data.getCCGKPic().trim())){
             Glide.with(getApplicationContext()).load(URL.BaseURL + data.getCCGKPic()).crossFade().into(ivCCGKPicname);
+            ivCCGKPicname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    img2.setVisibility(View.VISIBLE);
+
+                    //获取img1的信息
+                    //                   mRectF = ivJCGKPicname.getInfo();
+                    mRectF = PhotoView.getImageViewInfo(ivCCGKPicname);
+                    //让img2从img1的位置变换到他本身的位置
+                    Glide.with(getApplicationContext()).load(URL.BaseURL + data.getCCGKPic()).crossFade().into(img2);
+                    img2.animaFrom(mRectF);
+                }
+            });
+
+            // 需要启动缩放需要手动开启
+            img2.enable();
+            img2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 让img2从自身位置变换到原来img1图片的位置大小
+                    img2.animaTo(mRectF, new Runnable() {
+                        @Override
+                        public void run() {
+                            img2.setVisibility(View.GONE);
+                            ivCCGKPicname.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            });
+
         }
-        if (data.getCCCPPic().trim() != null){
+        if (!TextUtils.isEmpty(data.getCCCPPic().trim())){
             Glide.with(getApplicationContext()).load(URL.BaseURL + data.getCCCPPic()).crossFade().into(ivCCCPPicname);
+            ivCCCPPicname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    img2.setVisibility(View.VISIBLE);
+
+                    //获取img1的信息
+                    //                   mRectF = ivJCGKPicname.getInfo();
+                    mRectF = PhotoView.getImageViewInfo(ivCCCPPicname);
+                    //让img2从img1的位置变换到他本身的位置
+                    Glide.with(getApplicationContext()).load(URL.BaseURL + data.getCCCPPic()).crossFade().into(img2);
+                    img2.animaFrom(mRectF);
+                }
+            });
+
+            // 需要启动缩放需要手动开启
+            img2.enable();
+            img2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 让img2从自身位置变换到原来img1图片的位置大小
+                    img2.animaTo(mRectF, new Runnable() {
+                        @Override
+                        public void run() {
+                            img2.setVisibility(View.GONE);
+                            ivCCCPPicname.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            });
+
         }
-        if (data.getCCHCPPic().trim() != null){
+        if (!TextUtils.isEmpty(data.getCCHCPPic().trim())){
             Glide.with(getApplicationContext()).load(URL.BaseURL + data.getCCHCPPic()).crossFade().into(ivCCHCPPicname);
+            ivCCHCPPicname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    img2.setVisibility(View.VISIBLE);
+
+                    //获取img1的信息
+                    //                   mRectF = ivJCGKPicname.getInfo();
+                    mRectF = PhotoView.getImageViewInfo(ivCCHCPPicname);
+                    //让img2从img1的位置变换到他本身的位置
+                    Glide.with(getApplicationContext()).load(URL.BaseURL + data.getCCHCPPic()).crossFade().into(img2);
+                    img2.animaFrom(mRectF);
+                }
+            });
+
+            // 需要启动缩放需要手动开启
+            img2.enable();
+            img2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 让img2从自身位置变换到原来img1图片的位置大小
+                    img2.animaTo(mRectF, new Runnable() {
+                        @Override
+                        public void run() {
+                            img2.setVisibility(View.GONE);
+                            ivCCHCPPicname.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            });
+
         }
-        if (data.getCCBFPic().trim() != null){
+        if (!TextUtils.isEmpty(data.getCCBFPic().trim())){
             Glide.with(getApplicationContext()).load(URL.BaseURL + data.getCCBFPic()).crossFade().into(ivCCBFPicname);
+            ivCCBFPicname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    img2.setVisibility(View.VISIBLE);
+
+                    //获取img1的信息
+                    //                   mRectF = ivJCGKPicname.getInfo();
+                    mRectF = PhotoView.getImageViewInfo(ivCCBFPicname);
+                    //让img2从img1的位置变换到他本身的位置
+                    Glide.with(getApplicationContext()).load(URL.BaseURL + data.getCCBFPic()).crossFade().into(img2);
+                    img2.animaFrom(mRectF);
+                }
+            });
+
+            // 需要启动缩放需要手动开启
+            img2.enable();
+            img2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 让img2从自身位置变换到原来img1图片的位置大小
+                    img2.animaTo(mRectF, new Runnable() {
+                        @Override
+                        public void run() {
+                            img2.setVisibility(View.GONE);
+                            ivCCBFPicname.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            });
+
         }
     }
 
