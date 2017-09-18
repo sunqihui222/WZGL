@@ -34,45 +34,45 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 public class LilunPeihebiDetailFragment extends BaseLazyFragment {
 
     private static final String TAG = LilunPeihebiDetailFragment.class.getSimpleName();
-    private NestedScrollView                           mNestedScrollView;
-    private PageStateLayout                            mPageStateLayout;
-    private PtrFrameLayout                             mPtrFrameLayout;
+    private NestedScrollView mNestedScrollView;
+    private PageStateLayout mPageStateLayout;
+    private PtrFrameLayout mPtrFrameLayout;
     private PeiliaoTongzhidanFragmentListData.DataBean mDataBean;
-    private TextView                                   tv_bianhao;
-    private TextView                                   tv_depart;
-    private TextView                                   tv_sjqd;
-    private TextView                                   tv_taluodu;
-    private TextView                                   tv_kangshen_level;
-    private TextView                                   tv_kangzhedu;
-    private TextView                                   tv1_material;
-    private TextView                                   tv2_material;
-    private TextView                                   tv3_material;
-    private TextView                                   tv4_material;
-    private TextView                                   tv5_material;
-    private TextView                                   tv6_material;
-    private TextView                                   tv7_material;
-    private TextView                                   tv8_material;
-    private TextView                                   tv9_material;
+    private TextView tv_bianhao;
+    private TextView tv_depart;
+    private TextView tv_sjqd;
+    private TextView tv_taluodu;
+    private TextView tv_kangshen_level;
+    private TextView tv_kangzhedu;
+    private TextView tv1_material;
+    private TextView tv2_material;
+    private TextView tv3_material;
+    private TextView tv4_material;
+    private TextView tv5_material;
+    private TextView tv6_material;
+    private TextView tv7_material;
+    private TextView tv8_material;
+    private TextView tv9_material;
     private TextView tv1_peibizhi;
     private TextView tv2_peibizhi;
     private TextView tv3_peibizhi;
     private TextView tv4_peibizhi;
-    private TextView                                   tv5_peibizhi;
-    private TextView                                   tv6_peibizhi;
-    private TextView                                   tv7_peibizhi;
-    private TextView                                   tv8_peibizhi;
-    private TextView                                   tv9_peibizhi;
-    private TextView                                   tv1_chanliang;
-    private TextView                                   tv2_chanliang;
-    private TextView                                   tv3_chanliang;
-    private TextView                                   tv4_chanliang;
-    private TextView                                   tv5_chanliang;
-    private TextView                                   tv6_chanliang;
-    private TextView                                   tv7_chanliang;
-    private TextView                                   tv8_chanliang;
-    private TextView                                   tv_remark;
-    private Gson                                       mGson;
-    private LilunPeihebiDetailActivityData             data;
+    private TextView tv5_peibizhi;
+    private TextView tv6_peibizhi;
+    private TextView tv7_peibizhi;
+    private TextView tv8_peibizhi;
+    private TextView tv9_peibizhi;
+    private TextView tv1_chanliang;
+    private TextView tv2_chanliang;
+    private TextView tv3_chanliang;
+    private TextView tv4_chanliang;
+    private TextView tv5_chanliang;
+    private TextView tv6_chanliang;
+    private TextView tv7_chanliang;
+    private TextView tv8_chanliang;
+    private TextView tv_remark;
+    private Gson mGson;
+    private LilunPeihebiDetailActivityData data;
 
     public static LilunPeihebiDetailFragment newInstance(PeiliaoTongzhidanFragmentListData.DataBean mDataBean) {
         Bundle args = new Bundle();
@@ -162,7 +162,7 @@ public class LilunPeihebiDetailFragment extends BaseLazyFragment {
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
         String produceDetailData = URL.getLilunPeihebiDetailData(mDataBean.getLlphbNo());
-        Log.e(TAG,"url=:"+produceDetailData);
+        Log.e(TAG, "url=:" + produceDetailData);
         return URL.getLilunPeihebiDetailData(mDataBean.getLlphbNo());
     }
 

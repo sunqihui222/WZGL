@@ -45,11 +45,11 @@ public class TaskListDetailFragment extends BaseLazyFragment {
 
     private static final String TAG = TaskListDetailFragment.class.getSimpleName();
     private NestedScrollView mNestedScrollView;
-    private PageStateLayout  mPageStateLayout;
-    private PtrFrameLayout   mPtrFrameLayout;
-    private String           id;
-    private String           biaoshi;
-    private Gson             mGson;
+    private PageStateLayout mPageStateLayout;
+    private PtrFrameLayout mPtrFrameLayout;
+    private String id;
+    private String biaoshi;
+    private Gson mGson;
 
     private TextView tv_renwuno;
     private TextView tv_time;
@@ -65,20 +65,20 @@ public class TaskListDetailFragment extends BaseLazyFragment {
     private TextView tv_zxjd;
     private TextView tv_jiechao;
 
-    private TaskListDetailActivityData                    data;
-    private RecyclerView                                  mRecyclerView;
-    private RecyclerView                                  rv_report;
-    private LinearLayoutManager                           mLinearLayoutManager;
-    private LinearLayoutManager                           mLinearLayoutManager1;
-    private TaskListDetailActivityRecylerView             mAdapter;
-    private TaskListDetailReportRecylerView               mReportAdapter;
+    private TaskListDetailActivityData data;
+    private RecyclerView mRecyclerView;
+    private RecyclerView rv_report;
+    private LinearLayoutManager mLinearLayoutManager;
+    private LinearLayoutManager mLinearLayoutManager1;
+    private TaskListDetailActivityRecylerView mAdapter;
+    private TaskListDetailReportRecylerView mReportAdapter;
     private List<TaskListDetailActivityData.XGJLDataBean> listData;
     private List<TaskListDetailActivityData.ZYJLDataBean> ZYlistData;
 
-    public static TaskListDetailFragment newInstance(String idNumber,String biaoshi) {
+    public static TaskListDetailFragment newInstance(String idNumber, String biaoshi) {
         Bundle args = new Bundle();
         args.putString("idNumber", idNumber);
-        args.putString("biaoshi",biaoshi);
+        args.putString("biaoshi", biaoshi);
         TaskListDetailFragment fragment = new TaskListDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -103,8 +103,8 @@ public class TaskListDetailFragment extends BaseLazyFragment {
         mNestedScrollView = (NestedScrollView) view.findViewById(R.id.nsv_task_list_detail_activity);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptr_task_list_detail_activity);
         mPageStateLayout = (PageStateLayout) view.findViewById(R.id.psl_task_list_detail_activity);
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.rv_task_list_fragment);
-        rv_report = (RecyclerView)view.findViewById(R.id.rv_report_task_list_fragment);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_task_list_fragment);
+        rv_report = (RecyclerView) view.findViewById(R.id.rv_report_task_list_fragment);
 
         //基础信息
         tv_depart = (TextView) view.findViewById(R.id.tv_depart_task_list_detail);
@@ -129,7 +129,7 @@ public class TaskListDetailFragment extends BaseLazyFragment {
 
         Bundle args = getArguments();
         if (args != null) {
-            id =  args.getString("idNumber");
+            id = args.getString("idNumber");
             biaoshi = args.getString("biaoshi");
         }
         mGson = new Gson();
@@ -152,9 +152,9 @@ public class TaskListDetailFragment extends BaseLazyFragment {
     @Override
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
-        String taskListDetailData = URL.getRenwudanDetailData(id,biaoshi);
-        Log.e(TAG,"url=:"+taskListDetailData);
-        return URL.getRenwudanDetailData(id,biaoshi);
+        String taskListDetailData = URL.getRenwudanDetailData(id, biaoshi);
+        Log.e(TAG, "url=:" + taskListDetailData);
+        return URL.getRenwudanDetailData(id, biaoshi);
     }
 
     @Override

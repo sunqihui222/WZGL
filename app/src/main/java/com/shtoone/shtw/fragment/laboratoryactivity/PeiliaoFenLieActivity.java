@@ -27,12 +27,12 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 
 public class PeiliaoFenLieActivity extends BaseActivity {
 
-    private Toolbar            mToolbar;
+    private Toolbar mToolbar;
     private AHBottomNavigation bottomNavigation;
 
-    private TabLayout            mTabLayout;
-    private ViewPager            mViewPager;
-    private AppBarLayout         mAppBarLayout;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+    private AppBarLayout mAppBarLayout;
     private PeiliaoFenLieAdapter mAdapter;
     private PeiliaoTongzhidanFragmentListData.DataBean mDataBean;
 
@@ -59,7 +59,7 @@ public class PeiliaoFenLieActivity extends BaseActivity {
     }
 
     private void setAdapter() {
-        mViewPager.setAdapter(mAdapter = new PeiliaoFenLieAdapter(getSupportFragmentManager(),mDataBean));
+        mViewPager.setAdapter(mAdapter = new PeiliaoFenLieAdapter(getSupportFragmentManager(), mDataBean));
         mTabLayout.setupWithViewPager(mViewPager);
 
     }
