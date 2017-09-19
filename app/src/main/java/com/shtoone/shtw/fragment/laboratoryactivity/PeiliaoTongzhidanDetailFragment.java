@@ -37,28 +37,28 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 public class PeiliaoTongzhidanDetailFragment extends BaseLazyFragment {
 
     private static final String TAG = PeiliaoTongzhidanDetailFragment.class.getSimpleName();
-    private NestedScrollView                           mNestedScrollView;
-    private PageStateLayout                            mPageStateLayout;
-    private PtrFrameLayout                             mPtrFrameLayout;
+    private NestedScrollView mNestedScrollView;
+    private PageStateLayout mPageStateLayout;
+    private PtrFrameLayout mPtrFrameLayout;
     private PeiliaoTongzhidanFragmentListData.DataBean mDataBean;
-    private Gson                                       mGson;
+    private Gson mGson;
 
-    private TextView                            tv_renwuno;
-    private TextView                            tv_time;
-    private TextView                            tv_gcmc;
-    private TextView                            tv_jzfs;
-    private TextView                            tv_fangliang;
-    private TextView                            tv_jzbw;
-    private TextView                            tv_bianhao;
-    private TextView                            tv_tongzhidanno;
-    private TextView                            tv_depart;
-    private TextView                            tv_sjqd;
-    private TextView                            tv_taluodu;
-    private TextView                            tv_kangshen_level;
-    private TextView                            tv_kangzhedu;
-    private TextView                            tv1_material;
-    private TextView                            tv2_material;
-    private TextView                            tv3_material;
+    private TextView tv_renwuno;
+    private TextView tv_time;
+    private TextView tv_gcmc;
+    private TextView tv_jzfs;
+    private TextView tv_fangliang;
+    private TextView tv_jzbw;
+    private TextView tv_bianhao;
+    private TextView tv_tongzhidanno;
+    private TextView tv_depart;
+    private TextView tv_sjqd;
+    private TextView tv_taluodu;
+    private TextView tv_kangshen_level;
+    private TextView tv_kangzhedu;
+    private TextView tv1_material;
+    private TextView tv2_material;
+    private TextView tv3_material;
     private TextView tv4_material;
     private TextView tv5_material;
     private TextView tv6_material;
@@ -86,23 +86,22 @@ public class PeiliaoTongzhidanDetailFragment extends BaseLazyFragment {
     private TextView tv1_sgyl;
     private TextView tv2_sgyl;
     private TextView tv3_sgyl;
-    private TextView                            tv4_sgyl;
-    private TextView                            tv5_sgyl;
-    private TextView                            tv6_sgyl;
-    private TextView                            tv7_sgyl;
-    private TextView                            tv8_sgyl;
-    private TextView                            tv9_sgyl;
-    private TextView                            tv1_chanliang;
-    private TextView                            tv2_chanliang;
-    private TextView                            tv3_chanliang;
-    private TextView                            tv4_chanliang;
-    private TextView                            tv5_chanliang;
-    private TextView                            tv6_chanliang;
-    private TextView                            tv7_chanliang;
-    private TextView                            tv8_chanliang;
-    private TextView                            tv_remark;
+    private TextView tv4_sgyl;
+    private TextView tv5_sgyl;
+    private TextView tv6_sgyl;
+    private TextView tv7_sgyl;
+    private TextView tv8_sgyl;
+    private TextView tv9_sgyl;
+    private TextView tv1_chanliang;
+    private TextView tv2_chanliang;
+    private TextView tv3_chanliang;
+    private TextView tv4_chanliang;
+    private TextView tv5_chanliang;
+    private TextView tv6_chanliang;
+    private TextView tv7_chanliang;
+    private TextView tv8_chanliang;
+    private TextView tv_remark;
     private PeiliaoTongzhidanDetailActivityData data;
-
 
 
     public static PeiliaoTongzhidanDetailFragment newInstance(PeiliaoTongzhidanFragmentListData.DataBean mDataBean) {
@@ -224,7 +223,7 @@ public class PeiliaoTongzhidanDetailFragment extends BaseLazyFragment {
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
         String produceDetailData = URL.getPeibiTongzhidanDetailData(mDataBean.getSgphbNo());
-        Log.e(TAG,"url=:"+produceDetailData);
+        Log.e(TAG, "url=:" + produceDetailData);
         return URL.getPeibiTongzhidanDetailData(mDataBean.getSgphbNo());
     }
 
@@ -349,8 +348,8 @@ public class PeiliaoTongzhidanDetailFragment extends BaseLazyFragment {
         tv_tongzhidanno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),PeiliaoTongzhidanQrcodeActivity.class);
-                intent.putExtra("peibi",dataBean.getSgphbno());
+                Intent intent = new Intent(getContext(), PeiliaoTongzhidanQrcodeActivity.class);
+                intent.putExtra("peibi", dataBean.getSgphbno());
                 startActivity(intent);
 
             }
