@@ -39,7 +39,7 @@ public class URL {
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
     // public static final String BaseURL = "http://192.168.0.133:8080/jeecg/";
-    public static final String BaseURL = "http://192.168.1.111:8080/jeecg/";
+    public static final String BaseURL = "http://192.168.0.141:8082/jeecg/";
 
 //    public static final String BaseURL = "http://192.168.0.141:8082/gxzjzqms/";
 
@@ -700,14 +700,14 @@ public class URL {
     /**
      * 拌合站生产数据查询
      */
-    public static final String TASK_LIST_ZX_URL = BaseURL + "appWZproject.do?AppTaskListZXQK&departId=%1&kaipanriqi=%2&kaipanriqiend=%3&sjqd=%4&pageNo=%5&maxPageItems=%6";
+    public static final String TASK_LIST_ZX_URL = BaseURL + "appWZproject.do?AppTaskListZXQK&departId=%1&kaipanriqi=%2&kaipanriqiend=%3&sjqd=%4&pageNo=%5&maxPageItems=%6&zhuangtai=%7";
 
-    public static String getTaskListZXData(String userGroupID, String startTime, String endTime, String strengthId,String current_PageNo, String maxPageItems) {
+    public static String getTaskListZXData(String userGroupID, String startTime, String endTime, String strengthId,String current_PageNo, String maxPageItems,String zhuangtai) {
         startTime = DateUtils.ChangeTimeToLong(startTime);
         endTime = DateUtils.ChangeTimeToLong(endTime);
         //如果开始时间大于结束时间，返回null
         if (Integer.valueOf(startTime) <= Integer.valueOf(endTime)) {
-            String url = TASK_LIST_ZX_URL.replace("%1", userGroupID).replace("%2", startTime).replace("%3", endTime).replace("%4", strengthId).replace("%5", current_PageNo).replace("%6", maxPageItems);
+            String url = TASK_LIST_ZX_URL.replace("%1", userGroupID).replace("%2", startTime).replace("%3", endTime).replace("%4", strengthId).replace("%5", current_PageNo).replace("%6", maxPageItems).replace("%7",zhuangtai);
             Log.e(TAG, "任务单执行情况查询URL :" + url);
             if (TextUtils.isEmpty(url)) {
                 return null;

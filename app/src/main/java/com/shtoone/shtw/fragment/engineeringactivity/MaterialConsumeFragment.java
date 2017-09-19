@@ -103,7 +103,7 @@ public class MaterialConsumeFragment extends BaseLazyFragment{
         mGson = new Gson();
         if (null != BaseApplication.parametersData) {
             mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-            mParametersData.fromTo = ConstantsUtils.STORAGEFRAGMENT;
+            mParametersData.fromTo = ConstantsUtils.MATERIALCONSUME;
         }
         if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
             mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.MATERIALCONSUME);

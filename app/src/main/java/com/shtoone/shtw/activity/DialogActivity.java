@@ -86,6 +86,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private List<String> strengthNames;
     private RadioGroup rg_handle;
     private RadioGroup rg_examine;
+    private RadioGroup rg_tasklist;
 
     private RadioGroup               rg_jinchang_handle;
     private RadioGroup               rg_chuchang_handle;
@@ -124,6 +125,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         rg_examine = (RadioGroup) findViewById(R.id.rg_examine_dialog);
         rg_jinchang_handle = (RadioGroup) findViewById(R.id.rg_jinchang_handle_dialog);
         rg_chuchang_handle= (RadioGroup) findViewById(R.id.rg_chuchang_handle_dialog);
+        rg_tasklist = (RadioGroup) findViewById(R.id.rg_tasklist_dialog);
         start_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         end_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         tv_MaterialName = (TextView) findViewById(R.id.tv_material_choose);
@@ -331,6 +333,23 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
+        rg_tasklist.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int i) {
+                if (i==R.id.rb_all_tasklist_dialog){
+                    mParametersData.zhuangtai="";
+                }else if (i==R.id.rb_unpeiliao_tasklist_dialog){
+                    mParametersData.states="0";
+                }else if (i==R.id.rb_peiliao_tasklist_dialog){
+                    mParametersData.states="1";
+                }else if (i==R.id.rb_unfinsh_tasklist_dialog){
+                    mParametersData.states="2";
+                }else if (i==R.id.rb_finsh_tasklist_dialog){
+                    mParametersData.states="3";
+                }
+            }
+        });
+
 
 
         //设置哪些条件选择该显示，默认只有时间选择是显示的
@@ -401,6 +420,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                  break;
             case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
                 ms_select_strength.setVisibility(View.VISIBLE);
+                rg_tasklist.setVisibility(View.VISIBLE);
                 url = URL.getDataDictionary("SJQD");
                 refresh();
                 break;
@@ -444,6 +464,20 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         }else if (mParametersData.states.equals("1")){
             rg_chuchang_handle.check(R.id.rb__diaobo_handled_dialog);
         }
+
+        if (mParametersData.zhuangtai.equals("")){
+            rg_tasklist.check(R.id.rb_all_tasklist_dialog);
+        }else if(mParametersData.zhuangtai.equals("0")){
+            rg_tasklist.check(R.id.rb_unpeiliao_tasklist_dialog);
+        }else if (mParametersData.zhuangtai.equals("1")){
+            rg_tasklist.check(R.id.rb_peiliao_tasklist_dialog);
+        }else if (mParametersData.zhuangtai.equals("2")){
+            rg_tasklist.check(R.id.rb_unfinsh_tasklist_dialog);
+        }else if (mParametersData.zhuangtai.equals("3")){
+            rg_tasklist.check(R.id.rb_finsh_tasklist_dialog);
+        }
+
+
     }
 
 //    @Override

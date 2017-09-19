@@ -90,9 +90,9 @@ public class StorageQueryDetailActivityData {
         private int id;
         private String isdel;
         private String jin;
-        private String jingjiezhi;
+        private double jingjiezhi;
         private String jinliang;
-        private int kucun;
+        private double kucun;
         private String lilun;
         private int lilunchuliang;
         private String orgCode;
@@ -224,11 +224,11 @@ public class StorageQueryDetailActivityData {
             this.jin = jin;
         }
 
-        public String getJingjiezhi() {
+        public double getJingjiezhi() {
             return jingjiezhi;
         }
 
-        public void setJingjiezhi(String jingjiezhi) {
+        public void setJingjiezhi(double jingjiezhi) {
             this.jingjiezhi = jingjiezhi;
         }
 
@@ -240,11 +240,11 @@ public class StorageQueryDetailActivityData {
             this.jinliang = jinliang;
         }
 
-        public int getKucun() {
+        public double getKucun() {
             return kucun;
         }
 
-        public void setKucun(int kucun) {
+        public void setKucun(double kucun) {
             this.kucun = kucun;
         }
 

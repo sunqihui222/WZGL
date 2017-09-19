@@ -99,7 +99,7 @@ public class TaskListImpQueryFragmenData {
         private String kaipanriqi;
         private String org_code;
         private String guid;
-        private int shijifangliang;
+        private double shijifangliang;
         private Object sgphbguid;
         private String shejifangliang;
         private String zhuangtai;
@@ -329,11 +329,11 @@ public class TaskListImpQueryFragmenData {
             this.guid = guid;
         }
 
-        public int getShijifangliang() {
+        public double getShijifangliang() {
             return shijifangliang;
         }
 
-        public void setShijifangliang(int shijifangliang) {
+        public void setShijifangliang(double shijifangliang) {
             this.shijifangliang = shijifangliang;
         }
 

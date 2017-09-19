@@ -223,6 +223,7 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
         String currentPage = "";
         String maxPageItems = "";
         String strengthId ="";
+        String zhuangtai = "";
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             startDateTime = mParametersData.startDateTime;
@@ -230,13 +231,14 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
             currentPage = mParametersData.currentPage;
             maxPageItems = mParametersData.maxPageItems;
             strengthId = mParametersData.strengthId;
+            zhuangtai = mParametersData.zhuangtai;
         }
 
         if (null != listData) {
             listData.clear();
         }
 //        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
-        return URL.getTaskListZXData(userGroupID, startDateTime, endDateTime,strengthId, currentPage, maxPageItems);
+        return URL.getTaskListZXData(userGroupID, startDateTime, endDateTime,strengthId, currentPage, maxPageItems,zhuangtai);
     }
 
 
@@ -249,6 +251,7 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
         String currentPage = "";
         String maxPageItems = "";
         String strengthId ="";
+        String zhuangtai = "";
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             startDateTime = mParametersData.startDateTime;
@@ -256,9 +259,10 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
             currentPage = mParametersData.currentPage;
             maxPageItems = mParametersData.maxPageItems;
             strengthId = mParametersData.strengthId;
+            zhuangtai = mParametersData.zhuangtai;
         }
 //        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
-        return URL.getTaskListZXData(userGroupID, startDateTime, endDateTime,strengthId,currentPage, maxPageItems);
+        return URL.getTaskListZXData(userGroupID, startDateTime, endDateTime,strengthId,currentPage, maxPageItems,zhuangtai);
     }
 
     @Override
@@ -399,6 +403,7 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
                 this.mParametersData.strengthId = mParametersData.strengthId;
+                this.mParametersData.zhuangtai = mParametersData.zhuangtai;
                 Log.e(TAG,"mParametersData:" + mParametersData.startDateTime);
                 Log.e(TAG,"mParametersData:" + mParametersData.endDateTime);
                 Log.e(TAG,"mParametersData:" + mParametersData.strengthId);

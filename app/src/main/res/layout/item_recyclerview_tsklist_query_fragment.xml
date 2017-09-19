@@ -126,4 +126,17 @@
 
     </RelativeLayout>
 
+    <com.shtoone.shtw.ui.SlantedTextView
+        android:id="@+id/stv_ischeck"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="top|right"
+        android:gravity="center"
+        app:slantedBackgroundColor="@color/material_green_300"
+        app:slantedLength="30dp"
+        app:slantedMode="right"
+        app:slantedText=""
+        app:slantedTextColor="@color/material_white"
+        app:slantedTextSize="13sp"/>
+
 </android.support.v7.widget.CardView>

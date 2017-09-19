@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,7 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
             } else if (item.getZhuangtai().equals("2")) {
                 mItemViewHolder.tvState.setText("生产中");
             } else if (item.getZhuangtai().equals("3")) {
-                mItemViewHolder.tvState.setText("已完成");
+                mItemViewHolder.tvState.setText("已完工");
             } else if (item.getZhuangtai().equals("-1")) {
                 mItemViewHolder.tvState.setText("未提交");
             }
@@ -85,13 +86,17 @@ public class JobOrderFinshFragmentAdapter extends RecyclerView.Adapter<RecyclerV
             if (item.getZhuangtai().equals("2")){
                 mItemViewHolder.stv_ischeck.setText("生产中");
             }else if (item.getZhuangtai().equals("3")){
-                mItemViewHolder.stv_ischeck.setText("已完成");
+                mItemViewHolder.stv_ischeck.setText("已完工");
             }
 
+            if (!TextUtils.isEmpty(item.getBaifenbi())){
+                double v = Double.parseDouble(item.getBaifenbi()) * 100;
+                int jindu = (int) v;
+                mItemViewHolder.pb_jindu.setProgress(jindu);
+            }else {
+                mItemViewHolder.pb_jindu.setProgress(0);
+            }
 
-            double v = Double.parseDouble(item.getBaifenbi()) * 100;
-            int jindu = (int) v;
-            mItemViewHolder.pb_jindu.setProgress(jindu);
 
             if (mOnItemClickListener != null) {
                 mItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
