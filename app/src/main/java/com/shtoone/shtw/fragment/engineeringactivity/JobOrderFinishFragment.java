@@ -290,6 +290,7 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
+        String finsh = "";
 
 
         if (null != mParametersData) {
@@ -297,13 +298,14 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
+            finsh = mParametersData.finsh;
         }
         String state = "1";
         if (null != listData) {
             listData.clear();
         }
 
-        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage);
+        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage,finsh);
 
     }
 
@@ -314,14 +316,16 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
+        String finsh = "";
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
+            finsh = mParametersData.finsh;
         }
         String state = "1";
-        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage);
+        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage,finsh);
     }
 
     @Override
@@ -449,9 +453,11 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
                 this.mParametersData.userGroupID = mParametersData.userGroupID;
+                this.mParametersData.finsh = mParametersData.finsh;
                 KLog.e("mParametersData:" + mParametersData.startDateTime);
                 KLog.e("mParametersData:" + mParametersData.endDateTime);
                 KLog.e("mParametersData:" + mParametersData.userGroupID);
+                KLog.e("mParametersData:" + mParametersData.finsh);
                 mPtrFrameLayout.autoRefresh(true);
             }
         }

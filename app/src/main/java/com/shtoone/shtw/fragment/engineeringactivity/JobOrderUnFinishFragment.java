@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
+import com.shtoone.shtw.activity.DialogActivity;
 import com.shtoone.shtw.adapter.JobOrderUnfinshFragmentAdapter;
 import com.shtoone.shtw.adapter.OnItemDelClickListener;
 import com.shtoone.shtw.bean.DepartmentData;
@@ -42,6 +43,7 @@ import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.ScreenUtils;
 import com.shtoone.shtw.utils.URL;
 import com.socks.library.KLog;
+import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -113,19 +115,16 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mUserInfoData = BaseApplication.mUserInfoData;
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mUserInfoData.getQuanxian().isWZGCB()) {
-//                    fab.setVisibility(View.VISIBLE);
-//                    Intent intent = new Intent(_mActivity, TaskListNewEditActivity.class);
-//                    intent.putExtra("username", mParametersData.username);
-//                    startActivity(intent);
-//                } else {
-//                    fab.setVisibility(View.GONE);
-//                }
-//            }
-//        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(_mActivity, DialogActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
 
         //设置动画与适配器
         SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new JobOrderUnfinshFragmentAdapter(_mActivity, listData));
@@ -354,18 +353,20 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
+        String unfinsh = "";
 
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
+            unfinsh = mParametersData.unfinsh;
         }
         String state = "0";
         if (null != listData) {
             listData.clear();
         }
-        return URL.getJobOrderUnfinsh(userGroupID, state, startDateTime, endDateTime, currentPage);
+        return URL.getJobOrderUnfinsh(userGroupID, state, startDateTime, endDateTime, currentPage,unfinsh);
     }
 
     @Override
@@ -375,14 +376,16 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
+        String unfinsh = "";
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
+            unfinsh = mParametersData.unfinsh;
         }
         String state = "0";
-        return URL.getJobOrderUnfinsh(userGroupID, state, startDateTime, endDateTime, currentPage);
+        return URL.getJobOrderUnfinsh(userGroupID, state, startDateTime, endDateTime, currentPage,unfinsh);
     }
 
     @Override
@@ -513,6 +516,21 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
         View view = inflater.inflate(R.layout.fragment_joborder_unfinsh, container, false);
         initView(view);
         return view;
+    }
+
+    @Subscribe
+    public void updateSearch(ParametersData mParametersData) {
+        if (mParametersData != null) {
+            if (mParametersData.fromTo == ConstantsUtils.JOBORDERUNFINSH) {
+                this.mParametersData.startDateTime = mParametersData.startDateTime;
+                this.mParametersData.endDateTime = mParametersData.endDateTime;
+
+                this.mParametersData.unfinsh = mParametersData.unfinsh;
+
+                KLog.e("mParametersData:" + mParametersData.unfinsh);
+                mPtrFrameLayout.autoRefresh(true);
+            }
+        }
     }
 
     @Override
@@ -690,4 +708,6 @@ public class JobOrderUnFinishFragment extends BaseLazyFragment {
         }
 
     }
+
+
 }

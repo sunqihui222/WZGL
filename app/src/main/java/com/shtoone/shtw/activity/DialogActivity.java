@@ -87,7 +87,8 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private RadioGroup rg_handle;
     private RadioGroup rg_examine;
     private RadioGroup rg_tasklist;
-
+    private RadioGroup rg_unfinsh;
+    private RadioGroup rg_finsh;
     private RadioGroup               rg_jinchang_handle;
     private RadioGroup               rg_chuchang_handle;
     private WaagListData             waagListData;
@@ -126,6 +127,8 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         rg_jinchang_handle = (RadioGroup) findViewById(R.id.rg_jinchang_handle_dialog);
         rg_chuchang_handle= (RadioGroup) findViewById(R.id.rg_chuchang_handle_dialog);
         rg_tasklist = (RadioGroup) findViewById(R.id.rg_tasklist_dialog);
+        rg_unfinsh = (RadioGroup) findViewById(R.id.rg_unfinsh_dialog);
+        rg_finsh = (RadioGroup) findViewById(R.id.rg_finsh_dialog);
         start_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         end_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         tv_MaterialName = (TextView) findViewById(R.id.tv_material_choose);
@@ -339,14 +342,43 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 if (i==R.id.rb_all_tasklist_dialog){
                     mParametersData.zhuangtai="";
                 }else if (i==R.id.rb_unpeiliao_tasklist_dialog){
-                    mParametersData.states="0";
+                    mParametersData.zhuangtai="0";
                 }else if (i==R.id.rb_peiliao_tasklist_dialog){
-                    mParametersData.states="1";
+                    mParametersData.zhuangtai="1";
                 }else if (i==R.id.rb_unfinsh_tasklist_dialog){
-                    mParametersData.states="2";
+                    mParametersData.zhuangtai="2";
                 }else if (i==R.id.rb_finsh_tasklist_dialog){
-                    mParametersData.states="3";
+                    mParametersData.zhuangtai="3";
                 }
+            }
+        });
+
+        rg_unfinsh.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int i) {
+                if (i==R.id.rb_unfinsh_all_handle_dialog){
+                    mParametersData.unfinsh="";
+                }else if (i==R.id.rb_unfinsh_unsubmit_handle_dialog){
+                    mParametersData.unfinsh="-1";
+                }else if (i==R.id.rb_unfinsh_unpeiliao_dialog){
+                    mParametersData.unfinsh="0";
+                }else if (i==R.id.rb_unfinsh_peiliao_dialog){
+                    mParametersData.unfinsh="1";
+                }
+            }
+        });
+
+        rg_finsh.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int i) {
+                if (i==R.id.rb_finsh_all_handle_dialog){
+                    mParametersData.finsh="";
+                }else if (i==R.id.rb_finsh_complete_handle_dialog){
+                    mParametersData.finsh="3";
+                }else if (i==R.id.rb_finsh_uncomplete_dialog){
+                    mParametersData.finsh="2";
+                }
+
             }
         });
 
@@ -427,8 +459,33 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
             case ConstantsUtils.JOBORDERFINSH:
                 tv_DepartmentName.setVisibility(View.VISIBLE);
+                rg_finsh.setVisibility(View.VISIBLE);
+                break;
+
+            case ConstantsUtils.JOBORDERUNFINSH:
+                rg_unfinsh.setVisibility(View.VISIBLE);
 
                 break;
+
+
+        }
+
+        if (mParametersData.finsh.equals("")){
+            rg_finsh.check(R.id.rb_finsh_all_handle_dialog);
+        }else if (mParametersData.finsh.equals("2")){
+            rg_finsh.check(R.id.rb_finsh_uncomplete_dialog);
+        }else if (mParametersData.finsh.equals("3")){
+            rg_finsh.check(R.id.rb_finsh_complete_handle_dialog);
+        }
+
+        if (mParametersData.unfinsh.equals("")){
+            rg_unfinsh.check(R.id.rb_unfinsh_all_handle_dialog);
+        }else if (mParametersData.unfinsh.equals("-1")){
+            rg_unfinsh.check(R.id.rb_unfinsh_unsubmit_handle_dialog);
+        }else if (mParametersData.unfinsh.equals("0")){
+            rg_unfinsh.check(R.id.rb_unfinsh_unpeiliao_dialog);
+        }else if (mParametersData.unfinsh.equals("1")){
+            rg_unfinsh.check(R.id.rb_unfinsh_peiliao_dialog);
         }
 
         if (mParametersData.handleType.equals("")) {

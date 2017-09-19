@@ -41,6 +41,8 @@ public class ParametersData implements Cloneable, Serializable {
     public String projectno = "";
     public String username = "";
     public String zhuangtai = "";
+    public String unfinsh = "";
+    public String finsh = "";
 
 
     public ParametersData() {
