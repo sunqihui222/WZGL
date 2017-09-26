@@ -72,10 +72,13 @@ public class YaLiJiFragmentViewPagerFragmentRecyclerViewAdapter extends Recycler
             mItemViewHolder.tv_test_number.setText(item.getSJBH());
             mItemViewHolder.tv_design_strength.setText(item.getSJQD());
             mItemViewHolder.tv_central_value.setText(item.getQDDBZ());
-            mItemViewHolder.tv_project_name.setText(item.getGCMC());
-            mItemViewHolder.tv_position.setText(item.getSGBW());
+            mItemViewHolder.tv_project_name.setText(item.getWTBH());
+//            mItemViewHolder.tv_project_name.setText(item.getGCMC());
+            mItemViewHolder.tv_position.setText(item.getCJMC());
+//            mItemViewHolder.tv_position.setText(item.getSGBW());
             mItemViewHolder.tv_testtype.setText(item.getTestName());
-            mItemViewHolder.tv_equipment.setText(item.getShebeiname());
+            mItemViewHolder.tv_equipment.setText(item.getBanhezhanminchen());
+//            mItemViewHolder.tv_equipment.setText(item.getShebeiname());
             if ("合格".equals(item.getPDJG())) {
                 //默认就是合格设置
             } else if ("有效".equals(item.getPDJG())) {
