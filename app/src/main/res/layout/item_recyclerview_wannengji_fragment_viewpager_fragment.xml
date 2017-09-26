@@ -128,6 +128,23 @@
             android:layout_toRightOf="@+id/textview6"
             android:text="万能机1" />
 
+        /******************************************************************************/
+        <TextView
+            android:id="@+id/textview7"
+            style="@style/RecyclerViewItemTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview6"
+            android:text="直        径：" />
+
+        <TextView
+            android:id="@+id/tv_diameter_item_recyclerview_wannengji_fragment_viewpager_fragment"
+            style="@style/RecyclerViewItemTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/textview7"
+            android:layout_toRightOf="@+id/textview6"
+            android:text="万能机1" />
     </RelativeLayout>
 
     <com.shtoone.shtw.ui.SlantedTextView
