@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,12 +120,15 @@ public class YaLiJiFragment extends BaseLazyFragment {
 
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {
+        Log.e(TAG,">>>>>>>>>>>>>>>>>>>>>updateSearch");
         if (mParametersData != null) {
             if (mParametersData.fromTo == ConstantsUtils.YALIJIFRAGMENT) {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
                 this.mParametersData.equipmentID = mParametersData.equipmentID;
                 this.mParametersData.testTypeID = mParametersData.testTypeID;
+
+
                 KLog.e("mParametersData:" + mParametersData.startDateTime);
                 KLog.e("mParametersData:" + mParametersData.endDateTime);
                 KLog.e("mParametersData:" + mParametersData.equipmentID);

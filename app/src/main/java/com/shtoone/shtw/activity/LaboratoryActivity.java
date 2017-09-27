@@ -3,6 +3,7 @@ package com.shtoone.shtw.activity;
 import android.animation.Animator;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -113,6 +114,7 @@ public class LaboratoryActivity extends BaseActivity {
         });
 
         int currentItem = 0;
+        Log.e(TAG,"BaseApplication.mUserInfoData:"+BaseApplication.mUserInfoData);
         if ("SG".equals(BaseApplication.mUserInfoData.getType())) {
             switch (itemFromSG) {
                 case "yaliji":

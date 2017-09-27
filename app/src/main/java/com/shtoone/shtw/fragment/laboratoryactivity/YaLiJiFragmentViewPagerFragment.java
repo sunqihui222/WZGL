@@ -191,6 +191,9 @@ public class YaLiJiFragmentViewPagerFragment extends BaseFragment {
         String isQualified = "";
         String isReal = "";
         String testType = "";
+        String sjqd = "";
+        String lq = "";
+        Log.e(TAG,"mParametersData:"+mParametersData);
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             startDateTime = mParametersData.startDateTime;
@@ -200,14 +203,16 @@ public class YaLiJiFragmentViewPagerFragment extends BaseFragment {
             isQualified = mParametersData.isQualified;
             isReal = mParametersData.isReal;
             testType = mParametersData.testTypeID;
+            sjqd = mParametersData.sjqd;
+            lq = mParametersData.lq;
         }
 
         if (null != listData) {
             listData.clear();
         }
-        String yalijiTestUrl = URL.getYalijiTestList(userGroupID, isQualified, startDateTime, endDateTime, currentPage, equipmentID, isReal, testType);
+        String yalijiTestUrl = URL.getYalijiTestList(userGroupID, isQualified, startDateTime, endDateTime, currentPage, equipmentID, isReal, testType,sjqd,lq);
         Log.e("压力机url","压力机url=:"+yalijiTestUrl);
-        return URL.getYalijiTestList(userGroupID, isQualified, startDateTime, endDateTime, currentPage, equipmentID, isReal, testType);
+        return URL.getYalijiTestList(userGroupID, isQualified, startDateTime, endDateTime, currentPage, equipmentID, isReal, testType,sjqd,lq);
     }
 
     @Override
@@ -221,6 +226,8 @@ public class YaLiJiFragmentViewPagerFragment extends BaseFragment {
         String isQualified = "";
         String isReal = "";
         String testType = "";
+        String sjqd = "";
+        String lq = "";
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             startDateTime = mParametersData.startDateTime;
@@ -230,9 +237,11 @@ public class YaLiJiFragmentViewPagerFragment extends BaseFragment {
             isQualified = mParametersData.isQualified;
             isReal = mParametersData.isReal;
             testType = mParametersData.testTypeID;
+            sjqd = mParametersData.sjqd;
+            lq = mParametersData.lq;
         }
 
-        return URL.getYalijiTestList(userGroupID, isQualified, startDateTime, endDateTime, currentPage, equipmentID, isReal, testType);
+        return URL.getYalijiTestList(userGroupID, isQualified, startDateTime, endDateTime, currentPage, equipmentID, isReal, testType,sjqd,lq);
     }
 
     @Override
@@ -374,6 +383,11 @@ public class YaLiJiFragmentViewPagerFragment extends BaseFragment {
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
                 this.mParametersData.equipmentID = mParametersData.equipmentID;
                 this.mParametersData.testTypeID = mParametersData.testTypeID;
+
+
+                this.mParametersData.sjqd = mParametersData.sjqd;
+                this.mParametersData.lq = mParametersData.lq;
+
                 KLog.e("mParametersData:" + mParametersData.startDateTime);
                 KLog.e("mParametersData:" + mParametersData.endDateTime);
                 KLog.e("mParametersData:" + mParametersData.equipmentID);

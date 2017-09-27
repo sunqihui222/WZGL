@@ -40,6 +40,8 @@ public class ParametersData implements Cloneable, Serializable {
     public String parentno="";
     public String projectno = "";
     public String username = "";
+    public String sjqd = "";
+    public String lq = "";
 
 
     public ParametersData() {
@@ -61,5 +63,13 @@ public class ParametersData implements Cloneable, Serializable {
         } catch (CloneNotSupportedException e) {
             return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ParametersData{" +
+                "sjqd='" + sjqd + '\'' +
+                ", lq='" + lq + '\'' +
+                '}';
     }
 }
