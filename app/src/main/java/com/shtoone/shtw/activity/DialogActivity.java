@@ -423,20 +423,22 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             case ConstantsUtils.CONCRETEFRAGMENT:
                 //默认开始和结束时间是可见的
                 break;
-            case ConstantsUtils.YALIJIFRAGMENT:
             case ConstantsUtils.WANNENGJIFRAGMENT:
-                //设置设备和试验类型的下拉选择可见
                 ms_select_equipment.setVisibility(View.VISIBLE);
+                break;
+            case ConstantsUtils.YALIJIFRAGMENT:
+                //设置设备和试验类型的下拉选择可见
+
                 ms_select_strength.setVisibility(View.VISIBLE);
                 ms_select_lq.setVisibility(View.VISIBLE);
                 url = URL.getLibEquipmentTest(mParametersData.userGroupID);
                 Log.e("float", "url=:" + url);
                 refresh();
                 break;
-            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
-                url = URL.getDataDictionary("SJQD");
-                refresh();
-                break;
+//            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
+//                url = URL.getDataDictionary("SJQD");
+//                refresh();
+//                break;
 
 
             case ConstantsUtils.MATERIALSTATISTICFRAGMENT:
