@@ -320,8 +320,10 @@ public class WannengjiDetailActivity extends BaseActivity {
         tv_identifier.setText(mWannengjiDetailData.getData().getSJBH());
         tv_diameter.setText(mWannengjiDetailData.getData().getGGZL());
         tv_kind.setText(mWannengjiDetailData.getData().getPZBM());
-        mViewPager.setAdapter(new WannengjiDetailActivityChartViewPagerAdapter(getSupportFragmentManager(), mWannengjiDetailData));
-        mTabLayout.setupWithViewPager(mViewPager);
+        if (!mWannengjiDetailData.getData().getF_LZ().contains("null")) {
+            mViewPager.setAdapter(new WannengjiDetailActivityChartViewPagerAdapter(getSupportFragmentManager(), mWannengjiDetailData));
+            mTabLayout.setupWithViewPager(mViewPager);
+        }
         if (!TextUtils.isEmpty(mWannengjiDetailData.getData().getChuli())) {
             et_handle_reason.getEditText().setText(mWannengjiDetailData.getData().getChuli());
             et_handle_reason.setEnabled(false);

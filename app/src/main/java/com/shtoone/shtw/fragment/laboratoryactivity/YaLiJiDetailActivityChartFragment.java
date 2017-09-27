@@ -114,7 +114,7 @@ public class YaLiJiDetailActivityChartFragment extends BaseFragment {
     private void setChartData() {
         ArrayList<String> xVals = new ArrayList<String>();
         String[] x = data.getX();
-        if (x[0].contains("null")) {
+        if (!x[0].contains("null")) {
             for (int i = 0; i < x.length; i++) {
                 xVals.add(x[i]);
             }
@@ -122,7 +122,7 @@ public class YaLiJiDetailActivityChartFragment extends BaseFragment {
 
         ArrayList<Entry> yVals = new ArrayList<Entry>();
         String[] y = data.getY();
-        if (y[0].contains("null")) {
+        if (!y[0].contains("null")) {
             for (int i = 0; i < y.length; i++) {
                 yVals.add(new Entry(Float.parseFloat(y[i]), i));
             }
