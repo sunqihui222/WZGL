@@ -63,8 +63,9 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private MaterialSpinner ms_select_test_type;
     private MaterialSpinner ms_select_material;
     private MaterialSpinner ms_select_strength;
+    private MaterialSpinner ms_select_lq;
     private MaterialSpinner ms_select_waagname;
-//    private MaterialSpinner ms_select_materialname;
+    //    private MaterialSpinner ms_select_materialname;
     private ImageView iv_cancel;
     private boolean isStartDateTime;
     private String startDateTime;
@@ -83,6 +84,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private List<String> materialIDs;
     private List<String> materialNames;
     private List<String> strengthIds;
+    private List<String> lqList;
     private List<String> strengthNames;
     private RadioGroup rg_handle;
     private RadioGroup rg_examine;
@@ -120,6 +122,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         ms_select_test_type = (MaterialSpinner) findViewById(R.id.ms_select_test_type_dialog);
         ms_select_material = (MaterialSpinner) findViewById(R.id.ms_select_material_dialog);
         ms_select_strength = (MaterialSpinner) findViewById(R.id.ms_select_strength_dialog);
+        ms_select_lq = (MaterialSpinner) findViewById(R.id.ms_select_lq_dialog);
         ms_select_waagname = (MaterialSpinner) findViewById(R.id.ms_select_waagname_dialog);
 //        ms_select_materialname = (MaterialSpinner) findViewById(R.id.ms_select_materialname_dialog);
         rg_handle = (RadioGroup) findViewById(R.id.rg_handle_dialog);
@@ -223,13 +226,18 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
+        //假数据
+        strengthIds = new ArrayList<>();
+        //使用数组作为数据源
+        final String[] strengthDataArr = new String[]{"C15","C20","C25","C30","C35","C40","C45","C50","C55","C60","C65",};
+        // adpater对象
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strengthDataArr);
+        ms_select_strength.setAdapter(arrayAdapter);
         ms_select_strength.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e(TAG,"strength选择第：" + i + "个");
                 if (i >= 0) {
-                    mParametersData.strengthId = strengthIds.get(i);
-                    Log.e(TAG,"strengthIds[i]:" + strengthNames.get(i));
+                    mParametersData.sjqd = strengthDataArr[i];
                 } else if (i == -1) {
                     mParametersData.strengthId = "";
                 }
@@ -240,6 +248,31 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
             }
         });
+
+        /*****************************************/
+        //假数据
+        lqList = new ArrayList<>();
+        //使用数组作为数据源
+        final String[] lqDataArr = new String[]{"7","28","56"};
+        // adpater对象
+        ArrayAdapter<String> lqArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lqDataArr);
+        ms_select_lq.setAdapter(lqArrayAdapter);
+        ms_select_lq.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i >= 0) {
+                    mParametersData.lq = lqDataArr[i];
+                } else if (i == -1) {
+                    mParametersData.strengthId = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        /*****************************************/
 
         ms_select_waagname.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -394,11 +427,18 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             case ConstantsUtils.WANNENGJIFRAGMENT:
                 //设置设备和试验类型的下拉选择可见
                 ms_select_equipment.setVisibility(View.VISIBLE);
-                ms_select_test_type.setVisibility(View.VISIBLE);
+                ms_select_strength.setVisibility(View.VISIBLE);
+                ms_select_lq.setVisibility(View.VISIBLE);
                 url = URL.getLibEquipmentTest(mParametersData.userGroupID);
                 Log.e("float", "url=:" + url);
                 refresh();
                 break;
+            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
+                url = URL.getDataDictionary("SJQD");
+                refresh();
+                break;
+
+
             case ConstantsUtils.MATERIALSTATISTICFRAGMENT:
             case ConstantsUtils.PRODUCEQUERYFRAGMENT:
                 //设置设备的下拉选择可见
@@ -456,6 +496,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 url = URL.getDataDictionary("SJQD");
                 refresh();
                 break;
+
 
             case ConstantsUtils.JOBORDERFINSH:
                 tv_DepartmentName.setVisibility(View.VISIBLE);

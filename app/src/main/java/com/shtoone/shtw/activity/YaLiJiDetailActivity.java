@@ -321,8 +321,10 @@ public class YaLiJiDetailActivity extends BaseActivity {
         tv_size.setText(mYalijiDetailData.getData().getSJCC());
         tv_age.setText(mYalijiDetailData.getData().getLQ());
         tv_central_value.setText(mYalijiDetailData.getData().getQDDBZ());
-        mViewPager.setAdapter(new YaLiJiDetailActivityChartViewPagerAdapter(getSupportFragmentManager(), mYalijiDetailData));
-        mTabLayout.setupWithViewPager(mViewPager);
+        if (!mYalijiDetailData.getData().getF_LZ().contains("null")) {
+            mViewPager.setAdapter(new YaLiJiDetailActivityChartViewPagerAdapter(getSupportFragmentManager(), mYalijiDetailData));
+            mTabLayout.setupWithViewPager(mViewPager);
+        }
         if (!TextUtils.isEmpty(mYalijiDetailData.getData().getChuli())) {
             et_handle_reason.getEditText().setText(mYalijiDetailData.getData().getChuli());
             et_handle_reason.setEnabled(false);

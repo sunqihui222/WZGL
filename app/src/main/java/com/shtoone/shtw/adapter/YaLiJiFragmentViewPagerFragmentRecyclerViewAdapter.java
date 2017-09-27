@@ -80,8 +80,6 @@ public class YaLiJiFragmentViewPagerFragmentRecyclerViewAdapter extends Recycler
             mItemViewHolder.tv_equipment.setText(item.getBanhezhanminchen());
 
 
-            Log.e(TAG,"getLQ："+item.getLQ());
-            Log.e(TAG,"getSJCC："+item.getSJCC());
             mItemViewHolder.tv_age.setText(item.getLQ()+"");
             mItemViewHolder.tv_test_size.setText(item.getSJCC()+"");
 

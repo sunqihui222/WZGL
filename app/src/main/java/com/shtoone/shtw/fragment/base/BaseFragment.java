@@ -3,6 +3,7 @@ package com.shtoone.shtw.fragment.base;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -143,7 +144,7 @@ public abstract class BaseFragment extends SupportFragment {
 
     public void refresh() {
         String URL = createRefreshULR();
-
+        Log.e(TAG,">>>>>>>>>>>refresh");
         //联网获取数据
         //还没有判断url，用户再判断
         HttpUtils.getRequest(URL, new HttpUtils.HttpListener() {
@@ -221,3 +222,4 @@ public abstract class BaseFragment extends SupportFragment {
         return null;
     }
 }
+

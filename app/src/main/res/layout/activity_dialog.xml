@@ -168,6 +168,24 @@
                 app:ms_hintColor="@color/black"
                 app:ms_multiline="true" />
 
+            <!---->
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/ms_select_lq_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:ms_alignLabels="true"
+                app:ms_arrowColor="@color/black"
+                app:ms_arrowSize="16dp"
+                app:ms_baseColor="@color/black"
+                app:ms_enableErrorLabel="false"
+                app:ms_floatingLabelColor="@color/black"
+                app:ms_floatingLabelText="@string/lq"
+                app:ms_highlightColor="@color/white"
+                app:ms_hint="@string/lq"
+                app:ms_hintColor="@color/black"
+                app:ms_multiline="true" />
+            <!---->
             <RadioGroup
                 android:id="@+id/rg_handle_dialog"
                 android:layout_width="match_parent"

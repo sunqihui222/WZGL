@@ -43,6 +43,8 @@ public class ParametersData implements Cloneable, Serializable {
     public String zhuangtai = "";
     public String unfinsh = "";
     public String finsh = "";
+    public String sjqd = "";
+    public String lq = "";
 
 
     public ParametersData() {
@@ -64,5 +66,13 @@ public class ParametersData implements Cloneable, Serializable {
         } catch (CloneNotSupportedException e) {
             return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ParametersData{" +
+                "sjqd='" + sjqd + '\'' +
+                ", lq='" + lq + '\'' +
+                '}';
     }
 }
