@@ -3,6 +3,7 @@ package com.shtoone.shtw.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.shtoone.shtw.bean.WannengjiDetailActivityChartFragmentData;
 import com.shtoone.shtw.bean.WannengjiDetailData;
@@ -29,6 +30,11 @@ public class WannengjiDetailActivityChartViewPagerAdapter extends FragmentPagerA
             String[] arr_scl = mWannengjiDetailData.getData().getSCL().split("&");
             String[] arrx = mWannengjiDetailData.getData().getF_SJ().split("&");
             String[] arry = mWannengjiDetailData.getData().getF_LZ().split("&");
+
+
+            Log.e(TAG,"arrx[0]>>>"+arrx[0]);
+            Log.e(TAG,"arry[0]>>>"+arrx[0]);
+
             listDatas = new ArrayList<WannengjiDetailActivityChartFragmentData>();
             if (arrx.length > 0) {
                 mTitles = new String[arrx.length];

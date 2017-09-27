@@ -43,13 +43,32 @@
             android:layout_alignBottom="@id/textview1"
             android:layout_toRightOf="@+id/textview1"
             android:text="万能机1" />
-
+        /**********************************************************************/
         <TextView
             android:id="@+id/textview2"
             style="@style/RecyclerViewItemTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textview1"
+            android:text="试件尺寸：" />
+
+        <TextView
+            android:id="@+id/tv_test_size_item_recyclerview_yaliji_fragment_viewpager_fragment"
+            style="@style/RecyclerViewItemTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/textview2"
+            android:layout_toRightOf="@+id/textview1"
+            android:text="150*150*150" />
+
+
+        /**********************************************************************/
+        <TextView
+            android:id="@+id/textview3"
+            style="@style/RecyclerViewItemTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview2"
             android:text="设计强度：" />
 
         <TextView
@@ -57,25 +76,8 @@
             style="@style/RecyclerViewItemTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/textview2"
-            android:layout_toRightOf="@+id/textview2"
-            android:text="万能机1" />
-
-        <TextView
-            android:id="@+id/textview3"
-            style="@style/RecyclerViewItemTextTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textview2"
-            android:text="强度代表：" />
-
-        <TextView
-            android:id="@+id/tv_central_value_item_recyclerview_yaliji_fragment_viewpager_fragment"
-            style="@style/RecyclerViewItemTextTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignBottom="@id/textview3"
-            android:layout_toRightOf="@+id/textview3"
+            android:layout_toRightOf="@+id/textview2"
             android:text="万能机1" />
 
         <TextView
@@ -84,16 +86,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textview3"
-            android:text="工程名称：" />
+            android:text="强度代表：" />
 
         <TextView
-            android:id="@+id/tv_project_name_item_recyclerview_yaliji_fragment_viewpager_fragment"
+            android:id="@+id/tv_central_value_item_recyclerview_yaliji_fragment_viewpager_fragment"
             style="@style/RecyclerViewItemTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/textview4"
-            android:layout_toRightOf="@+id/textview4"
-            android:singleLine="true"
+            android:layout_toRightOf="@+id/textview3"
             android:text="万能机1" />
 
         <TextView
@@ -102,15 +103,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textview4"
-            android:text="施工部位：" />
+            android:text="工程名称：" />
 
         <TextView
-            android:id="@+id/tv_position_item_recyclerview_yaliji_fragment_viewpager_fragment"
+            android:id="@+id/tv_project_name_item_recyclerview_yaliji_fragment_viewpager_fragment"
             style="@style/RecyclerViewItemTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/textview5"
-            android:layout_toRightOf="@+id/textview5"
+            android:layout_toRightOf="@+id/textview4"
             android:singleLine="true"
             android:text="万能机1" />
 
@@ -120,15 +121,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textview5"
-            android:text="试验类型：" />
+            android:text="施工部位：" />
 
         <TextView
-            android:id="@+id/tv_testtype_item_recyclerview_yaliji_fragment_viewpager_fragment"
+            android:id="@+id/tv_position_item_recyclerview_yaliji_fragment_viewpager_fragment"
             style="@style/RecyclerViewItemTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/textview6"
-            android:layout_toRightOf="@+id/textview6"
+            android:layout_toRightOf="@+id/textview5"
+            android:singleLine="true"
             android:text="万能机1" />
 
         <TextView
@@ -137,6 +139,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textview6"
+            android:text="试验类型：" />
+
+        <TextView
+            android:id="@+id/tv_testtype_item_recyclerview_yaliji_fragment_viewpager_fragment"
+            style="@style/RecyclerViewItemTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/textview7"
+            android:layout_toRightOf="@+id/textview6"
+            android:text="万能机1" />
+
+        <TextView
+            android:id="@+id/textview8"
+            style="@style/RecyclerViewItemTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview7"
             android:text="设备名称：" />
 
         <TextView
@@ -144,8 +163,26 @@
             style="@style/RecyclerViewItemTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/textview7"
+            android:layout_alignBottom="@id/textview8"
             android:layout_toRightOf="@+id/textview7" />
+
+        /****************************************************************/
+        <TextView
+            android:id="@+id/textview9"
+            style="@style/RecyclerViewItemTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview8"
+            android:text="龄        期：" />
+
+        <TextView
+            android:id="@+id/tv_age_item_recyclerview_yaliji_fragment_viewpager_fragment"
+            style="@style/RecyclerViewItemTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/textview9"
+            android:layout_toRightOf="@+id/textview7" />
+        /****************************************************************/
 
     </RelativeLayout>
 

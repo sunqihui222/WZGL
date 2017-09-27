@@ -8,25 +8,11 @@ import java.util.List;
  */
 public class YalijiFragmentViewPagerFragmentRecyclerViewItemData {
     /**
-     * data : [{"GCMC":"杨柳河1#大桥","SYJID":"392E893E-F063-4C93-ACE4-8E8F5581903A","SYRQ":"2016-07-15","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅2-1T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1293","QDDBZ":"51.1"},{"GCMC":"杨柳河1#大桥","SYJID":"D49DB0CA-3F8E-4864-8341-B07E6E22EB18","SYRQ":"2016-07-15","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅8-4T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1294","QDDBZ":"51.9"},{"GCMC":"杨柳河1#大桥","SYJID":"7E124510-800F-4E17-B4D1-33BA81A3A37F","SYRQ":"2016-07-14","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅13-4T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1289","QDDBZ":"51.3"},{"GCMC":"杨柳河2#大桥","SYJID":"28D83842-4E84-475B-8227-4C9681F85E9C","SYRQ":"2016-07-14","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅4-5T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1290","QDDBZ":"51.6"},{"GCMC":"杨柳河1#大桥","SYJID":"5F9A4660-B032-4949-97DD-5D850333E64D","SYRQ":"2016-07-13","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅8-1T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1266","QDDBZ":"51.2"},{"GCMC":"杨柳河1#大桥","SYJID":"2E1904BF-1B84-4B42-9FEC-051299EB863E","SYRQ":"2016-07-13","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅13-3T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1267","QDDBZ":"51"},{"GCMC":"杨柳河1#大桥","SYJID":"31F568F9-90F7-404B-8397-D32F7A1286C8","SYRQ":"2016-07-13","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅5-3T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1268","QDDBZ":"52.5"},{"GCMC":"杨柳河1#大桥","SYJID":"FE0EFDEB-8CA9-4827-84DB-188774821447","SYRQ":"2016-07-12","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅13-1T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1264","QDDBZ":"51.4"},{"GCMC":"杨柳河2#大桥","SYJID":"F9E1BD09-6019-4A74-AC60-8954AC651555","SYRQ":"2016-07-12","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅4-4T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1265","QDDBZ":"52.1"},{"GCMC":"杨柳河1#大桥","SYJID":"1B965E20-19CF-489C-AEBA-2E1CDE9C8EA3","SYRQ":"2016-07-11","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅11-4T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1198","QDDBZ":"51.7"},{"GCMC":"杨柳河1#大桥","SYJID":"6A0F2D96-BDD7-49B7-A397-26B67DD4FEC3","SYRQ":"2016-07-11","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅6-4T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1199","QDDBZ":"51.7"},{"GCMC":"杨柳河2#大桥","SYJID":"7260B917-DDA2-4E0A-9720-2954A00F5E4E","SYRQ":"2016-07-10","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅4-3T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1194","QDDBZ":"51.9"},{"GCMC":"杨柳河1#大桥","SYJID":"9A8E5BC2-C2CA-4292-A64A-1216D36388DA","SYRQ":"2016-07-10","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅5-5T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1196","QDDBZ":"51.4"},{"GCMC":"盘龙河1#大桥","SYJID":"D710FA13-36B1-4962-9B2E-59F7B9DFA70E","SYRQ":"2016-06-12","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅6-1T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1089","QDDBZ":"50.6"},{"GCMC":"杨柳河3#大桥","SYJID":"0FDC8D5D-0549-4246-9C8B-03A6E76D78BF","SYRQ":"2016-06-12","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅1-5T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1090","QDDBZ":"51.1"},{"GCMC":"杨柳河1#大桥","SYJID":"52130032-F2AF-412F-BCA0-A9BCB8A98598","SYRQ":"2016-06-12","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅12-2T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1091","QDDBZ":"53"},{"GCMC":"盘龙河1#大桥","SYJID":"0A602D6C-AF0B-4FA7-BB13-8DD3A04453D0","SYRQ":"2016-06-11","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅3-3T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1086","QDDBZ":"51"},{"GCMC":"杨柳河3#大桥","SYJID":"50B7A576-4906-44D2-9D17-E2C91A6DAD47","SYRQ":"2016-06-11","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅1-2T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1087","QDDBZ":"50.4"},{"GCMC":"杨柳河3#大桥","SYJID":"7EB26A61-FC27-42E9-93ED-068EDD2FE05A","SYRQ":"2016-06-11","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅1-3T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1088","QDDBZ":"50.7"},{"GCMC":"盘龙河3#大桥","SYJID":"0DF5238D-E871-4B72-A707-D1EE20F6A550","SYRQ":"2016-06-10","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅2#墩5#块","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1082","QDDBZ":"50.8"},{"GCMC":"杨柳河3#大桥","SYJID":"5E8F3B96-D6CC-43B6-9A95-4D6E6F58FD3E","SYRQ":"2016-06-10","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅1-1T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1082","QDDBZ":"51.1"},{"GCMC":"杨柳河2#大桥","SYJID":"E9227A77-B4B8-4D9F-B4DE-55F97300E43E","SYRQ":"2016-06-10","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅3-5T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1084","QDDBZ":"50.9"},{"GCMC":"盘龙河1#大桥","SYJID":"7F97435F-456B-4CD2-9DC7-8712E7CC67F0","SYRQ":"2016-06-10","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅3-1T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1085","QDDBZ":"50.5"},{"GCMC":"盘龙河1#大桥","SYJID":"D3F482FD-BCBC-4C69-97D8-018918C54FF8","SYRQ":"2016-06-09","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅6-2T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1080","QDDBZ":"50.8"},{"GCMC":"杨柳河2#大桥","SYJID":"801828C4-587D-480B-AF7D-7299040AF079","SYRQ":"2016-06-09","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅3-4T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1081","QDDBZ":"50.6"},{"GCMC":"杨柳河3#大桥","SYJID":"E1572A4E-D980-42F9-8BEF-24075199ADC9","SYRQ":"2016-06-08","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅1-3T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1077","QDDBZ":"51"},{"GCMC":"杨柳河2#大桥","SYJID":"6DAAAE3C-1DCA-44E4-BAAF-7DBA1FF1895B","SYRQ":"2016-06-08","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"右幅2-4T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1078","QDDBZ":"50.9"},{"GCMC":"盘龙河1#大桥","SYJID":"402FEF52-2DD5-404D-B3D9-C4C3B0B1CDB1","SYRQ":"2016-06-08","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅6-4T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1079","QDDBZ":"51.1"},{"GCMC":"杨柳河3#大桥","SYJID":"AAE29333-4E60-4354-9E8C-EC65E9FA1C64","SYRQ":"2016-06-07","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅1-5T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1074","QDDBZ":"50.4"},{"GCMC":"盘龙河1#大桥","SYJID":"9A0620A6-5B67-483C-B70B-76397721C5EA","SYRQ":"2016-06-07","chuzhi":"0","testName":"混凝土试件抗压强度试验","SGBW":"左幅6-3T梁","SJQD":"C50","shebeiname":"二航项目部1号压力机","PDJG":"有效","SJBH":"1075","QDDBZ":"51"}]
+     * data : [{"SYJID":"7AA03D14-3F5D-4875-A16B-3228759FD2E9","SYRQ":"2017-04-18","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0051-02","LQ":28,"CJMC":"电焊网隔离栅立柱基础","chuzhi":"","SJQD":"C20","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"24.7"},{"SYJID":"D2EEE681-DE11-4331-BB39-B5D9A82C8515","SYRQ":"2017-04-18","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0051-03","LQ":28,"CJMC":"电焊网隔离栅立柱基础","chuzhi":"","SJQD":"C20","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"24.6"},{"SYJID":"91294CA6-0E56-4C21-9AF1-A7126FFC69CE","SYRQ":"2017-04-17","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0050-02","LQ":28,"CJMC":"电焊网隔离栅立柱基础","chuzhi":"","SJQD":"C20","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"24.3"},{"SYJID":"F0A68010-7E32-4D5D-A5E9-BEF58F99658B","SYRQ":"2017-04-17","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0050-03","LQ":28,"CJMC":"电焊网隔离栅立柱基础","chuzhi":"","SJQD":"C20","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"24.6"},{"SYJID":"3D9C20B0-D628-4C58-BD6B-0A4808A20FAD","SYRQ":"2017-04-14","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0049-03","LQ":28,"CJMC":"混凝土护栏","chuzhi":"","SJQD":"C40","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"49"},{"SYJID":"C6C2AFF1-A997-4C3C-B8D0-391939CADF7C","SYRQ":"2017-04-14","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0049-02","LQ":28,"CJMC":"混凝土护栏","chuzhi":"","SJQD":"C40","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"49.8"},{"SYJID":"54CC237A-14E7-418D-AA45-BB1A7271DBBE","SYRQ":"2017-04-07","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0048-02","LQ":28,"CJMC":"混凝土护栏","chuzhi":"","SJQD":"C40","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"47.9"},{"SYJID":"F36E4DEE-E15E-4B8C-B700-278A2688304F","SYRQ":"2017-04-07","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0048-03","LQ":28,"CJMC":"混凝土护栏","chuzhi":"","SJQD":"C40","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"48.4"},{"SYJID":"502905A5-0A94-4322-9681-586FA77E491A","SYRQ":"2017-04-02","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0047-03","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.3"},{"SYJID":"8BF69441-F1CB-4EEB-8AEC-71DA49576BCF","SYRQ":"2017-04-02","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0047-02","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.3"},{"SYJID":"1037E353-A7AD-434F-8D8C-793CF45E0D99","SYRQ":"2017-04-01","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0046-02","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.3"},{"SYJID":"F923A7EC-0B2B-4C3F-AD0A-26F63763CC70","SYRQ":"2017-04-01","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0046-03","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.6"},{"SYJID":"C592A1FB-35D2-4FEF-8210-1F6FC8A3FC9F","SYRQ":"2017-03-31","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0045-02","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"19.5"},{"SYJID":"DEFD1B63-9D36-41B7-9E00-1B1089545703","SYRQ":"2017-03-31","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0045-03","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"19.1"},{"SYJID":"A83D2CA3-9BF7-4449-95CE-4495A8F6505C","SYRQ":"2017-03-30","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0044-03","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"20.1"},{"SYJID":"F0C30396-80E9-494D-956A-F3F2386BD625","SYRQ":"2017-03-30","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0044-02","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.9"},{"SYJID":"020053D1-EA51-4ADE-A99D-D6C7B9D042D4","SYRQ":"2017-03-29","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0043-03","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.6"},{"SYJID":"57452164-476C-4EF7-B099-8E5EDDF28FF5","SYRQ":"2017-03-29","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0043-02","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.6"},{"SYJID":"D85B3FBF-CB45-4CC5-86A0-40F892F2775E","SYRQ":"2017-03-28","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0042-02","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.8"},{"SYJID":"DF6805C2-FE7C-4E8C-ABE7-86035B49BEF2","SYRQ":"2017-03-28","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0042-03","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.6"},{"SYJID":"3ACB33DD-81E9-4B5E-9AB0-B5DD9D89E6C1","SYRQ":"2017-03-27","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0041-03","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.8"},{"SYJID":"5703B418-63A7-420C-8953-A82FD925864B","SYRQ":"2017-03-27","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0041-02","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.9"},{"SYJID":"35876AFA-2D72-4939-AC46-9B73B9693B22","SYRQ":"2017-03-26","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0040-02","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.4"},{"SYJID":"F160BF89-8B69-4574-BE48-2784C9FA9FCD","SYRQ":"2017-03-26","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0040-02","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.6"},{"SYJID":"FFC227E9-7392-4A78-A76B-E78E76CE6777","SYRQ":"2017-03-26","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0040-03","LQ":28,"CJMC":"横向排水管帽石","chuzhi":"","SJQD":"C15","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"18.3"},{"SYJID":"6E91D7C9-600A-4C39-9017-C4FBC0352B30","SYRQ":"2017-03-25","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0039-02","LQ":28,"CJMC":"人手孔","chuzhi":"","SJQD":"C20","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"24.7"},{"SYJID":"86C68285-2358-4746-B63B-A7991C52E865","SYRQ":"2017-03-25","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0039-03","LQ":28,"CJMC":"人手孔","chuzhi":"","SJQD":"C20","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"24.5"},{"SYJID":"6E3095C8-C072-4273-856D-A7C7EED5EADF","SYRQ":"2017-03-24","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0038-02","LQ":28,"CJMC":"人手孔","chuzhi":"","SJQD":"C20","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"24.8"},{"SYJID":"A34CE7A4-7C57-44CC-97DD-9349FEC9493A","SYRQ":"2017-03-24","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0038-03","LQ":28,"CJMC":"人手孔","chuzhi":"","SJQD":"C20","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"24.6"},{"SYJID":"4AEFCC83-99C8-462A-B76C-7C65B7CE21A3","SYRQ":"2017-03-23","WTBH":"路面工程","testName":"混凝土试件抗压强度试验","SJCC":"150*150*150","PDJG":"合格","SJBH":"YP2017ZA-TKY-0037-03","LQ":28,"CJMC":"人手孔","chuzhi":"","SJQD":"C20","banhezhanminchen":"贵合高速路面A标1#压力机","QDDBZ":"25.5"}]
      * success : true
      */
 
     private boolean success;
-    /**
-     * GCMC : 杨柳河1#大桥
-     * SYJID : 392E893E-F063-4C93-ACE4-8E8F5581903A
-     * SYRQ : 2016-07-15
-     * chuzhi : 0
-     * testName : 混凝土试件抗压强度试验
-     * SGBW : 右幅2-1T梁
-     * SJQD : C50
-     * shebeiname : 二航项目部1号压力机
-     * PDJG : 有效
-     * SJBH : 1293
-     * QDDBZ : 51.1
-     */
-
     private List<DataBean> data;
 
     public boolean isSuccess() {
@@ -45,26 +31,36 @@ public class YalijiFragmentViewPagerFragmentRecyclerViewItemData {
         this.data = data;
     }
 
-    public static class DataBean implements Serializable {
-        private String GCMC;
+    public static class DataBean implements Serializable{
+        /**
+         * SYJID : 7AA03D14-3F5D-4875-A16B-3228759FD2E9
+         * SYRQ : 2017-04-18
+         * WTBH : 路面工程
+         * testName : 混凝土试件抗压强度试验
+         * SJCC : 150*150*150
+         * PDJG : 合格
+         * SJBH : YP2017ZA-TKY-0051-02
+         * LQ : 28
+         * CJMC : 电焊网隔离栅立柱基础
+         * chuzhi :
+         * SJQD : C20
+         * banhezhanminchen : 贵合高速路面A标1#压力机
+         * QDDBZ : 24.7
+         */
+
         private String SYJID;
         private String SYRQ;
-        private String chuzhi;
+        private String WTBH;
         private String testName;
-        private String SGBW;
-        private String SJQD;
-        private String shebeiname;
+        private String SJCC;
         private String PDJG;
         private String SJBH;
+        private int LQ;
+        private String CJMC;
+        private String chuzhi;
+        private String SJQD;
+        private String banhezhanminchen;
         private String QDDBZ;
-
-        public String getGCMC() {
-            return GCMC;
-        }
-
-        public void setGCMC(String GCMC) {
-            this.GCMC = GCMC;
-        }
 
         public String getSYJID() {
             return SYJID;
@@ -82,12 +78,12 @@ public class YalijiFragmentViewPagerFragmentRecyclerViewItemData {
             this.SYRQ = SYRQ;
         }
 
-        public String getChuzhi() {
-            return chuzhi;
+        public String getWTBH() {
+            return WTBH;
         }
 
-        public void setChuzhi(String chuzhi) {
-            this.chuzhi = chuzhi;
+        public void setWTBH(String WTBH) {
+            this.WTBH = WTBH;
         }
 
         public String getTestName() {
@@ -98,28 +94,12 @@ public class YalijiFragmentViewPagerFragmentRecyclerViewItemData {
             this.testName = testName;
         }
 
-        public String getSGBW() {
-            return SGBW;
+        public String getSJCC() {
+            return SJCC;
         }
 
-        public void setSGBW(String SGBW) {
-            this.SGBW = SGBW;
-        }
-
-        public String getSJQD() {
-            return SJQD;
-        }
-
-        public void setSJQD(String SJQD) {
-            this.SJQD = SJQD;
-        }
-
-        public String getShebeiname() {
-            return shebeiname;
-        }
-
-        public void setShebeiname(String shebeiname) {
-            this.shebeiname = shebeiname;
+        public void setSJCC(String SJCC) {
+            this.SJCC = SJCC;
         }
 
         public String getPDJG() {
@@ -136,6 +116,46 @@ public class YalijiFragmentViewPagerFragmentRecyclerViewItemData {
 
         public void setSJBH(String SJBH) {
             this.SJBH = SJBH;
+        }
+
+        public int getLQ() {
+            return LQ;
+        }
+
+        public void setLQ(int LQ) {
+            this.LQ = LQ;
+        }
+
+        public String getCJMC() {
+            return CJMC;
+        }
+
+        public void setCJMC(String CJMC) {
+            this.CJMC = CJMC;
+        }
+
+        public String getChuzhi() {
+            return chuzhi;
+        }
+
+        public void setChuzhi(String chuzhi) {
+            this.chuzhi = chuzhi;
+        }
+
+        public String getSJQD() {
+            return SJQD;
+        }
+
+        public void setSJQD(String SJQD) {
+            this.SJQD = SJQD;
+        }
+
+        public String getBanhezhanminchen() {
+            return banhezhanminchen;
+        }
+
+        public void setBanhezhanminchen(String banhezhanminchen) {
+            this.banhezhanminchen = banhezhanminchen;
         }
 
         public String getQDDBZ() {

@@ -77,6 +77,7 @@ public class WannengjiFragmentViewPagerFragmentRecyclerViewAdapter extends Recyc
             mItemViewHolder.tv_position.setText(item.getSGBW());
             mItemViewHolder.tv_kind.setText(item.getPZBM());
             mItemViewHolder.tv_testtype.setText(item.getTestName());
+            mItemViewHolder.tv_diameter.setText(item.getGCZJ()+"");
 
             if ("合格".equals(item.getPDJG())) {
                 //默认就是合格设置
@@ -122,6 +123,7 @@ public class WannengjiFragmentViewPagerFragmentRecyclerViewAdapter extends Recyc
         TextView tv_identifier;
         TextView tv_position;
         TextView tv_kind;
+        TextView tv_diameter;
         TextView tv_testtype;
         SlantedTextView stv_qualified;
         SlantedTextView stv_handle;
@@ -135,6 +137,7 @@ public class WannengjiFragmentViewPagerFragmentRecyclerViewAdapter extends Recyc
             tv_identifier = (TextView) view.findViewById(R.id.tv_identifier_item_recyclerview_wannengji_fragment_viewpager_fragment);
             tv_position = (TextView) view.findViewById(R.id.tv_position_item_recyclerview_wannengji_fragment_viewpager_fragment);
             tv_kind = (TextView) view.findViewById(R.id.tv_kind_item_recyclerview_wannengji_fragment_viewpager_fragment);
+            tv_diameter = (TextView) view.findViewById(R.id.tv_diameter_item_recyclerview_wannengji_fragment_viewpager_fragment);
             tv_testtype = (TextView) view.findViewById(R.id.tv_testtype_item_recyclerview_wannengji_fragment_viewpager_fragment);
             stv_qualified = (SlantedTextView) view.findViewById(R.id.stv_qualified_item_recyclerview_wannengji_fragment_viewpager_fragment);
             stv_handle = (SlantedTextView) view.findViewById(R.id.stv_handle_item_recyclerview_wannengji_fragment_viewpager_fragment);

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.bean.YalijiFragmentViewPagerFragmentRecyclerViewItemData;
 import com.shtoone.shtw.ui.SlantedTextView;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -72,10 +74,18 @@ public class YaLiJiFragmentViewPagerFragmentRecyclerViewAdapter extends Recycler
             mItemViewHolder.tv_test_number.setText(item.getSJBH());
             mItemViewHolder.tv_design_strength.setText(item.getSJQD());
             mItemViewHolder.tv_central_value.setText(item.getQDDBZ());
-            mItemViewHolder.tv_project_name.setText(item.getGCMC());
-            mItemViewHolder.tv_position.setText(item.getSGBW());
+            mItemViewHolder.tv_project_name.setText(item.getWTBH());
+            mItemViewHolder.tv_position.setText(item.getCJMC());
             mItemViewHolder.tv_testtype.setText(item.getTestName());
-            mItemViewHolder.tv_equipment.setText(item.getShebeiname());
+            mItemViewHolder.tv_equipment.setText(item.getBanhezhanminchen());
+
+
+            Log.e(TAG,"getLQ："+item.getLQ());
+            Log.e(TAG,"getSJCC："+item.getSJCC());
+            mItemViewHolder.tv_age.setText(item.getLQ()+"");
+            mItemViewHolder.tv_test_size.setText(item.getSJCC()+"");
+
+
             if ("合格".equals(item.getPDJG())) {
                 //默认就是合格设置
             } else if ("有效".equals(item.getPDJG())) {
@@ -127,6 +137,8 @@ public class YaLiJiFragmentViewPagerFragmentRecyclerViewAdapter extends Recycler
         TextView tv_position;
         TextView tv_equipment;
         TextView tv_testtype;
+        TextView tv_test_size;
+        TextView tv_age;
         SlantedTextView stv_qualified;
         SlantedTextView stv_handle;
         CardView cv;
@@ -135,6 +147,8 @@ public class YaLiJiFragmentViewPagerFragmentRecyclerViewAdapter extends Recycler
             super(view);
             tv_title = (TextView) view.findViewById(R.id.tv_title_item_recyclerview_yaliji_fragment_viewpager_fragment);
             tv_test_number = (TextView) view.findViewById(R.id.tv_test_number_item_recyclerview_yaliji_fragment_viewpager_fragment);
+            tv_test_size = (TextView) view.findViewById(R.id.tv_test_size_item_recyclerview_yaliji_fragment_viewpager_fragment);
+            tv_age = (TextView) view.findViewById(R.id.tv_age_item_recyclerview_yaliji_fragment_viewpager_fragment);
             tv_design_strength = (TextView) view.findViewById(R.id.tv_design_strength_item_recyclerview_yaliji_fragment_viewpager_fragment);
             tv_central_value = (TextView) view.findViewById(R.id.tv_central_value_item_recyclerview_yaliji_fragment_viewpager_fragment);
             tv_project_name = (TextView) view.findViewById(R.id.tv_project_name_item_recyclerview_yaliji_fragment_viewpager_fragment);

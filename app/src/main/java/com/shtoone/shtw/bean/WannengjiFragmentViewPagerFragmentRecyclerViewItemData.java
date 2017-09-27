@@ -7,27 +7,13 @@ import java.util.List;
  * Created by leguang on 2016/6/23 0016.
  */
 public class WannengjiFragmentViewPagerFragmentRecyclerViewItemData {
+
     /**
-     * data : [{"GCMC":"桥梁工程","SYJID":"6E678FB6-333D-4F51-8A01-FF2ED3F01158","SYRQ":"2016-06-01","chuzhi":"0","testName":"钢筋试验","SGBW":"周家寨大桥右幅11空心墩4.5-9m","LZQD":"","shebeiname":"二航试验段分部1号压力机","PDJG":"合格","QFLZ":"","SJBH":"1","PZBM":""},{"GCMC":"桥梁工程","SYJID":"6D7CD53E-7DD3-4C0F-BBE6-B650D3C9B842","SYRQ":"2016-05-24","chuzhi":"0","testName":"钢筋试验","SGBW":"周家寨大桥左幅5空心墩63-65.25m","LZQD":"","shebeiname":"二航试验段分部1号压力机","PDJG":"合格","QFLZ":"","SJBH":"1","PZBM":""}]
+     * data : [{"GCMC":"路面工程","SYRQ":"2016-08-13","SYJID":"2566BEEA-BCA3-4E9F-95DE-EB20A0F6B181","chuzhi":"1","testName":"钢筋试验","SGBW":"K124+990横向排水管","GCZJ":"12","LZQD":"","shebeiname":"贵合高速B标1#万能机","PDJG":"合格","QFLZ":"","SJBH":"YP2016ZF-TYH-0004-B","PZBM":""},{"GCMC":"路面工程","SYRQ":"2016-08-13","SYJID":"2566BEEA-BCA3-4E9F-95DE-EB20A0F6B181","chuzhi":"1","testName":"钢筋试验","SGBW":"K124+990横向排水管","GCZJ":"12","LZQD":"","shebeiname":"贵合高速B标1#万能机","PDJG":"合格","QFLZ":"","SJBH":"YP2016ZF-TYH-0004-B","PZBM":""},{"GCMC":"路面工程","SYRQ":"2016-08-13","SYJID":"2566BEEA-BCA3-4E9F-95DE-EB20A0F6B181","chuzhi":"1","testName":"钢筋试验","SGBW":"K124+990横向排水管","GCZJ":"12","LZQD":"","shebeiname":"贵合高速B标1#万能机","PDJG":"合格","QFLZ":"","SJBH":"YP2016ZF-TYH-0004-B","PZBM":""},{"GCMC":"路面工程","SYRQ":"2016-08-13","SYJID":"2566BEEA-BCA3-4E9F-95DE-EB20A0F6B181","chuzhi":"1","testName":"钢筋试验","SGBW":"K124+990横向排水管","GCZJ":"12","LZQD":"","shebeiname":"贵合高速B标1#万能机","PDJG":"合格","QFLZ":"","SJBH":"YP2016ZF-TYH-0004-B","PZBM":""},{"GCMC":"路面工程","SYRQ":"2016-08-13","SYJID":"2566BEEA-BCA3-4E9F-95DE-EB20A0F6B181","chuzhi":"1","testName":"钢筋试验","SGBW":"K124+990横向排水管","GCZJ":"12","LZQD":"","shebeiname":"贵合高速B标1#万能机","PDJG":"合格","QFLZ":"","SJBH":"YP2016ZF-TYH-0004-B","PZBM":""},{"GCMC":"路面工程","SYRQ":"2016-08-13","SYJID":"2566BEEA-BCA3-4E9F-95DE-EB20A0F6B181","chuzhi":"1","testName":"钢筋试验","SGBW":"K124+990横向排水管","GCZJ":"12","LZQD":"","shebeiname":"贵合高速B标1#万能机","PDJG":"合格","QFLZ":"","SJBH":"YP2016ZF-TYH-0004-B","PZBM":""},{"GCMC":"路面工程","SYRQ":"2016-08-11","SYJID":"C8995E8B-7B6D-411E-9586-A60C31BF22E80","chuzhi":"0","testName":"钢筋试验","SGBW":"K124+640 K124+840 K124+940 左侧 K124+740右侧","GCZJ":"2","LZQD":"","shebeiname":"贵合高速F标1#压力机","PDJG":"合格","QFLZ":"","SJBH":"YP2016ZF-TYH-0003-B","PZBM":""},{"GCMC":"路面工程","SYRQ":"2016-08-11","SYJID":"F6C9695B-06C1-4555-93FB-9F126C4389DB1","chuzhi":"1","testName":"钢筋试验","SGBW":"K124+640 K124+840 K124+940 左侧 K124+740右侧","GCZJ":"6","LZQD":"","shebeiname":"贵合高速B标1#万能机","PDJG":"合格","QFLZ":"","SJBH":"YP2016ZF-TYH-0003-C","PZBM":""},{"GCMC":"路面工程","SYRQ":"2016-08-11","SYJID":"F6C9695B-06C1-4555-93FB-9F126C4389DB2","chuzhi":"1","testName":"钢筋试验","SGBW":"K124+640 K124+840 K124+940 左侧 K124+740右侧","GCZJ":"6","LZQD":"","shebeiname":"贵合高速B标1#万能机","PDJG":"合格","QFLZ":"","SJBH":"YP2016ZF-TYH-0003-C","PZBM":""},{"GCMC":"路面工程","SYRQ":"2016-08-09","SYJID":"F00AA601-8317-4D5A-A601-4DEF7989B9073","chuzhi":"0","testName":"钢筋试验","SGBW":"K124+340 K124+390 K124+440 K124+490左侧横向排水管","GCZJ":"1","LZQD":"","shebeiname":"贵合高速F标1#压力机","PDJG":"合格","QFLZ":"","SJBH":"YP2016ZF-TYH-0002-C","PZBM":""}]
      * success : true
      */
 
     private boolean success;
-    /**
-     * GCMC : 桥梁工程
-     * SYJID : 6E678FB6-333D-4F51-8A01-FF2ED3F01158
-     * SYRQ : 2016-06-01
-     * chuzhi : 0
-     * testName : 钢筋试验
-     * SGBW : 周家寨大桥右幅11空心墩4.5-9m
-     * LZQD :
-     * shebeiname : 二航试验段分部1号压力机
-     * PDJG : 合格
-     * QFLZ :
-     * SJBH : 1
-     * PZBM :
-     */
-
     private List<DataBean> data;
 
     public boolean isSuccess() {
@@ -46,13 +32,30 @@ public class WannengjiFragmentViewPagerFragmentRecyclerViewItemData {
         this.data = data;
     }
 
-    public static class DataBean implements Serializable {
+    public static class DataBean implements Serializable{
+        /**
+         * GCMC : 路面工程
+         * SYRQ : 2016-08-13
+         * SYJID : 2566BEEA-BCA3-4E9F-95DE-EB20A0F6B181
+         * chuzhi : 1
+         * testName : 钢筋试验
+         * SGBW : K124+990横向排水管
+         * GCZJ : 12
+         * LZQD :
+         * shebeiname : 贵合高速B标1#万能机
+         * PDJG : 合格
+         * QFLZ :
+         * SJBH : YP2016ZF-TYH-0004-B
+         * PZBM :
+         */
+
         private String GCMC;
-        private String SYJID;
         private String SYRQ;
+        private String SYJID;
         private String chuzhi;
         private String testName;
         private String SGBW;
+        private String GCZJ;
         private String LZQD;
         private String shebeiname;
         private String PDJG;
@@ -68,20 +71,20 @@ public class WannengjiFragmentViewPagerFragmentRecyclerViewItemData {
             this.GCMC = GCMC;
         }
 
-        public String getSYJID() {
-            return SYJID;
-        }
-
-        public void setSYJID(String SYJID) {
-            this.SYJID = SYJID;
-        }
-
         public String getSYRQ() {
             return SYRQ;
         }
 
         public void setSYRQ(String SYRQ) {
             this.SYRQ = SYRQ;
+        }
+
+        public String getSYJID() {
+            return SYJID;
+        }
+
+        public void setSYJID(String SYJID) {
+            this.SYJID = SYJID;
         }
 
         public String getChuzhi() {
@@ -106,6 +109,14 @@ public class WannengjiFragmentViewPagerFragmentRecyclerViewItemData {
 
         public void setSGBW(String SGBW) {
             this.SGBW = SGBW;
+        }
+
+        public String getGCZJ() {
+            return GCZJ;
+        }
+
+        public void setGCZJ(String GCZJ) {
+            this.GCZJ = GCZJ;
         }
 
         public String getLZQD() {
@@ -155,31 +166,5 @@ public class WannengjiFragmentViewPagerFragmentRecyclerViewItemData {
         public void setPZBM(String PZBM) {
             this.PZBM = PZBM;
         }
-
-        @Override
-        public String toString() {
-            return "DataBean{" +
-                    "GCMC='" + GCMC + '\'' +
-                    ", SYJID='" + SYJID + '\'' +
-                    ", SYRQ='" + SYRQ + '\'' +
-                    ", chuzhi='" + chuzhi + '\'' +
-                    ", testName='" + testName + '\'' +
-                    ", SGBW='" + SGBW + '\'' +
-                    ", LZQD='" + LZQD + '\'' +
-                    ", shebeiname='" + shebeiname + '\'' +
-                    ", PDJG='" + PDJG + '\'' +
-                    ", QFLZ='" + QFLZ + '\'' +
-                    ", SJBH='" + SJBH + '\'' +
-                    ", PZBM='" + PZBM + '\'' +
-                    '}';
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "WannengjiFragmentViewPagerFragmentRecyclerViewItemData{" +
-                "success=" + success +
-                ", data=" + data +
-                '}';
     }
 }
