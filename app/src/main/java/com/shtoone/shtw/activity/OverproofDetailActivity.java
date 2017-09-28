@@ -535,6 +535,7 @@ public class OverproofDetailActivity extends BaseActivity implements TimePickerD
                 if (null != data) {
                     if (data.isSuccess()) {
                         mPageStateLayout.showContent();
+                        setData2View();
                         setAdapter();
                     } else {
                         //提示数据为空，展示空状态
@@ -667,6 +668,27 @@ public class OverproofDetailActivity extends BaseActivity implements TimePickerD
                 }
             }
         });
+
+    }
+
+    private void setData2View() {
+        if (!TextUtils.isEmpty(data.getHeadMsg().getFilePath())) {
+
+            String imageURL = URL.BaseURL + data.getHeadMsg().getFilePath();
+            Glide.with(getApplicationContext()).load(imageURL).crossFade().into(iv_photo_select);
+        }else{
+            iv_photo_select.setImageResource(R.drawable.ic_camera_album);
+        }
+        et_handle_person.getEditText().setText(data.getHeadMsg().getChuliren());
+        et_handle_time.getEditText().setText(data.getHeadMsg().getChulishijian());
+        et_handle_reason.getEditText().setText(data.getHeadMsg().getWentiyuanyin());
+        et_handle_way.getEditText().setText(data.getHeadMsg().getChulifangshi());
+        et_handle_result.getEditText().setText(data.getHeadMsg().getChulijieguo());
+        et_examine_person.getEditText().setText(data.getHeadMsg().getShenpiren());
+        et_examine_result.getEditText().setText(data.getHeadMsg().getJianliresult());
+        et_examine_approve.getEditText().setText(data.getHeadMsg().getJianlishenpi());
+        et_confirm_date.getEditText().setText(data.getHeadMsg().getConfirmdate());
+        et_approve_date.getEditText().setText(data.getHeadMsg().getShenpidate());
 
     }
 

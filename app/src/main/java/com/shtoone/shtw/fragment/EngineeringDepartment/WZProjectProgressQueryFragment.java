@@ -101,7 +101,9 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
                 switch (item.getItemId()) {
                     case R.id.action_hierarchy:
                         Intent intent = new Intent(getActivity(), FBProjectListActivity.class);
-
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
+                        intent.putExtras(bundle);
                         AnimationUtils.startActivity(_mActivity, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color, 500);
                         break;
                 }
@@ -337,7 +339,8 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
             if (mParametersData.fromTo == ConstantsUtils.WZPROGRESS){
-                this.mParametersData.projectno = mParametersData.projectno;
+                this.mParametersData = mParametersData;
+                //this.mParametersData.projectno = mParametersData.projectno;
                 KLog.e("mParametersData:" + mParametersData.projectno);
                 mPtrFrameLayout.autoRefresh(true);
             }
@@ -348,11 +351,7 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (!isRegistered) {
             BaseApplication.bus.register(this);
-            isRegistered = true;
-        }
-
         View view = inflater.inflate(R.layout.fragment_wzprogress_query, container, false);
         initView(view);
         return view;

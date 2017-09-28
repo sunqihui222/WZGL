@@ -88,13 +88,15 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private List<String> strengthNames;
     private RadioGroup rg_handle;
     private RadioGroup rg_examine;
-
-    private RadioGroup rg_jinchang_handle;
-    private RadioGroup rg_chuchang_handle;
-    private WaagListData waagListData;
-    private MaterialListData materialListData;
-    private List<String> cailiaoName;
-    private List<String> cailiaoNo;
+    private RadioGroup rg_tasklist;
+    private RadioGroup rg_unfinsh;
+    private RadioGroup rg_finsh;
+    private RadioGroup               rg_jinchang_handle;
+    private RadioGroup               rg_chuchang_handle;
+    private WaagListData             waagListData;
+    private MaterialListData         materialListData;
+    private List<String>             cailiaoName;
+    private List<String>             cailiaoNo;
     private TextView tv_MaterialName;
     private TextView tv_DepartmentName;
 
@@ -126,7 +128,10 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         rg_handle = (RadioGroup) findViewById(R.id.rg_handle_dialog);
         rg_examine = (RadioGroup) findViewById(R.id.rg_examine_dialog);
         rg_jinchang_handle = (RadioGroup) findViewById(R.id.rg_jinchang_handle_dialog);
-        rg_chuchang_handle = (RadioGroup) findViewById(R.id.rg_chuchang_handle_dialog);
+        rg_chuchang_handle= (RadioGroup) findViewById(R.id.rg_chuchang_handle_dialog);
+        rg_tasklist = (RadioGroup) findViewById(R.id.rg_tasklist_dialog);
+        rg_unfinsh = (RadioGroup) findViewById(R.id.rg_unfinsh_dialog);
+        rg_finsh = (RadioGroup) findViewById(R.id.rg_finsh_dialog);
         start_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         end_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         tv_MaterialName = (TextView) findViewById(R.id.tv_material_choose);
@@ -206,10 +211,10 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         ms_select_material.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e(TAG, "material选择第：" + i + "个");
+                Log.e(TAG,"material选择第：" + i + "个");
                 if (i >= 0) {
                     mParametersData.materialID = materialIDs.get(i);
-                    Log.e(TAG, "materialIDs[i]:" + materialNames.get(i));
+                    Log.e(TAG,"materialIDs[i]:" + materialNames.get(i));
                 } else if (i == -1) {
                     mParametersData.materialID = "";
                 }
@@ -337,15 +342,15 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
-        rg_jinchang_handle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        rg_jinchang_handle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
 
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int i) {
-                if (i == R.id.rb_ji_handle_dialog) {
-                    mParametersData.dataType = "0";
-                } else if (i == R.id.rb_yue_handle_dialog) {
-                    mParametersData.dataType = "1";
-                } else if (i == R.id.rb__zhou_handled_dialog) {
+                if (i==R.id.rb_ji_handle_dialog){
+                    mParametersData.dataType="0";
+                }else if(i==R.id.rb_yue_handle_dialog){
+                    mParametersData.dataType="1";
+                }else if (i==R.id.rb__zhou_handled_dialog){
                     mParametersData.dataType = "2";
                 }
             }
@@ -354,15 +359,62 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         rg_chuchang_handle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int i) {
-                if (i == R.id.rb_chu_all_handle_dialog) {
-                    mParametersData.states = "";
-                } else if (i == R.id.rb_feiliao_handle_dialog) {
-                    mParametersData.states = "0";
-                } else if (i == R.id.rb__diaobo_handled_dialog) {
-                    mParametersData.states = "1";
+                if (i==R.id.rb_chu_all_handle_dialog){
+                    mParametersData.states="";
+                }else if (i==R.id.rb_feiliao_handle_dialog){
+                    mParametersData.states="0";
+                }else if (i==R.id.rb__diaobo_handled_dialog){
+                    mParametersData.states="1";
                 }
             }
         });
+
+        rg_tasklist.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int i) {
+                if (i==R.id.rb_all_tasklist_dialog){
+                    mParametersData.zhuangtai="";
+                }else if (i==R.id.rb_unpeiliao_tasklist_dialog){
+                    mParametersData.zhuangtai="0";
+                }else if (i==R.id.rb_peiliao_tasklist_dialog){
+                    mParametersData.zhuangtai="1";
+                }else if (i==R.id.rb_unfinsh_tasklist_dialog){
+                    mParametersData.zhuangtai="2";
+                }else if (i==R.id.rb_finsh_tasklist_dialog){
+                    mParametersData.zhuangtai="3";
+                }
+            }
+        });
+
+        rg_unfinsh.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int i) {
+                if (i==R.id.rb_unfinsh_all_handle_dialog){
+                    mParametersData.unfinsh="";
+                }else if (i==R.id.rb_unfinsh_unsubmit_handle_dialog){
+                    mParametersData.unfinsh="-1";
+                }else if (i==R.id.rb_unfinsh_unpeiliao_dialog){
+                    mParametersData.unfinsh="0";
+                }else if (i==R.id.rb_unfinsh_peiliao_dialog){
+                    mParametersData.unfinsh="1";
+                }
+            }
+        });
+
+        rg_finsh.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int i) {
+                if (i==R.id.rb_finsh_all_handle_dialog){
+                    mParametersData.finsh="";
+                }else if (i==R.id.rb_finsh_complete_handle_dialog){
+                    mParametersData.finsh="3";
+                }else if (i==R.id.rb_finsh_uncomplete_dialog){
+                    mParametersData.finsh="2";
+                }
+
+            }
+        });
+
 
 
         //设置哪些条件选择该显示，默认只有时间选择是显示的
@@ -371,20 +423,22 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             case ConstantsUtils.CONCRETEFRAGMENT:
                 //默认开始和结束时间是可见的
                 break;
-            case ConstantsUtils.YALIJIFRAGMENT:
             case ConstantsUtils.WANNENGJIFRAGMENT:
-                //设置设备和试验类型的下拉选择可见
                 ms_select_equipment.setVisibility(View.VISIBLE);
+                break;
+            case ConstantsUtils.YALIJIFRAGMENT:
+                //设置设备和试验类型的下拉选择可见
+
                 ms_select_strength.setVisibility(View.VISIBLE);
                 ms_select_lq.setVisibility(View.VISIBLE);
                 url = URL.getLibEquipmentTest(mParametersData.userGroupID);
                 Log.e("float", "url=:" + url);
                 refresh();
                 break;
-            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
-                url = URL.getDataDictionary("SJQD");
-                refresh();
-                break;
+//            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
+//                url = URL.getDataDictionary("SJQD");
+//                refresh();
+//                break;
 
 
             case ConstantsUtils.MATERIALSTATISTICFRAGMENT:
@@ -433,17 +487,48 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
                 break;
             case ConstantsUtils.STORAGEFRAGMENT:
-                //               ms_select_material.setVisibility(View.VISIBLE);
-                //               url = URL.getStorageMaterialName();
+ //               ms_select_material.setVisibility(View.VISIBLE);
+ //               url = URL.getStorageMaterialName();
                 tv_MaterialName.setVisibility(View.VISIBLE);
-                //               refresh();
+ //               refresh();
+                 break;
+            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
+                ms_select_strength.setVisibility(View.VISIBLE);
+                rg_tasklist.setVisibility(View.VISIBLE);
+                url = URL.getDataDictionary("SJQD");
+                refresh();
                 break;
 
 
             case ConstantsUtils.JOBORDERFINSH:
                 tv_DepartmentName.setVisibility(View.VISIBLE);
+                rg_finsh.setVisibility(View.VISIBLE);
+                break;
+
+            case ConstantsUtils.JOBORDERUNFINSH:
+                rg_unfinsh.setVisibility(View.VISIBLE);
 
                 break;
+
+
+        }
+
+        if (mParametersData.finsh.equals("")){
+            rg_finsh.check(R.id.rb_finsh_all_handle_dialog);
+        }else if (mParametersData.finsh.equals("2")){
+            rg_finsh.check(R.id.rb_finsh_uncomplete_dialog);
+        }else if (mParametersData.finsh.equals("3")){
+            rg_finsh.check(R.id.rb_finsh_complete_handle_dialog);
+        }
+
+        if (mParametersData.unfinsh.equals("")){
+            rg_unfinsh.check(R.id.rb_unfinsh_all_handle_dialog);
+        }else if (mParametersData.unfinsh.equals("-1")){
+            rg_unfinsh.check(R.id.rb_unfinsh_unsubmit_handle_dialog);
+        }else if (mParametersData.unfinsh.equals("0")){
+            rg_unfinsh.check(R.id.rb_unfinsh_unpeiliao_dialog);
+        }else if (mParametersData.unfinsh.equals("1")){
+            rg_unfinsh.check(R.id.rb_unfinsh_peiliao_dialog);
         }
 
         if (mParametersData.handleType.equals("")) {
@@ -464,21 +549,35 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             rg_examine.setVisibility(View.VISIBLE);
         }
 
-        if (mParametersData.dataType.equals("0")) {
+        if (mParametersData.dataType.equals("0")){
             rg_jinchang_handle.check(R.id.rb_ji_handle_dialog);
-        } else if (mParametersData.dataType.equals("1")) {
+        }else if(mParametersData.dataType.equals("1")){
             rg_jinchang_handle.check(R.id.rb_yue_handle_dialog);
-        } else if (mParametersData.dataType.equals("2")) {
+        }else if (mParametersData.dataType.equals("2")){
             rg_jinchang_handle.check(R.id.rb__zhou_handled_dialog);
         }
 
-        if (mParametersData.states.equals("")) {
+        if (mParametersData.states.equals("")){
             rg_chuchang_handle.check(R.id.rb_chu_all_handle_dialog);
-        } else if (mParametersData.states.equals("0")) {
+        }else if(mParametersData.states.equals("0")){
             rg_chuchang_handle.check(R.id.rb_feiliao_handle_dialog);
-        } else if (mParametersData.states.equals("1")) {
+        }else if (mParametersData.states.equals("1")){
             rg_chuchang_handle.check(R.id.rb__diaobo_handled_dialog);
         }
+
+        if (mParametersData.zhuangtai.equals("")){
+            rg_tasklist.check(R.id.rb_all_tasklist_dialog);
+        }else if(mParametersData.zhuangtai.equals("0")){
+            rg_tasklist.check(R.id.rb_unpeiliao_tasklist_dialog);
+        }else if (mParametersData.zhuangtai.equals("1")){
+            rg_tasklist.check(R.id.rb_peiliao_tasklist_dialog);
+        }else if (mParametersData.zhuangtai.equals("2")){
+            rg_tasklist.check(R.id.rb_unfinsh_tasklist_dialog);
+        }else if (mParametersData.zhuangtai.equals("3")){
+            rg_tasklist.check(R.id.rb_finsh_tasklist_dialog);
+        }
+
+
     }
 
 //    @Override
@@ -605,8 +704,8 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             materialNames.add(temp.getCailiaoname());
             materialIDs.add(temp.getCailiaono());
         }
-        Log.e(TAG, "materialNames=:" + materialNames);
-        Log.e(TAG, "materialIDs=:" + materialIDs);
+        Log.e(TAG,"materialNames=:" + materialNames);
+        Log.e(TAG,"materialIDs=:" + materialIDs);
         ArrayAdapter<String> materialsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, materialNames);
         materialsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ms_select_material.setAdapter(materialsAdapter);
@@ -614,20 +713,20 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         for (int i = 0; i < materialIDs.size(); i++) {
             if (mParametersData.materialID.equals(materialIDs.get(i))) {
                 ms_select_material.setSelection(i + 1);
-                Log.e(TAG, "默认：" + (i + 1) + "个");
+                Log.e(TAG,"默认：" + (i + 1) + "个");
             }
         }
     }
 
     private void setStrengthQueryView() {
         strengthNames = new ArrayList<>();
-//        strengthIds = new ArrayList<>();
+        strengthIds = new ArrayList<>();
         for (DesignStrengthData.DataBean temp : mDesignStrengthData.getData()) {
             strengthNames.add(temp.getTypename());
             strengthIds.add(temp.getTypecode());
         }
-        Log.e(TAG, "strengthNames=:" + strengthNames);
-        Log.e(TAG, "strengthIds=:" + strengthIds);
+        Log.e(TAG,"strengthNames=:" + strengthNames);
+        Log.e(TAG,"strengthIds=:" + strengthIds);
         ArrayAdapter<String> strengthAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strengthNames);
         strengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ms_select_strength.setAdapter(strengthAdapter);
@@ -635,7 +734,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         for (int i = 0; i < strengthIds.size(); i++) {
             if (mParametersData.materialID.equals(strengthIds.get(i))) {
                 ms_select_material.setSelection(i + 1);
-                Log.e(TAG, "默认：" + (i + 1) + "个");
+                Log.e(TAG,"默认：" + (i + 1) + "个");
             }
         }
     }
@@ -738,8 +837,8 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 break;
 
             case R.id.tv_material_choose:
-                Intent material = new Intent(this, MaterialListActivity.class);
-                startActivityForResult(material, 10);
+                Intent material = new Intent(this,MaterialListActivity.class);
+                startActivityForResult(material,10);
 
                 break;
 
@@ -749,7 +848,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
                 intent.putExtras(bundle);
                 intent.putExtra("type", "1");
-                startActivityForResult(intent, 12);
+                startActivityForResult(intent,12);
 
                 break;
         }
@@ -877,23 +976,23 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 10) {
+        if (requestCode==10){
 
-            if (resultCode == 15) {
+            if (resultCode==15){
 
                 tv_MaterialName.setText(data.getExtras().getString("cailiaoname"));
-                mParametersData.cailiaono = data.getExtras().getString("cailiaono");
+                mParametersData.cailiaono=data.getExtras().getString("cailiaono");
                 mParametersData.materialID = data.getExtras().getString("cailiaono");
-                Log.e("tv_MaterialName", data.getStringExtra("cailiaoname"));
+                Log.e("tv_MaterialName",data.getStringExtra("cailiaoname"));
 
             }
 
-        } else if (requestCode == 12) {
-            if (resultCode == 15) {
+        }else if (requestCode==12){
+            if (resultCode==15){
 
                 tv_DepartmentName.setText(data.getExtras().getString("departmentname"));
-                mParametersData.userGroupID = data.getExtras().getString("departmentnno");
-                Log.e("tv_DepartmentName", data.getStringExtra("departmentnno"));
+                mParametersData.userGroupID=data.getExtras().getString("departmentnno");
+                Log.e("tv_DepartmentName",data.getStringExtra("departmentnno"));
             }
         }
 

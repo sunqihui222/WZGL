@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.bean.TaskListImpQueryFragmenData;
+import com.shtoone.shtw.ui.SlantedTextView;
 
 import java.util.List;
 
@@ -78,6 +79,17 @@ public class TaskListImpQueryFragmentRecyclerViewAdapter extends RecyclerView.Ad
             double baifenbi = item.getBaifenbi()* 100;
             int jindu = (int)baifenbi;
             mItemViewHolder.tv_progress.setProgress(jindu);
+            if (item.getZhuangtai().equals("1")){
+                mItemViewHolder.stv_ischeck.setText("已配料");
+            }else if (item.getZhuangtai().equals("0")){
+                mItemViewHolder.stv_ischeck.setText("未配料");
+            }else if (item.getZhuangtai().equals("2")){
+                mItemViewHolder.stv_ischeck.setText("生产中");
+            }else if (item.getZhuangtai().equals("3")){
+                mItemViewHolder.stv_ischeck.setText("已完成");
+            }
+
+
             if (mOnItemClickListener != null) {
                 mItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -119,13 +131,14 @@ public class TaskListImpQueryFragmentRecyclerViewAdapter extends RecyclerView.Ad
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        TextView tv_state;
-        TextView tv_time;
-        TextView tv_renwuno;
-        TextView tv_pbno;
-        TextView tv_gcmc;
-        ProgressBar tv_progress;
+        CardView         cv;
+        TextView         tv_state;
+        TextView         tv_time;
+        TextView         tv_renwuno;
+        TextView         tv_pbno;
+        TextView         tv_gcmc;
+        ProgressBar      tv_progress;
+        SlantedTextView stv_ischeck;
 
         public ItemViewHolder(View view) {
             super(view);
@@ -136,6 +149,7 @@ public class TaskListImpQueryFragmentRecyclerViewAdapter extends RecyclerView.Ad
             tv_pbno = (TextView) view.findViewById(R.id.tv3_item_recyclerview_tasklist_query_fragment);
             tv_gcmc = (TextView) view.findViewById(R.id.tv4_item_recyclerview_tasklist_query_fragment);
             tv_progress = (ProgressBar) view.findViewById(R.id.tv5_item_recyclerview_tasklist_query_fragment);
+            stv_ischeck = (SlantedTextView) view.findViewById(R.id.stv_ischeck);
         }
     }
 

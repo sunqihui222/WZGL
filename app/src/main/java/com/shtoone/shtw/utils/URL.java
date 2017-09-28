@@ -38,9 +38,9 @@ public class URL {
     //中交集团二航局地址
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
-    // public static final String BaseURL = "http://192.168.0.133:8080/jeecg/";
-    public static final String BaseURL = "http://192.168.0.126:8080/jeecg/";
-//    public static final String BaseURL = "http://192.168.0.117:8082/jeecg/";
+     public static final String BaseURL = "http://192.168.0.126:8080/jeecg/";
+    //public static final String BaseURL = "http://192.168.0.117:8082/jeecg/";
+    //public static final String BaseURL = "http://121.40.150.65:8083/WZAPP/";
 
 //    public static final String BaseURL = "http://192.168.0.141:8082/gxzjzqms/";
 
@@ -62,7 +62,7 @@ public class URL {
         if (TextUtils.isEmpty(url)) {
             return null;
         }
-        Log.e("登录url", "登录url=:" + url);
+        Log.e("登录url","登录url=:"+url);
         return url;
     }
 
@@ -75,7 +75,7 @@ public class URL {
      * 组织结构面板
      *
      * @param dateTime    时间
-     *                    //     * @param type        部门类型（试验室或者拌合站）
+//     * @param type        部门类型（试验室或者拌合站）
      * @param userGroupID 组织ID
      * @param userRole    组织ID
      * @return 返回拼凑后的url
@@ -615,8 +615,8 @@ public class URL {
      * @param departID 详情ID
      * @return 返回拼凑后的url
      */
-    public static String getStorageDetailData(String departID, String id, String cailiaoguid) {
-        String url = STORAGE_DETAIL_URL.replace("%1", departID).replace("%2", id).replace("%3", cailiaoguid);
+    public static String getStorageDetailData(String departID,String id,String cailiaoguid) {
+        String url = STORAGE_DETAIL_URL.replace("%1", departID).replace("%2",id).replace("%3",cailiaoguid);
         Log.e(TAG, "库存查询详情查询 :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;
@@ -709,14 +709,14 @@ public class URL {
     /**
      * 拌合站生产数据查询
      */
-    public static final String TASK_LIST_ZX_URL = BaseURL + "appWZproject.do?AppTaskListZXQK&departId=%1&kaipanriqi=%2&kaipanriqiend=%3&sjqd=%4&pageNo=%5&maxPageItems=%6";
+    public static final String TASK_LIST_ZX_URL = BaseURL + "appWZproject.do?AppTaskListZXQK&departId=%1&kaipanriqi=%2&kaipanriqiend=%3&sjqd=%4&pageNo=%5&maxPageItems=%6&zhuangtai=%7";
 
-    public static String getTaskListZXData(String userGroupID, String startTime, String endTime, String strengthId, String current_PageNo, String maxPageItems) {
+    public static String getTaskListZXData(String userGroupID, String startTime, String endTime, String strengthId,String current_PageNo, String maxPageItems,String zhuangtai) {
         startTime = DateUtils.ChangeTimeToLong(startTime);
         endTime = DateUtils.ChangeTimeToLong(endTime);
         //如果开始时间大于结束时间，返回null
         if (Integer.valueOf(startTime) <= Integer.valueOf(endTime)) {
-            String url = TASK_LIST_ZX_URL.replace("%1", userGroupID).replace("%2", startTime).replace("%3", endTime).replace("%4", strengthId).replace("%5", current_PageNo).replace("%6", maxPageItems);
+            String url = TASK_LIST_ZX_URL.replace("%1", userGroupID).replace("%2", startTime).replace("%3", endTime).replace("%4", strengthId).replace("%5", current_PageNo).replace("%6", maxPageItems).replace("%7",zhuangtai);
             Log.e(TAG, "任务单执行情况查询URL :" + url);
             if (TextUtils.isEmpty(url)) {
                 return null;
@@ -930,16 +930,16 @@ public class URL {
     /**
      * 原材料出场数据查询
      */
-    public static String YCLCHUCHANG_QUERY = BaseURL + "AppWZYCLChuChangGBCountInterfaceController.do?AppWZYCLChuChangGBCount&departId=%1&cailiaomingcheng=%2&gprsbianhao=%3&tongjitype=%4&chuchangshijian1=%5&chuchangshijian2=%6&states=%7&pageNo=%8&maxPageItems=10";
+    public static String YCLCHUCHANG_QUERY = BaseURL +"AppWZYCLChuChangGBCountInterfaceController.do?AppWZYCLChuChangGBCount&departId=%1&cailiaomingcheng=%2&gprsbianhao=%3&tongjitype=%4&chuchangshijian1=%5&chuchangshijian2=%6&states=%7&pageNo=%8&maxPageItems=10";
 
 
-    public static String getYCLCHUCHANGquery(String departId, String cailiaomingcheng, String gprsbianhao, String tongjitype, String jinchangshijian1, String jinchangshijian2, String states, String pageNo) {
+    public static String getYCLCHUCHANGquery(String departId,String cailiaomingcheng,String gprsbianhao,String tongjitype,String jinchangshijian1,String jinchangshijian2,String states,String pageNo) {
         jinchangshijian1 = DateUtils.ChangeTimeToLong(jinchangshijian1);
         jinchangshijian2 = DateUtils.ChangeTimeToLong(jinchangshijian2);
 
         //如果开始时间大于结束时间，返回null
         if (Integer.valueOf(jinchangshijian1) <= Integer.valueOf(jinchangshijian2)) {
-            String url = YCLCHUCHANG_QUERY.replace("%1", departId).replace("%2", cailiaomingcheng).replace("%3", gprsbianhao).replace("%4", tongjitype).replace("%5", jinchangshijian1).replace("%6", jinchangshijian2).replace("%7", states).replace("%8", pageNo);
+            String url = YCLCHUCHANG_QUERY.replace("%1", departId).replace("%2", cailiaomingcheng).replace("%3", gprsbianhao).replace("%4", tongjitype).replace("%5", jinchangshijian1).replace("%6", jinchangshijian2).replace("%7", states).replace("%8",pageNo);
             KLog.e(TAG, "原材料出厂过账数据:" + url);
             if (TextUtils.isEmpty(url)) {
                 return null;
@@ -961,13 +961,13 @@ public class URL {
      * @param
      * @return 返回拼凑后的url
      */
-    public static String getYclChuchangDetailData(String id, String guobangleibie, String cailiaono, String gongyingshangdanweibianma, String pici, String shebeibianhao, String jcmin, String jcmax, String ccmin, String ccmax) {
-        String url = YCL_CHUCHANG_DETAIL.replace("%1", id).replace("%2", guobangleibie).replace("%3", cailiaono).replace("%4", gongyingshangdanweibianma).replace("%5", pici).replace("%6", shebeibianhao).replace("%7", jcmin).replace("%8", jcmax).replace("%9", ccmin).replace("@10", ccmax);
+    public static String getYclChuchangDetailData(String id,String guobangleibie,String cailiaono,String gongyingshangdanweibianma,String pici,String shebeibianhao,String jcmin,String jcmax,String ccmin,String ccmax) {
+        String url = YCL_CHUCHANG_DETAIL.replace("%1",id).replace("%2",guobangleibie).replace("%3",cailiaono).replace("%4",gongyingshangdanweibianma).replace("%5",pici).replace("%6",shebeibianhao).replace("%7",jcmin).replace("%8", jcmax).replace("%9",ccmin).replace("@10",ccmax);
         KLog.e(TAG, "原材料出场数据详情查询 :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;
         }
-        Log.e("原材料出场数据详情查询", url);
+        Log.e("原材料出场数据详情查询",url);
         return url;
     }
 
@@ -977,7 +977,7 @@ public class URL {
     public static final String POUR_POSITION_URL = BaseURL + "appWZproject.do?AppjzbwList&departId=%1";
 
     public static String getPourPosData(String departId) {
-        String url = POUR_POSITION_URL.replace("%1", departId);
+        String url = POUR_POSITION_URL.replace("%1",departId);
         Log.e(TAG, "浇筑部位查询 :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;
@@ -993,7 +993,7 @@ public class URL {
     /**
      * 工程进度查询查询
      */
-    public static final String WZ_PROJECTPROGRESS = BaseURL + "AppWZprojectProgressQueryController.do?query&parentno=%1&pageNo=%2&maxPageItems=10";
+    public static final String WZ_PROJECTPROGRESS = BaseURL+"AppWZprojectProgressQueryController.do?query&parentno=%1&pageNo=%2&maxPageItems=10";
 
     /**
      * 工程进度查询查询
@@ -1001,48 +1001,48 @@ public class URL {
      * @param
      * @return 返回拼凑后的url
      */
-    public static String getWZprojectprogress(String parentno, String pageNo) {
-        String url = WZ_PROJECTPROGRESS.replace("%1", parentno).replace("%2", pageNo);
+    public static String getWZprojectprogress(String parentno,String pageNo) {
+        String url = WZ_PROJECTPROGRESS.replace("%1",parentno).replace("%2",pageNo);
         KLog.e(TAG, "工程进度查询查询 :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;
         }
-        Log.e("原材料出场数据详情查询", url);
+        Log.e("原材料出场数据详情查询",url);
         return url;
     }
 
     /**
      * 分部分项列表
      */
-    public static final String FB_PROJECT = BaseURL + "appWZproject.do?Appfenbufenxiang";
+    public static final String FB_PROJECT = BaseURL+"appWZproject.do?Appfenbufenxiang";
 
     /**
      * 发车单数据查询
      */
     public static final String PAGE_LIST = "http://61.237.239.105:18190/FCDService/FCDService.asmx/GetFCDListByPage?index=%1&size=%2&jgdm=%3&status=%4&begintime=%5&endtime=%6";
 
-    public static String getPAGE_LIST(String index, String size, String jgdm, String status, String begintime, String endtime) {
-        String url = PAGE_LIST.replace("%1", index).replace("%2", size).replace("%3", jgdm).replace("%4", status).replace("%5", begintime).replace("%6", endtime);
+    public static String getPAGE_LIST(String index,String size,String jgdm,String status,String begintime,String endtime) {
+        String url = PAGE_LIST.replace("%1",index).replace("%2",size).replace("%3",jgdm).replace("%4",status).replace("%5",begintime).replace("%6",endtime);
         KLog.e(TAG, "发车单据查询 :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;
         }
-        Log.e("发车单据查询", url);
+        Log.e("发车单据查询",url);
         return url;
     }
 
     /**
      * 任务单（浇筑令）未生产
      */
-    public static final String JOBODDER_UNFINSH = BaseURL + "appWZSys.do?AppWzRenWuDanList&departId=%1&state=%2&startTime=%3&endTime=%4&pageNo=%5&maxPageItems=10";
+    public static final String JOBODDER_UNFINSH = BaseURL+"appWZSys.do?AppWzRenWuDanList&departId=%1&state=%2&startTime=%3&endTime=%4&pageNo=%5&maxPageItems=10&zhuangtai=%6";
 
-    public static String getJobOrderUnfinsh(String departId, String state, String startTime, String endTime, String pageNo) {
+    public static String getJobOrderUnfinsh(String departId,String state,String startTime,String endTime,String pageNo,String unfinsh) {
         startTime = DateUtils.ChangeTimeToLong(startTime);
         endTime = DateUtils.ChangeTimeToLong(endTime);
 
         //如果开始时间大于结束时间，返回null
         if (Integer.valueOf(startTime) <= Integer.valueOf(endTime)) {
-            String url = JOBODDER_UNFINSH.replace("%1", departId).replace("%2", state).replace("%3", startTime).replace("%4", endTime).replace("%5", pageNo);
+            String url = JOBODDER_UNFINSH.replace("%1", departId).replace("%2",state).replace("%3",startTime).replace("%4",endTime).replace("%5",pageNo).replace("%6",unfinsh);
             KLog.e(TAG, "任务单浇筑令未完成:" + url);
             if (TextUtils.isEmpty(url)) {
                 return null;
@@ -1056,15 +1056,15 @@ public class URL {
     /**
      * 任务单（浇筑令）已完成
      */
-    public static final String JOBODDER_FINSH = BaseURL + "appWZSys.do?AppWzRenWuDanList&departId=%1&state=%2&startTime=%3&endTime=%4&pageNo=%5&maxPageItems=10";
+    public static final String JOBODDER_FINSH = BaseURL+"appWZSys.do?AppWzRenWuDanList&departId=%1&state=%2&startTime=%3&endTime=%4&pageNo=%5&maxPageItems=10&zhuangtai=%6";
 
-    public static String getJobOrderFinsh(String departId, String state, String startTime, String endTime, String pageNo) {
+    public static String getJobOrderFinsh(String departId,String state,String startTime,String endTime,String pageNo,String finsh) {
         startTime = DateUtils.ChangeTimeToLong(startTime);
         endTime = DateUtils.ChangeTimeToLong(endTime);
 
         //如果开始时间大于结束时间，返回null
         if (Integer.valueOf(startTime) <= Integer.valueOf(endTime)) {
-            String url = JOBODDER_FINSH.replace("%1", departId).replace("%2", state).replace("%3", startTime).replace("%4", endTime).replace("%5", pageNo);
+            String url = JOBODDER_FINSH.replace("%1", departId).replace("%2",state).replace("%3",startTime).replace("%4",endTime).replace("%5",pageNo).replace("%6",finsh);
             KLog.e(TAG, "任务单浇筑令已完成:" + url);
             if (TextUtils.isEmpty(url)) {
                 return null;
@@ -1078,20 +1078,19 @@ public class URL {
     /**
      * 任务单(浇筑令)删除
      */
-    public static final String JOBORDER_UNFINSHDEL = BaseURL + "appWZproject.do?AppWzRenwudandel";
+    public static final String JOBORDER_UNFINSHDEL = BaseURL+"appWZproject.do?AppWzRenwudandel";
 
     /**
      * 任务单(浇筑令)提交
      */
-    public static final String JOBORDER_SUBMIT = BaseURL + "appWZproject.do?AppRenwudanTiJiao&id=%1&username=%2";
-
-    public static String getJOBORDERSUBMIT(String id, String username) {
-        String url = JOBORDER_SUBMIT.replace("%1", id).replace("%2", username);
+    public static final String JOBORDER_SUBMIT = BaseURL+"appWZproject.do?AppRenwudanTiJiao&id=%1&username=%2";
+    public static String getJOBORDERSUBMIT(String id,String username) {
+        String url = JOBORDER_SUBMIT.replace("%1",id).replace("%2",username);
         KLog.e(TAG, "任务单(浇筑令)提交 :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;
         }
-        Log.e("任务单(浇筑令)提交", url);
+        Log.e("任务单(浇筑令)提交",url);
         return url;
     }
 
@@ -1099,15 +1098,14 @@ public class URL {
     /**
      * 任务单(浇筑令)结束任务
      */
-    public static final String JOBORDER_CANCEL = BaseURL + "appWZproject.do?AppWzRenwudanFinish&id=%1&username=%2";
-
-    public static String getJOBORDER_CANCEL(String id, String username) {
-        String url = JOBORDER_CANCEL.replace("%1", id).replace("%2", username);
+    public static final String JOBORDER_CANCEL = BaseURL+"appWZproject.do?AppWzRenwudanFinish&id=%1&username=%2";
+    public static String getJOBORDER_CANCEL(String id,String username) {
+        String url = JOBORDER_CANCEL.replace("%1",id).replace("%2",username);
         KLog.e(TAG, "任务单(浇筑令)结束任务 :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;
         }
-        Log.e("任务单(浇筑令)结束任务", url);
+        Log.e("任务单(浇筑令)结束任务",url);
         return url;
     }
 

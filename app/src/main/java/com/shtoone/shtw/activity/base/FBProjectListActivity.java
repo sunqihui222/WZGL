@@ -17,6 +17,7 @@ import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.ui.treeview.Node;
 import com.shtoone.shtw.ui.treeview.TreeListViewAdapter;
+import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
 
@@ -64,7 +65,8 @@ public class FBProjectListActivity extends BaseActivity {
     private void initData() {
 
 
-        mParametersData = BaseApplication.parametersData;
+        mParametersData = (ParametersData) getIntent().getSerializableExtra(ConstantsUtils.PARAMETERS);
+
         mToolbar.setTitle("分部分项");
         initToolbarBackNavigation(mToolbar);
         treeNodes = new ArrayList<FBProjectData>();

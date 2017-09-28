@@ -28,6 +28,7 @@ import com.shtoone.shtw.adapter.OnItemDelClickListener;
 import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.JobOrderFinshData;
 import com.shtoone.shtw.bean.ParametersData;
+import com.shtoone.shtw.bean.UserInfoData;
 import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
@@ -71,11 +72,12 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
     private List<JobOrderFinshData.DataEntity> listData;
 
 
-    private ParametersData mParametersData;
-    private LinearLayoutManager mLinearLayoutManager;
-    private int lastVisibleItemPosition;
+    private ParametersData          mParametersData;
+    private LinearLayoutManager     mLinearLayoutManager;
+    private int                     lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
-    private String id;
+    private String                  id;
+    private UserInfoData            mUserInfoData;
 
     public static JobOrderFinishFragment newInstance() {
         return new JobOrderFinishFragment();
@@ -98,6 +100,7 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
         listData = new ArrayList<>();
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mUserInfoData = BaseApplication.mUserInfoData;
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,46 +121,52 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
         mRecyclerView.setAdapter(mScaleInAnimationAdapter);
-        mAdapter.setOnItemClickListener(new OnItemDelClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                // 实现局部界面刷新, 这个view就是被点击的item布局对象
+        if (mUserInfoData.getQuanxian().isWZGCB()) {
 
-            }
+            mAdapter.setOnItemClickListener(new OnItemDelClickListener() {
 
-            @Override
-            public void onLongItemClick(View view, int position) {
-                if (!TextUtils.isEmpty(listData.get(position).getId())) {
-                    if (listData.get(position).getZhuangtai().equals("2"))
-                    {
-                        //弹出对话框，确定提交
-                        id = listData.get(position).getId();
-                        new MaterialDialog.Builder(getActivity())
-                                .title("结束")
-                                .content("请问您确定结束吗？")
-                                .positiveText("确定")
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
-                                                .title("结束")
-                                                .content("正在结束中，请稍等……")
-                                                .progress(true, 0)
-                                                .progressIndeterminateStyle(true)
-                                                .cancelable(false)
-                                                .show();
-                                        joborderCancelSubmit(progressDialog, id, mParametersData.username);
-                                    }
-                                })
-                                .negativeText("放弃")
-                                .show();
-                    }else {
-                        Toast.makeText(getContext(),"只有生产中的能够结束",Toast.LENGTH_SHORT).show();
+                @Override
+                public void onItemClick(View view, int position) {
+                    // 实现局部界面刷新, 这个view就是被点击的item布局对象
+
+                }
+
+                @Override
+                public void onLongItemClick(View view, int position) {
+                    if (!TextUtils.isEmpty(listData.get(position).getId())) {
+                        if (listData.get(position).getZhuangtai().equals("2"))
+                        {
+                            //弹出对话框，确定提交
+                            id = listData.get(position).getId();
+                            new MaterialDialog.Builder(getActivity())
+                                    .title("结束")
+                                    .content("请问您确定结束吗？")
+                                    .positiveText("确定")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
+                                                    .title("结束")
+                                                    .content("正在结束中，请稍等……")
+                                                    .progress(true, 0)
+                                                    .progressIndeterminateStyle(true)
+                                                    .cancelable(false)
+                                                    .show();
+                                            joborderCancelSubmit(progressDialog, id, mParametersData.username);
+                                        }
+                                    })
+                                    .negativeText("放弃")
+                                    .show();
+                        }else {
+                            Toast.makeText(getContext(),"只有生产中的能够结束",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
-            }
 
-        });
+            });
+
+        }
+
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -290,6 +299,7 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
+        String finsh = "";
 
 
         if (null != mParametersData) {
@@ -297,13 +307,14 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
+            finsh = mParametersData.finsh;
         }
         String state = "1";
         if (null != listData) {
             listData.clear();
         }
 
-        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage);
+        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage,finsh);
 
     }
 
@@ -314,14 +325,16 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
+        String finsh = "";
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
+            finsh = mParametersData.finsh;
         }
         String state = "1";
-        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage);
+        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage,finsh);
     }
 
     @Override
@@ -449,9 +462,11 @@ public class JobOrderFinishFragment extends BaseLazyFragment {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
                 this.mParametersData.userGroupID = mParametersData.userGroupID;
+                this.mParametersData.finsh = mParametersData.finsh;
                 KLog.e("mParametersData:" + mParametersData.startDateTime);
                 KLog.e("mParametersData:" + mParametersData.endDateTime);
                 KLog.e("mParametersData:" + mParametersData.userGroupID);
+                KLog.e("mParametersData:" + mParametersData.finsh);
                 mPtrFrameLayout.autoRefresh(true);
             }
         }

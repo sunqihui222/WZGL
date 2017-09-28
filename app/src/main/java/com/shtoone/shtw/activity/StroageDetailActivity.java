@@ -168,7 +168,7 @@ public class StroageDetailActivity extends BaseActivity {
         tv6.setText(deatilDataBean.getXiuzheng());//修正量
         tv7.setText(deatilDataBean.getChushi());//初始量
         tv8.setText((deatilDataBean.getBaojing() == "1"?"报警":"不报警"));//是否报警
-        tv9.setText(deatilDataBean.getJingjiezhi());//警戒值
+        tv9.setText(deatilDataBean.getJingjiezhi()+"");//警戒值
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         //设置动画与适配器
