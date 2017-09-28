@@ -50,7 +50,7 @@ public class WZProjectProgressQueryData {
 
         private int tempRowNumber;
         private int    id;
-        private int    shijifangliang;
+        private double    shijifangliang;
         private double jindu;
         private double shejifangliang;
         private Object remark;
@@ -68,7 +68,7 @@ public class WZProjectProgressQueryData {
             this.id = id;
         }
 
-        public void setShijifangliang(int shijifangliang) {
+        public void setShijifangliang(double shijifangliang) {
             this.shijifangliang = shijifangliang;
         }
 
@@ -112,7 +112,7 @@ public class WZProjectProgressQueryData {
             return id;
         }
 
-        public int getShijifangliang() {
+        public double getShijifangliang() {
             return shijifangliang;
         }
 
