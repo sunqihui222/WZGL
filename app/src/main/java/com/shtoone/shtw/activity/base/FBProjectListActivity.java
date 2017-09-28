@@ -152,7 +152,7 @@ public class FBProjectListActivity extends BaseActivity {
         }
 
         try {
-            mAdapter = new FBProjectTreeListViewAdapter<>(treeListView, this, treeNodes, 1);
+            mAdapter = new FBProjectTreeListViewAdapter<>(treeListView, this, treeNodes, 0);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

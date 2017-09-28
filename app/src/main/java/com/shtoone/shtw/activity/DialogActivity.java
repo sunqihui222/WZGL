@@ -425,14 +425,17 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 break;
             case ConstantsUtils.WANNENGJIFRAGMENT:
                 ms_select_equipment.setVisibility(View.VISIBLE);
+                url = URL.getLibEquipmentTest(mParametersData.userGroupID);
+                refresh();
+                Log.e("WANNENGJIFRAGMENT", "url=:" + url);
                 break;
             case ConstantsUtils.YALIJIFRAGMENT:
                 //设置设备和试验类型的下拉选择可见
-
+                ms_select_equipment.setVisibility(View.VISIBLE);
                 ms_select_strength.setVisibility(View.VISIBLE);
                 ms_select_lq.setVisibility(View.VISIBLE);
                 url = URL.getLibEquipmentTest(mParametersData.userGroupID);
-                Log.e("float", "url=:" + url);
+                Log.e("YALIJIFRAGMENT", "url=:" + url);
                 refresh();
                 break;
 //            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
