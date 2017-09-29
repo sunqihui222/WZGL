@@ -280,6 +280,7 @@ public class MaterialConsumeFragment extends BaseLazyFragment{
             if (mParametersData.fromTo == ConstantsUtils.MATERIALCONSUME) {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
+                this.mParametersData.userGroupID = mParametersData.userGroupID;
                 Log.e(TAG,"mParametersData:" + mParametersData.startDateTime);
                 Log.e(TAG,"mParametersData:" + mParametersData.endDateTime);
                 mPtrFrameLayout.autoRefresh(true);

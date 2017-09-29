@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +115,7 @@ public class YaLiJiDetailActivityChartFragment extends BaseFragment {
     private void setChartData() {
         ArrayList<String> xVals = new ArrayList<String>();
         String[] x = data.getX();
-        if (!x[0].contains("null")) {
+        if (!x[0].contains("null")&&!TextUtils.isEmpty(x[0])) {
             for (int i = 0; i < x.length; i++) {
                 xVals.add(x[i]);
             }
@@ -122,7 +123,7 @@ public class YaLiJiDetailActivityChartFragment extends BaseFragment {
 
         ArrayList<Entry> yVals = new ArrayList<Entry>();
         String[] y = data.getY();
-        if (!y[0].contains("null")) {
+        if (!y[0].contains("null")&&!TextUtils.isEmpty(y[0])) {
             for (int i = 0; i < y.length; i++) {
                 yVals.add(new Entry(Float.parseFloat(y[i]), i));
             }

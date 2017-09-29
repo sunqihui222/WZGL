@@ -513,6 +513,11 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
                 break;
 
+            case ConstantsUtils.MATERIALCONSUME:
+                tv_DepartmentName.setVisibility(View.VISIBLE);
+
+                break;
+
 
         }
 

@@ -15,7 +15,7 @@
             style="@style/YalijiDetailTextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="荷载代表值：" />
+            android:text="力值(kN)" />
 
         <TextView
             android:id="@+id/tv_hz_fragment_chart_yaliji_detail_activity"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:text="荷载代表值：" />
+            android:text="强度(MPa)" />
 
         <TextView
             android:id="@+id/tv_qd_fragment_chart_yaliji_detail_activity"
