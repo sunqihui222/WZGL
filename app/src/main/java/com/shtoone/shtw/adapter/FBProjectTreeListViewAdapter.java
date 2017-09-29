@@ -1,6 +1,7 @@
 package com.shtoone.shtw.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class FBProjectTreeListViewAdapter<T> extends TreeListViewAdapter<T> {
 
+    String TAG = "FBProjectTreeListViewAdapter";
     public FBProjectTreeListViewAdapter(ListView tree, Context context, List<T> datas, int defaultExpandLevel) throws IllegalArgumentException, IllegalAccessException {
         super(tree, context, datas, defaultExpandLevel);
     }

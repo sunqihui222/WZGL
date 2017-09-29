@@ -1,6 +1,7 @@
 package com.shtoone.shtw.ui.treeview;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import java.util.List;
 
 public abstract class TreeListViewAdapter<T> extends BaseAdapter {
+    private static final String TAG = "TreeListViewAdapter";
     protected Context mContext;
     protected List<Node> mAllNodes;
     protected List<Node> mVisibleNodes;
@@ -48,7 +50,7 @@ public abstract class TreeListViewAdapter<T> extends BaseAdapter {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 expandOrCollapse(position);
-
+                Log.e(TAG,"POSION:"+position);
                 if (mListener != null) {
                     mListener.onClick(mVisibleNodes.get(position), position);
                 }

@@ -1,8 +1,11 @@
 package com.shtoone.shtw.activity.base;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -11,9 +14,11 @@ import com.google.gson.Gson;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.adapter.FBProjectTreeListViewAdapter;
+import com.shtoone.shtw.bean.FBDataBean;
 import com.shtoone.shtw.bean.FBProjectData;
 import com.shtoone.shtw.bean.FENBUProjectData;
 import com.shtoone.shtw.bean.ParametersData;
+import com.shtoone.shtw.bean.QueryOverEvent;
 import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.ui.treeview.Node;
 import com.shtoone.shtw.ui.treeview.TreeListViewAdapter;
@@ -23,9 +28,12 @@ import com.shtoone.shtw.utils.URL;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
@@ -35,21 +43,50 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class FBProjectListActivity extends BaseActivity {
 
+    private static final String TAG = "FBProjectListActivity";
     private Toolbar mToolbar;
     private ListView treeListView;
     private LinearLayout ll_container;
     private PageStateLayout mPageStateLayout;
     private FENBUProjectData data;
-    private List<FBProjectData> treeNodes;
+    //    private List<FBProjectData> treeNodes;
+    private List<FBDataBean> treeNodes;
     private String type;
-    private FBProjectTreeListViewAdapter<FBProjectData> mAdapter;
+    //    private FBProjectTreeListViewAdapter<FBProjectData> mAdapter;
+    private FBProjectTreeListViewAdapter<FBDataBean> mAdapter;
     private PtrFrameLayout mPtrFrameLayout;
     private ParametersData mParametersData;
+
+
+    private android.os.Handler handler = new android.os.Handler(new android.os.Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            Log.e(TAG, "treeNodes.size:" + treeNodes.size());
+            try {
+//                Log.e(TAG, "treeNodes:" + treeNodes.toString());
+                mAdapter = new FBProjectTreeListViewAdapter<>(treeListView, FBProjectListActivity.this, treeNodes, 1);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            treeListView.setAdapter(mAdapter);
+            mAdapter.setOnTreeNodeClickListener(new TreeListViewAdapter.OnTreeNodeClickListener() {
+                @Override
+                public void onClick(Node node, int position) {
+                    Log.e(TAG,"posion:"+position);
+                    mParametersData.projectno = node.getId();
+                    BaseApplication.bus.post(mParametersData);
+                }
+            });
+            return false;
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organization);
+        Log.e(TAG, "onCreate");
+        Log.e(TAG, "onCreate>>>account:" + DataSupport.count(FBDataBean.class));
         initView();
         initData();
     }
@@ -63,13 +100,14 @@ public class FBProjectListActivity extends BaseActivity {
     }
 
     private void initData() {
-
+        Log.e(TAG, "initData>>>account:" + DataSupport.count(FBDataBean.class));
 
         mParametersData = (ParametersData) getIntent().getSerializableExtra(ConstantsUtils.PARAMETERS);
 
         mToolbar.setTitle("分部分项");
         initToolbarBackNavigation(mToolbar);
-        treeNodes = new ArrayList<FBProjectData>();
+//        treeNodes = new ArrayList<FBProjectData>();
+        treeNodes = new ArrayList<FBDataBean>();
 
         //        ll_container.post(new Runnable() {
         //            @Override
@@ -80,6 +118,9 @@ public class FBProjectListActivity extends BaseActivity {
 
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
+        /*****************/
+        setViewData();
+        /*****************/
     }
 
     @Override
@@ -108,7 +149,7 @@ public class FBProjectListActivity extends BaseActivity {
                 if (null != data) {
                     if (data.getSuccess()) {
                         mPageStateLayout.showContent();
-                        setViewData();
+//                        setViewData();
                     } else {
                         //提示数据为空，展示空状态
                         mPageStateLayout.showEmpty();
@@ -128,9 +169,10 @@ public class FBProjectListActivity extends BaseActivity {
     }
 
     private void setViewData() {
-        if (null == data || !(data.getData().size() > 0)) {
+        Log.e(TAG, "setViewData>>>account:" + DataSupport.count(FBDataBean.class));
+       /* if (null == data || !(data.getData().size() > 0)) {
             return;
-        }
+        }*/
 
         String projectNo = null;
         String projectName = null;
@@ -138,7 +180,7 @@ public class FBProjectListActivity extends BaseActivity {
 
         treeNodes.clear();
 
-        for (FENBUProjectData.DataEntity mDataBean : data.getData()) {
+      /*  for (FENBUProjectData.DataEntity mDataBean : data.getData()) {
             if (TextUtils.isEmpty(mDataBean.getProjectNo())) {
                 mPageStateLayout.showError();
                 return;
@@ -149,21 +191,41 @@ public class FBProjectListActivity extends BaseActivity {
             parentNo = mDataBean.getParentNo();
             projectName = mDataBean.getProjectName();
             treeNodes.add(new FBProjectData(projectNo, parentNo, projectName));
-        }
+        }*/
+        /********************************************************************/
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<FBDataBean> all = DataSupport.findAll(FBDataBean.class);
+                Log.e(TAG, "account:" + DataSupport.count(FBDataBean.class));
+                for (FBDataBean fbProjectData : all) {
+//                    Log.e(TAG, "fbProjectData====>>>>>" + fbProjectData);
+                    FBDataBean fbDataBean = new FBDataBean();
+                    fbDataBean.setParentNo(fbProjectData.getParentNo());
+                    fbDataBean.setProjectNo(fbProjectData.getProjectNo());
+                    fbDataBean.setProjectName(fbProjectData.getProjectName());
+                    treeNodes.add(fbDataBean);
+                }
+                handler.sendMessage(new Message());
+            }
+        }).start();
 
-        try {
+        /********************************************************************/
+    /*    try {
+//            mAdapter = new FBProjectTreeListViewAdapter<>(treeListView, this, treeNodes, 1);
+            Log.e(TAG, "treeNodes:" + treeNodes.toString());
             mAdapter = new FBProjectTreeListViewAdapter<>(treeListView, this, treeNodes, 1);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        }
-        treeListView.setAdapter(mAdapter);
+        }*/
+      /*  treeListView.setAdapter(mAdapter);
         mAdapter.setOnTreeNodeClickListener(new TreeListViewAdapter.OnTreeNodeClickListener() {
             @Override
             public void onClick(Node node, int position) {
                 mParametersData.projectno = node.getId();
                 BaseApplication.bus.post(mParametersData);
             }
-        });
+        });*/
     }
 
     @Override
@@ -189,4 +251,5 @@ public class FBProjectListActivity extends BaseActivity {
     public boolean swipeBackPriority() {
         return false;
     }
+
 }
