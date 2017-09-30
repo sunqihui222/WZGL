@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -19,6 +20,7 @@ import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
+import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.PeiliaoTongzhidanFragmentRVAdapter;
 import com.shtoone.shtw.bean.DepartmentData;
@@ -27,6 +29,7 @@ import com.shtoone.shtw.bean.PeiliaoTongzhidanFragmentListData;
 import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
+import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
@@ -66,8 +69,7 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
     private List<PeiliaoTongzhidanFragmentListData.DataBean> listData;
     private PeiliaoTongzhidanFragmentListData itemsData;
     private PeiliaoTongzhidanFragmentRVAdapter mAdapter;
-
-
+    private DepartmentData mDepartmentData;
     public static PeiliaoTongzhidanFragment newInstance() {
         return new PeiliaoTongzhidanFragment();
     }
@@ -118,6 +120,23 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
+        mToolbar.inflateMenu(R.menu.menu_hierarchy);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_hierarchy:
+                        Intent intent = new Intent(_mActivity, OrganizationActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
+                        intent.putExtras(bundle);
+                        intent.putExtra("type", "3");
+                        AnimationUtils.startActivity(_mActivity, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color);
+                        break;
+                }
+                return true;
+            }
+        });
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
 //        initToolbarMenu(mToolbar);
@@ -205,6 +224,16 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
             return false;
         } else {
             return true;
+        }
+    }
+
+    @Subscribe
+    public void updateDepartment(DepartmentData mDepartmentData) {
+        if (null != mDepartmentData && null != mParametersData ) {
+            if (mDepartmentData.fromto == ConstantsUtils.PEILIAOTONGZHIDAN) {
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                mPtrFrameLayout.autoRefresh(true);
+            }
         }
     }
 
@@ -385,6 +414,8 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+
 
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {

@@ -195,6 +195,11 @@
 
         /*****************************************************************************/
         <service android:name=".InitializeService"></service>
+        <activity android:name=".activity.PressureTestActivity"></activity>
+        <activity android:name=".activity.AllPowerTestActivity"></activity>
+        <activity android:name=".activity.DesignMixRatioActivity"></activity>
+        <activity android:name=".activity.MatchNoticeActivity"></activity>
+        <activity android:name=".activity.StatisticAnalysisActivity"></activity>
         /*****************************************************************************/
 
         <!-- 【必须】 信鸽receiver广播接收 -->

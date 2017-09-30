@@ -33,6 +33,7 @@ public class ConstantsUtils {
     public static final int WANNENGJIFRAGMENT = 2;
     public static final int CONCRETEFRAGMENT = 3;
     public static final int MATERIALSTATISTICFRAGMENT = 4;
+    public static final int TESTSTATISTICFRAGMENT = 11;
     public static final int PRODUCEQUERYFRAGMENT = 5;
     public static final int OVERPROOFFRAGMENT = 6;
     public static final int WEIGHTHOUSEFRAGMENT = 7;

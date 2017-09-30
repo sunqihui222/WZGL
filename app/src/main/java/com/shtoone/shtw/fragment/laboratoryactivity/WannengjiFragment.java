@@ -10,16 +10,20 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
+import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.adapter.WannengjiFragmentViewPagerAdapter;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
+import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.socks.library.KLog;
 import com.squareup.otto.Subscribe;
@@ -37,7 +41,7 @@ public class WannengjiFragment extends BaseLazyFragment {
     private boolean isRegistered = false;
     private ParametersData mParametersData;
     private WannengjiFragmentViewPagerAdapter mAdapter;
-
+    private DepartmentData mDepartmentData;
     public static WannengjiFragment newInstance() {
         return new WannengjiFragment();
     }
@@ -71,6 +75,9 @@ public class WannengjiFragment extends BaseLazyFragment {
         mParametersData = (ParametersData) BaseApplication.parametersData.clone();
         mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
         mParametersData.fromTo = ConstantsUtils.WANNENGJIFRAGMENT;
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.WANNENGJIFRAGMENT);
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,7 +100,23 @@ public class WannengjiFragment extends BaseLazyFragment {
                 }
             }
         });
-
+        mToolbar.inflateMenu(R.menu.menu_hierarchy);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_hierarchy:
+                        Intent intent = new Intent(_mActivity, OrganizationActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
+                        intent.putExtras(bundle);
+                        intent.putExtra("type", "3");
+                        AnimationUtils.startActivity(_mActivity, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color);
+                        break;
+                }
+                return true;
+            }
+        });
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
 //        initToolbarMenu(mToolbar);
@@ -131,6 +154,8 @@ public class WannengjiFragment extends BaseLazyFragment {
             }
         }
     }
+
+
 
     @Subscribe
     public void hideOrShowFab(EventData event) {

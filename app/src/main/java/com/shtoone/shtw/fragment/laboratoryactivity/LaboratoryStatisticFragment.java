@@ -1,5 +1,6 @@
 package com.shtoone.shtw.fragment.laboratoryactivity;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,12 +31,16 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
+import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.adapter.LaboratoryStatisticFragmentRecyclerViewAdapter;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.LaboratoryStatisticFragmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
+import com.shtoone.shtw.utils.AnimationUtils;
+import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
 import com.squareup.otto.Subscribe;
@@ -69,7 +75,7 @@ public class LaboratoryStatisticFragment extends BaseLazyFragment implements Dat
     private LaboratoryStatisticFragmentData data;
     private RecyclerView mRecyclerView;
     private boolean isRegistered = false;
-
+    private DepartmentData mDepartmentData;
     public static LaboratoryStatisticFragment newInstance() {
         return new LaboratoryStatisticFragment();
     }
@@ -109,6 +115,26 @@ public class LaboratoryStatisticFragment extends BaseLazyFragment implements Dat
         mGson = new Gson();
         mParametersData = (ParametersData) BaseApplication.parametersData.clone();
         mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.TESTSTATISTICFRAGMENT);
+        }
+        mToolbar.inflateMenu(R.menu.menu_hierarchy);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_hierarchy:
+                        Intent intent = new Intent(_mActivity, OrganizationActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
+                        intent.putExtras(bundle);
+                        intent.putExtra("type", "3");
+                        AnimationUtils.startActivity(_mActivity, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color);
+                        break;
+                }
+                return true;
+            }
+        });
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
 //        initToolbarMenu(mToolbar);
@@ -136,6 +162,16 @@ public class LaboratoryStatisticFragment extends BaseLazyFragment implements Dat
         });
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
+    }
+
+    @Subscribe
+    public void updateDepartment(DepartmentData mDepartmentData) {
+        if (null != mDepartmentData && null != mParametersData ) {
+            if (mDepartmentData.fromto == ConstantsUtils.TESTSTATISTICFRAGMENT) {
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                mPtrFrameLayout.autoRefresh(true);
+            }
+        }
     }
 
     @Override

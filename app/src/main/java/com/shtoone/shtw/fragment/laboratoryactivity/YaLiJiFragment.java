@@ -11,16 +11,20 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
+import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.adapter.YaLiJiFragmentViewPagerAdapter;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
+import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.socks.library.KLog;
 import com.squareup.otto.Subscribe;
@@ -38,6 +42,7 @@ public class YaLiJiFragment extends BaseLazyFragment {
     private boolean isRegistered = false;
     private ParametersData mParametersData;
     private YaLiJiFragmentViewPagerAdapter mAdapter;
+    private DepartmentData mDepartmentData;
 
     public static YaLiJiFragment newInstance() {
         return new YaLiJiFragment();
@@ -75,6 +80,9 @@ public class YaLiJiFragment extends BaseLazyFragment {
         mParametersData = (ParametersData) BaseApplication.parametersData.clone();
         mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
         mParametersData.fromTo = ConstantsUtils.YALIJIFRAGMENT;
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.YALIJIFRAGMENT);
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +102,24 @@ public class YaLiJiFragment extends BaseLazyFragment {
                 } else {
                     BaseApplication.isExpand = false;
                 }
+            }
+        });
+        Log.e(TAG,"mDepartmentData:"+mDepartmentData);
+        mToolbar.inflateMenu(R.menu.menu_hierarchy);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_hierarchy:
+                        Intent intent = new Intent(_mActivity, OrganizationActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
+                        intent.putExtras(bundle);
+                        intent.putExtra("type", "3");
+                        AnimationUtils.startActivity(_mActivity, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color);
+                        break;
+                }
+                return true;
             }
         });
 
@@ -120,6 +146,8 @@ public class YaLiJiFragment extends BaseLazyFragment {
 
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {
+
+
         Log.e(TAG,">>>>>>>>>>>>>>>>>>>>>updateSearch");
         if (mParametersData != null) {
             if (mParametersData.fromTo == ConstantsUtils.YALIJIFRAGMENT) {

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.WannengjiDetailActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.WannengjiFragmentViewPagerFragmentRecyclerViewAdapter;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.bean.WannengjiFragmentViewPagerFragmentRecyclerViewItemData;
@@ -67,6 +69,15 @@ public class WannengjiFragmentViewPagerFragment extends BaseFragment {
         return fragment;
     }
 
+    @Subscribe
+    public void updateDepartment(DepartmentData mDepartmentData) {
+        if (null != mDepartmentData && null != mParametersData ) {
+            if (mDepartmentData.fromto == ConstantsUtils.WANNENGJIFRAGMENT) {
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                mPtrFrameLayout.autoRefresh(true);
+            }
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -205,6 +216,7 @@ public class WannengjiFragmentViewPagerFragment extends BaseFragment {
         if (null != listData) {
             listData.clear();
         }
+        Log.e(TAG,"111---userGroupID"+userGroupID);
         return URL.getWannengjiTestList(userGroupID, isQualified, startDateTime, endDateTime, currentPage, equipmentID, isReal, testType);
     }
 

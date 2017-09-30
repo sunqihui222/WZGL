@@ -38,6 +38,7 @@ public class URL {
     //中交集团二航局地址
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
+//     public static final String BaseURL = "http://121.40.150.65:8083/zt11j5gs3.6.6WZ/";
      public static final String BaseURL = "http://192.168.0.126:8080/jeecg/";
     //public static final String BaseURL = "http://192.168.0.117:8082/jeecg/";
     //public static final String BaseURL = "http://121.40.150.65:8083/WZAPP/";
@@ -220,6 +221,7 @@ public class URL {
         //如果开始时间大于结束时间，返回null
         Log.e(TAG,"sjqd:"+sjqd);
         Log.e(TAG,"lq:"+lq);
+        Log.e(TAG,"userGroupID:"+userGroupID);
         if (Integer.valueOf(startTime) <= Integer.valueOf(endTime)) {
             String url = HNT_URL.replace("%1", userGroupID).replace("%2", isQualified).replace("%3", startTime).replace("%4", endTime).replace("%5", current_PageNo).replace("%6", deviceNo).replace("%7", isReal).replace("%8", testType).replace("%9", sjqd).replace(">>>", lq);
             KLog.e(TAG, "试验室压力试验列表 :" + url);
@@ -530,6 +532,7 @@ public class URL {
             if (TextUtils.isEmpty(url)) {
                 return null;
             }
+
             return url;
         }
         return null;

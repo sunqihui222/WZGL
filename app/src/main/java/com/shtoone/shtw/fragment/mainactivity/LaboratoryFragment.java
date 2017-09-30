@@ -14,15 +14,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
+import com.shtoone.shtw.activity.AllPowerTestActivity;
+import com.shtoone.shtw.activity.DesignMixRatioActivity;
 import com.shtoone.shtw.activity.DialogActivity;
 import com.shtoone.shtw.activity.LaboratoryActivity;
 import com.shtoone.shtw.activity.MainActivity;
+import com.shtoone.shtw.activity.MatchNoticeActivity;
 import com.shtoone.shtw.activity.OrganizationActivity;
+import com.shtoone.shtw.activity.PressureTestActivity;
+import com.shtoone.shtw.activity.StatisticAnalysisActivity;
 import com.shtoone.shtw.adapter.LaboratoryFragmentRecyclerViewAdapter;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.bean.DepartmentData;
@@ -48,11 +54,11 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 /**
  * Created by leguang on 2016/5/31 0031.
  */
-public class LaboratoryFragment extends BaseLazyFragment {
+public class LaboratoryFragment extends BaseLazyFragment implements View.OnClickListener {
     private static final String TAG = LaboratoryFragment.class.getSimpleName();
     private Toolbar mToolbar;
     private PtrFrameLayout mPtrFrameLayout;
-    private RecyclerView mRecyclerView;
+    //    private RecyclerView mRecyclerView;
     private LaboratoryFragmentRecyclerViewAdapter mAdapter;
     private LaboratoryFragmentRecyclerViewItemData itemsData;
     private FloatingActionButton fab;
@@ -60,6 +66,11 @@ public class LaboratoryFragment extends BaseLazyFragment {
     private ParametersData mParametersData;
     private Gson mGson;
     private DepartmentData mDepartmentData;
+    private LinearLayout item1;
+    private LinearLayout item2;
+    private LinearLayout item3;
+    private LinearLayout item4;
+    private LinearLayout item5;
 
     public static LaboratoryFragment newInstance() {
         return new LaboratoryFragment();
@@ -85,8 +96,20 @@ public class LaboratoryFragment extends BaseLazyFragment {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptrframelayout);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+//        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         mPageStateLayout = (PageStateLayout) view.findViewById(R.id.pagestatelayout);
+        /****************************************************************/
+        item1 = (LinearLayout) view.findViewById(R.id.cl_laboratory_item1);
+        item2 = (LinearLayout) view.findViewById(R.id.cl_laboratory_item2);
+        item3 = (LinearLayout) view.findViewById(R.id.cl_laboratory_item3);
+        item4 = (LinearLayout) view.findViewById(R.id.cl_laboratory_item4);
+        item5 = (LinearLayout) view.findViewById(R.id.cl_laboratory_item5);
+        item1.setOnClickListener(this);
+        item2.setOnClickListener(this);
+        item3.setOnClickListener(this);
+        item4.setOnClickListener(this);
+        item5.setOnClickListener(this);
+        /****************************************************************/
     }
 
     @Override
@@ -135,14 +158,14 @@ public class LaboratoryFragment extends BaseLazyFragment {
             }
         });
 
-        mPageStateLayout.setPadding(0, 0, 0, DensityUtils.dp2px(_mActivity, 56));
+//        mPageStateLayout.setPadding(0, 0, 0, DensityUtils.dp2px(_mActivity, 56));
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
     }
 
     @Override
     public boolean isCanDoRefresh() {
-        //判断是哪种状态的页面，都让其可下拉
+       /* //判断是哪种状态的页面，都让其可下拉
         if (mPageStateLayout.isShowContent) {
             //判断RecyclerView是否在在顶部，在顶部则允许滑动下拉刷新
             if (null != mRecyclerView) {
@@ -161,7 +184,8 @@ public class LaboratoryFragment extends BaseLazyFragment {
             return false;
         } else {
             return true;
-        }
+        }*/
+        return true;
     }
 
     @Override
@@ -176,13 +200,13 @@ public class LaboratoryFragment extends BaseLazyFragment {
             endDateTime = mParametersData.endDateTime;
         }
         String sysLingdaoUrl = URL.getSYSLingdaoData(userGroupID, startDateTime, endDateTime);
-        Log.e("111111","url=:"+sysLingdaoUrl);
+        Log.e("111111", "url=:" + sysLingdaoUrl);
         return URL.getSYSLingdaoData(userGroupID, startDateTime, endDateTime);
     }
 
     @Override
     public void onRefreshSuccess(String response) {
-        Log.e(TAG,"response=:"+response.toString());
+        Log.e(TAG, "response=:" + response.toString());
         if (!TextUtils.isEmpty(response)) {
             JSONObject jsonObject = null;
             try {
@@ -241,7 +265,7 @@ public class LaboratoryFragment extends BaseLazyFragment {
         }
     }
 
-    @Subscribe
+    /*@Subscribe
     public void updateDepartment(DepartmentData mDepartmentData) {
         if (null != mDepartmentData && null != mParametersData && null != this.mDepartmentData) {
             if (mDepartmentData.fromto == ConstantsUtils.LABORATORYFRAGMENT) {
@@ -252,7 +276,7 @@ public class LaboratoryFragment extends BaseLazyFragment {
                 mPtrFrameLayout.autoRefresh(true);
             }
         }
-    }
+    }*/
 
     private void setToolbarTitle() {
         if (null != mToolbar && null != mDepartmentData && !TextUtils.isEmpty(mDepartmentData.departmentName)) {
@@ -277,13 +301,13 @@ public class LaboratoryFragment extends BaseLazyFragment {
 
     private void setAdapter() {
         // 设置显示形式
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
         //设置动画
         SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new LaboratoryFragmentRecyclerViewAdapter(_mActivity, itemsData));
         mSlideInLeftAnimationAdapter.setDuration(500);
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         ScaleInAnimationAdapter mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
-        mRecyclerView.setAdapter(mScaleInAnimationAdapter);
+//        mRecyclerView.setAdapter(mScaleInAnimationAdapter);
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -307,5 +331,34 @@ public class LaboratoryFragment extends BaseLazyFragment {
         BaseApplication.mDepartmentData.departmentID = itemsData.getData().get(position).get(0).getUserGroupId();
         BaseApplication.mDepartmentData.departmentName = itemsData.getData().get(position).get(0).getDepartName();
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = null;
+            switch (v.getId()){
+                case R.id.cl_laboratory_item1://压力
+                    intent = new Intent(getContext(), PressureTestActivity.class);
+                    startActivity(intent);
+                    break;
+                 case R.id.cl_laboratory_item2://万能
+                     intent = new Intent(getContext(), AllPowerTestActivity.class);
+                     startActivity(intent);
+                    break;
+                 case R.id.cl_laboratory_item3://配比通知单
+                     intent = new Intent(getContext(), MatchNoticeActivity.class);
+                     startActivity(intent);
+                    break;
+                 case R.id.cl_laboratory_item4://设计配合比
+                     intent = new Intent(getContext(), DesignMixRatioActivity.class);
+                     startActivity(intent);
+                    break;
+                 case R.id.cl_laboratory_item5://统计分析
+                     intent = new Intent(getContext(), StatisticAnalysisActivity.class);
+                     startActivity(intent);
+                    break;
+
+
+            }
     }
 }

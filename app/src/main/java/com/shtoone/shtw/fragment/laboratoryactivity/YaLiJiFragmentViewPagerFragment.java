@@ -20,6 +20,7 @@ import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.YaLiJiDetailActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.YaLiJiFragmentViewPagerFragmentRecyclerViewAdapter;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.bean.YalijiFragmentViewPagerFragmentRecyclerViewItemData;
 import com.shtoone.shtw.event.EventData;
@@ -392,6 +393,16 @@ public class YaLiJiFragmentViewPagerFragment extends BaseFragment {
                 KLog.e("mParametersData:" + mParametersData.endDateTime);
                 KLog.e("mParametersData:" + mParametersData.equipmentID);
                 KLog.e("mParametersData:" + mParametersData.testTypeID);
+                mPtrFrameLayout.autoRefresh(true);
+            }
+        }
+    }
+
+    @Subscribe
+    public void updateDepartment(DepartmentData mDepartmentData) {
+        if (null != mDepartmentData && null != mParametersData ) {
+            if (mDepartmentData.fromto == ConstantsUtils.YALIJIFRAGMENT) {
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
                 mPtrFrameLayout.autoRefresh(true);
             }
         }
