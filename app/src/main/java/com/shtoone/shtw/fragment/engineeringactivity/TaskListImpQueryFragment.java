@@ -37,6 +37,8 @@ import com.squareup.otto.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -230,7 +232,11 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
             maxPageItems = mParametersData.maxPageItems;
-            strengthId = mParametersData.strengthId;
+            try {
+                strengthId = URLEncoder.encode(mParametersData.sjqd,"utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             zhuangtai = mParametersData.zhuangtai;
         }
 
@@ -258,7 +264,11 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
             maxPageItems = mParametersData.maxPageItems;
-            strengthId = mParametersData.strengthId;
+            try {
+                strengthId = URLEncoder.encode(mParametersData.sjqd,"utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             zhuangtai = mParametersData.zhuangtai;
         }
 //        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
@@ -402,11 +412,11 @@ public class TaskListImpQueryFragment extends BaseLazyFragment {
             if (mParametersData.fromTo == ConstantsUtils.TASKLISTIMPQUERYFRAGMENT) {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
-                this.mParametersData.strengthId = mParametersData.strengthId;
+                this.mParametersData.sjqd = mParametersData.sjqd;
                 this.mParametersData.zhuangtai = mParametersData.zhuangtai;
                 Log.e(TAG,"mParametersData:" + mParametersData.startDateTime);
                 Log.e(TAG,"mParametersData:" + mParametersData.endDateTime);
-                Log.e(TAG,"mParametersData:" + mParametersData.strengthId);
+                Log.e(TAG,"mParametersData:" + mParametersData.sjqd);
                 mPtrFrameLayout.autoRefresh(true);
             }
         }

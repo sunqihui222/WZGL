@@ -218,6 +218,37 @@
             </RadioGroup>
 
             <RadioGroup
+                android:id="@+id/rg_sjpeihe_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/rb_all_sjpeihe_dialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="全部" />
+
+                <RadioButton
+                    android:id="@+id/rb_unsubmit_sjpeihe_dialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="未提交" />
+
+                <RadioButton
+                    android:id="@+id/rb_submit_sjpeihe_dialog"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="已提交" />
+            </RadioGroup>
+
+            <RadioGroup
                 android:id="@+id/rg_unfinsh_dialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

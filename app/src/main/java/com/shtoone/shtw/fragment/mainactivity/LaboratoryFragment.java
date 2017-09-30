@@ -23,6 +23,7 @@ import com.shtoone.shtw.activity.DialogActivity;
 import com.shtoone.shtw.activity.LaboratoryActivity;
 import com.shtoone.shtw.activity.MainActivity;
 import com.shtoone.shtw.activity.OrganizationActivity;
+import com.shtoone.shtw.activity.SJPeiHebiActivity;
 import com.shtoone.shtw.adapter.LaboratoryFragmentRecyclerViewAdapter;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.bean.DepartmentData;
@@ -127,10 +128,12 @@ public class LaboratoryFragment extends BaseLazyFragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(_mActivity, DialogActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
-                intent.putExtras(bundle);
+//                Intent intent = new Intent(_mActivity, DialogActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+                Intent intent = new Intent(_mActivity, SJPeiHebiActivity.class);
                 startActivity(intent);
             }
         });

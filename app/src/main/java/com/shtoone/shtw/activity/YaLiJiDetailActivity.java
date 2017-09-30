@@ -278,6 +278,7 @@ public class YaLiJiDetailActivity extends BaseActivity {
                     if (jsonObject.optBoolean("success")) {
                         TastyToast.makeText(getApplicationContext(), "上传成功!", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
                         isSubmit = true;
+                        finish();
                     } else {
                         TastyToast.makeText(getApplicationContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     }
@@ -321,9 +322,12 @@ public class YaLiJiDetailActivity extends BaseActivity {
         tv_size.setText(mYalijiDetailData.getData().getSJCC());
         tv_age.setText(mYalijiDetailData.getData().getLQ());
         tv_central_value.setText(mYalijiDetailData.getData().getQDDBZ());
-        if (!mYalijiDetailData.getData().getF_LZ().contains("null")) {
+        if (!mYalijiDetailData.getData().getF_LZ().contains("null")&&!TextUtils.isEmpty(mYalijiDetailData.getData().getF_LZ())) {
             mViewPager.setAdapter(new YaLiJiDetailActivityChartViewPagerAdapter(getSupportFragmentManager(), mYalijiDetailData));
             mTabLayout.setupWithViewPager(mViewPager);
+        }else {
+            mViewPager.setVisibility(View.GONE);
+            mTabLayout.setVisibility(View.GONE);
         }
         if (!TextUtils.isEmpty(mYalijiDetailData.getData().getChuli())) {
             et_handle_reason.getEditText().setText(mYalijiDetailData.getData().getChuli());

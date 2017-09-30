@@ -278,6 +278,7 @@ public class WannengjiDetailActivity extends BaseActivity {
                     if (jsonObject.optBoolean("success")) {
                         TastyToast.makeText(getApplicationContext(), "上传成功!", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
                         isSubmit = true;
+                        finish();
                     } else {
                         TastyToast.makeText(getApplicationContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     }
@@ -320,9 +321,12 @@ public class WannengjiDetailActivity extends BaseActivity {
         tv_identifier.setText(mWannengjiDetailData.getData().getSJBH());
         tv_diameter.setText(mWannengjiDetailData.getData().getGGZL());
         tv_kind.setText(mWannengjiDetailData.getData().getPZBM());
-        if (!mWannengjiDetailData.getData().getF_LZ().contains("null")) {
+        if (!mWannengjiDetailData.getData().getF_LZ().contains("null")&&!TextUtils.isEmpty(mWannengjiDetailData.getData().getF_LZ())) {
             mViewPager.setAdapter(new WannengjiDetailActivityChartViewPagerAdapter(getSupportFragmentManager(), mWannengjiDetailData));
             mTabLayout.setupWithViewPager(mViewPager);
+        }else {
+            mViewPager.setVisibility(View.GONE);
+            mTabLayout.setVisibility(View.GONE);
         }
         if (!TextUtils.isEmpty(mWannengjiDetailData.getData().getChuli())) {
             et_handle_reason.getEditText().setText(mWannengjiDetailData.getData().getChuli());

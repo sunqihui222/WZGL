@@ -110,8 +110,6 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
             mParametersData = (ParametersData) BaseApplication.parametersData.clone();
             mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
         }
-//        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-//        mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
         mParametersData.fromTo = ConstantsUtils.PEILIAOTONGZHIDAN;
         mGson = new Gson();
         listData = new ArrayList<>();

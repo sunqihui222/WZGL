@@ -2,6 +2,7 @@ package com.shtoone.shtw.fragment.engineeringactivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -243,6 +244,16 @@ public class MaterialConsumeFragment extends BaseLazyFragment{
         mBarChart.setPinchZoom(false);
         mBarChart.animateXY(2000, 2000);
         mBarChart.setDrawGridBackground(false);
+        //设置是否支持拖拽
+        mBarChart.setDragEnabled(true);
+
+        Matrix m =new Matrix();
+        m.postScale(5.0f, 1f);
+        mBarChart.getViewPortHandler().refresh(m, mBarChart, false);
+        mBarChart.animateX(1000);
+        //设置能否缩放
+        //mBarChart.setScaleEnabled(true);
+
 
         mTf = Typeface.createFromAsset(_mActivity.getAssets(), "OpenSans-Regular.ttf");
 
@@ -250,7 +261,9 @@ public class MaterialConsumeFragment extends BaseLazyFragment{
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 //        xAxis.setTypeface(mTf);
         xAxis.setDrawGridLines(false);
-        xAxis.setSpaceBetweenLabels(0);
+        xAxis.setSpaceBetweenLabels(1);
+
+
 
         YAxis leftAxis = mBarChart.getAxisLeft();
 //        leftAxis.setTypeface(mTf);

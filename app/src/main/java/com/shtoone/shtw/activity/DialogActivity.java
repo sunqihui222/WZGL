@@ -93,6 +93,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private RadioGroup rg_finsh;
     private RadioGroup               rg_jinchang_handle;
     private RadioGroup               rg_chuchang_handle;
+    private RadioGroup               rg_sjpeihe_dialog;
     private WaagListData             waagListData;
     private MaterialListData         materialListData;
     private List<String>             cailiaoName;
@@ -132,6 +133,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         rg_tasklist = (RadioGroup) findViewById(R.id.rg_tasklist_dialog);
         rg_unfinsh = (RadioGroup) findViewById(R.id.rg_unfinsh_dialog);
         rg_finsh = (RadioGroup) findViewById(R.id.rg_finsh_dialog);
+        rg_sjpeihe_dialog = (RadioGroup) findViewById(R.id.rg_sjpeihe_dialog);
         start_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         end_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         tv_MaterialName = (TextView) findViewById(R.id.tv_material_choose);
@@ -226,28 +228,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
-        //假数据
-        strengthIds = new ArrayList<>();
-        //使用数组作为数据源
-        final String[] strengthDataArr = new String[]{"C15","C20","C25","C30","C35","C40","C45","C50","C55","C60","C65",};
-        // adpater对象
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strengthDataArr);
-        ms_select_strength.setAdapter(arrayAdapter);
-        ms_select_strength.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i >= 0) {
-                    mParametersData.sjqd = strengthDataArr[i];
-                } else if (i == -1) {
-                    mParametersData.strengthId = "";
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         /*****************************************/
         //假数据
@@ -415,6 +396,19 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
+        rg_sjpeihe_dialog.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int i) {
+                if (i==R.id.rb_all_sjpeihe_dialog){
+                    mParametersData.sjzt = "";
+                }else if (i == R.id.rb_unsubmit_sjpeihe_dialog){
+                    mParametersData.sjzt = "-1";
+                }else if (i== R.id.rb_submit_sjpeihe_dialog){
+                    mParametersData.sjzt = "0";
+                }
+            }
+        });
+
 
 
         //设置哪些条件选择该显示，默认只有时间选择是显示的
@@ -436,6 +430,29 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 ms_select_lq.setVisibility(View.VISIBLE);
                 url = URL.getLibEquipmentTest(mParametersData.userGroupID);
                 Log.e("YALIJIFRAGMENT", "url=:" + url);
+
+                //假数据
+                strengthIds = new ArrayList<>();
+                //使用数组作为数据源
+                final String[] strengthDataArr = new String[]{"C15","C20","C25","C30","C35","C40","C45","C50","C55","C60","C65",};
+                // adpater对象
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strengthDataArr);
+                ms_select_strength.setAdapter(arrayAdapter);
+                ms_select_strength.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (i >= 0) {
+                            mParametersData.sjqd = strengthDataArr[i];
+                        } else if (i == -1) {
+                            mParametersData.strengthId = "";
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
                 refresh();
                 break;
 //            case ConstantsUtils.TASKLISTIMPQUERYFRAGMENT:
@@ -518,7 +535,12 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
                 break;
 
-
+            case ConstantsUtils.SHEJIPEIHEBI:
+                rg_sjpeihe_dialog.setVisibility(View.VISIBLE);
+                ms_select_strength.setVisibility(View.VISIBLE);
+                url = URL.getDataDictionary("SJQD");
+                refresh();
+                break;
         }
 
         if (mParametersData.finsh.equals("")){
@@ -585,6 +607,14 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             rg_tasklist.check(R.id.rb_finsh_tasklist_dialog);
         }
 
+        if (mParametersData.sjzt.equals("")){
+            rg_sjpeihe_dialog.check(R.id.rb_all_sjpeihe_dialog);
+        }else if (mParametersData.sjzt.equals("-1")){
+            rg_sjpeihe_dialog.check(R.id.rb_unsubmit_sjpeihe_dialog);
+        }else if (mParametersData.sjzt.equals("0")){
+            rg_sjpeihe_dialog.check(R.id.rb_submit_sjpeihe_dialog);
+        }
+
 
     }
 
@@ -640,6 +670,10 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 waagListData = new Gson().fromJson(response, WaagListData.class);
                 setWaagListView();
 
+            case ConstantsUtils.SHEJIPEIHEBI:
+                mDesignStrengthData = new Gson().fromJson(response, DesignStrengthData.class);
+                setsjqdQueryView();
+                break;
         }
 
     }
@@ -738,6 +772,63 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         ArrayAdapter<String> strengthAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strengthNames);
         strengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ms_select_strength.setAdapter(strengthAdapter);
+        ms_select_strength.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i >= 0) {
+
+
+                    mParametersData.sjqd = strengthIds.get(i);
+                } else if (i == -1) {
+                    mParametersData.sjqd = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Log.e(TAG, "-----setStrengthQueryView----");
+        for (int i = 0; i < strengthIds.size(); i++) {
+            if (mParametersData.materialID.equals(strengthIds.get(i))) {
+                ms_select_material.setSelection(i + 1);
+                Log.e(TAG,"默认：" + (i + 1) + "个");
+            }
+        }
+    }
+
+    private void setsjqdQueryView() {
+        strengthNames = new ArrayList<>();
+        strengthIds = new ArrayList<>();
+        for (DesignStrengthData.DataBean temp : mDesignStrengthData.getData()) {
+            strengthNames.add(temp.getTypename());
+            strengthIds.add(temp.getTypecode());
+        }
+        Log.e(TAG,"strengthNames=:" + strengthNames);
+        Log.e(TAG,"strengthIds=:" + strengthIds);
+        ArrayAdapter<String> strengthAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, strengthNames);
+        strengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ms_select_strength.setAdapter(strengthAdapter);
+        ms_select_strength.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i >= 0) {
+
+
+                    mParametersData.llsjqd = strengthIds.get(i);
+                } else if (i == -1) {
+                    mParametersData.llsjqd = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         Log.e(TAG, "-----setStrengthQueryView----");
         for (int i = 0; i < strengthIds.size(); i++) {
             if (mParametersData.materialID.equals(strengthIds.get(i))) {

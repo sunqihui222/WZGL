@@ -193,6 +193,10 @@
         <activity android:name=".fragment.laboratoryactivity.PeiliaoTongzhidanQrcodeActivity"
                   android:launchMode="singleTop"/>
 
+        <activity android:name=".activity.SJPeiHebiActivity"
+            android:launchMode="singleTop"
+            />
+
         /*****************************************************************************/
         <service android:name=".InitializeService"></service>
         /*****************************************************************************/
