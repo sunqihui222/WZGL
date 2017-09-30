@@ -193,6 +193,10 @@
         <activity android:name=".fragment.laboratoryactivity.PeiliaoTongzhidanQrcodeActivity"
                   android:launchMode="singleTop"/>
 
+        /*****************************************************************************/
+        <service android:name=".InitializeService"></service>
+        /*****************************************************************************/
+
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreeHelper {
+    private static final String TAG = "TreeHelper";
+
     /**
      * 将用户的数据转化为树形数据
      *
@@ -31,7 +33,7 @@ public class TreeHelper {
 
             node = new Node();
             Class clazz = t.getClass();
-            Field[] fields = clazz.getDeclaredFields();
+            Field[] fields = clazz.getDeclaredFields();//获取类中所有属性
             for (Field field : fields) {
                 if (field.getAnnotation(TreeNodeId.class) != null) {
                     field.setAccessible(true);
@@ -51,6 +53,7 @@ public class TreeHelper {
         }// for end
 
         Log.e("TAG", nodes + "");
+        Log.e("TAG", "设置Node间的节点关系");
 
         /**
          * 设置Node间的节点关系
@@ -60,7 +63,7 @@ public class TreeHelper {
 
             for (int j = i + 1; j < nodes.size(); j++) {
                 Node m = nodes.get(j);
-
+//                Log.e(TAG, "index:" + i + "n:" + n + "||||||m:" + m);
                 if (String.valueOf(m.getpId()).equals(n.getId())) {
                     n.getChildren().add(m);
                     m.setParent(n);
@@ -74,6 +77,7 @@ public class TreeHelper {
         for (Node n : nodes) {
             setNodeIcon(n);
         }
+        Log.e(TAG,"nodes.size>>>>>"+nodes.size());
         return nodes;
     }
 

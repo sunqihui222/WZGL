@@ -53,6 +53,7 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
  */
 
 public class WZProjectProgressQueryFragment extends BaseLazyFragment {
+    private static final String TAG = "WZProjectProgressQueryFragment";
     private Toolbar mToolbar;
     private PtrFrameLayout mPtrFrameLayout;
     private RecyclerView mRecyclerView;
@@ -101,6 +102,7 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
                 switch (item.getItemId()) {
                     case R.id.action_hierarchy:
                         Intent intent = new Intent(getActivity(), FBProjectListActivity.class);
+                        Log.e(TAG,"跳转到FBProjectListActivity");
                         Bundle bundle = new Bundle();
                         bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
                         intent.putExtras(bundle);

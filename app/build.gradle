@@ -11,6 +11,16 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        signing {
+            keyAlias '拌和站android版app'
+            keyPassword 'tooneyanfa'
+            storeFile file('G:/shtw/keystore/shtoone_Android.jks') // 这里需要修改为自己主机上的目录
+            storePassword 'tooneyanfa'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
