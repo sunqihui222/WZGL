@@ -1,17 +1,14 @@
-package com.shtoone.shtw.fragment.laboratoryactivity;
+package com.shtoone.shtw.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 
 import com.android.volley.VolleyError;
@@ -19,15 +16,15 @@ import com.google.gson.Gson;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
-import com.shtoone.shtw.activity.DialogActivity;
-import com.shtoone.shtw.activity.OrganizationActivity;
+import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.PeiliaoTongzhidanFragmentRVAdapter;
+import com.shtoone.shtw.adapter.SJPeiHebiListAdapter;
 import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.bean.PeiliaoTongzhidanFragmentListData;
-import com.shtoone.shtw.event.EventData;
-import com.shtoone.shtw.fragment.base.BaseLazyFragment;
+import com.shtoone.shtw.bean.SJPeiHebiData;
+import com.shtoone.shtw.fragment.laboratoryactivity.LilunPeihebiDetailActivity;
 import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
@@ -39,6 +36,8 @@ import com.squareup.otto.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,87 +48,64 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * Created by Administrator on 2017/9/30.
  */
-public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
 
-    private static final String TAG = PeiliaoTongzhidanFragment.class.getSimpleName();
+public class SJPeiHebiActivity extends BaseActivity {
+
     private boolean isRegistered = false;
-    private Toolbar mToolbar;
-    private PtrFrameLayout mPtrFrameLayout;
-    private RecyclerView mRecyclerView;
-    private FloatingActionButton fab;
-    private PageStateLayout mPageStateLayout;
-    private int lastVisibleItemPosition;
-    private boolean isLoading;
-    private ParametersData mParametersData;
-    private Gson mGson;
-    private LinearLayoutManager mLinearLayoutManager;
+    private Toolbar                 mToolbar;
+    private PtrFrameLayout          mPtrFrameLayout;
+    private RecyclerView            mRecyclerView;
+    private FloatingActionButton    fab;
+    private PageStateLayout         mPageStateLayout;
+    private int                     lastVisibleItemPosition;
+    private boolean                 isLoading;
+    private ParametersData          mParametersData;
+    private Gson                    mGson;
+    private LinearLayoutManager     mLinearLayoutManager;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
-    private List<PeiliaoTongzhidanFragmentListData.DataBean> listData;
-    private PeiliaoTongzhidanFragmentListData itemsData;
-    private PeiliaoTongzhidanFragmentRVAdapter mAdapter;
+    private List<SJPeiHebiData.DataEntity> listData;
+    private SJPeiHebiData        itemsData;
+    private SJPeiHebiListAdapter mAdapter;
     private DepartmentData mDepartmentData;
-    public static PeiliaoTongzhidanFragment newInstance() {
-        return new PeiliaoTongzhidanFragment();
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         if (!isRegistered) {
             BaseApplication.bus.register(this);
             isRegistered = true;
         }
-        View view = inflater.inflate(R.layout.fragment_peiliao_tongzhidan, container, false);
-        initView(view);
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //返回到看见此fragment时，fab显示
-        fab.show();
-    }
-
-    private void initView(View view) {
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptrframelayout);
-        mPageStateLayout = (PageStateLayout) view.findViewById(R.id.pagestatelayout);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-    }
-
-    @Override
-    protected void initLazyView(@Nullable Bundle savedInstanceState) {
+        setContentView(R.layout.fragment_peiliao_tongzhidan);
+        initView();
         initData();
+
     }
 
     private void initData() {
+
         if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
-            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.PEILIAOTONGZHIDAN);
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.SHEJIPEIHEBI);
             mParametersData = (ParametersData) BaseApplication.parametersData.clone();
             mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
         }
-        mParametersData.fromTo = ConstantsUtils.PEILIAOTONGZHIDAN;
+        mParametersData.fromTo = ConstantsUtils.SHEJIPEIHEBI;
         mGson = new Gson();
         listData = new ArrayList<>();
-        mLinearLayoutManager = new LinearLayoutManager(_mActivity);
+        mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
         mToolbar.inflateMenu(R.menu.menu_hierarchy);
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_hierarchy:
-                        Intent intent = new Intent(_mActivity, OrganizationActivity.class);
+                        Intent intent = new Intent(SJPeiHebiActivity.this, OrganizationActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
                         intent.putExtras(bundle);
                         intent.putExtra("type", "3");
-                        AnimationUtils.startActivity(_mActivity, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color);
+                        AnimationUtils.startActivity(SJPeiHebiActivity.this, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color);
                         break;
                 }
                 return true;
@@ -137,12 +113,12 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         });
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
-//        initToolbarMenu(mToolbar);
+        //        initToolbarMenu(mToolbar);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(_mActivity, DialogActivity.class);
+                Intent intent = new Intent(SJPeiHebiActivity.this, DialogActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
                 intent.putExtras(bundle);
@@ -151,7 +127,7 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         });
 
         //设置动画与适配器
-        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new PeiliaoTongzhidanFragmentRVAdapter(_mActivity, listData));
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new SJPeiHebiListAdapter(this, listData));
         mSlideInLeftAnimationAdapter.setDuration(500);
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
@@ -201,6 +177,40 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         initPtrFrameLayout(mPtrFrameLayout);
     }
 
+    private void jump2DetailActivity(int position) {
+        Intent intent = new Intent(this, LilunPeihebiDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("PeiliaoTongzhidanDetail", listData.get(position));
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+    }
+
+    @Subscribe
+    public void updateDepartment(DepartmentData mDepartmentData) {
+        if (null != mDepartmentData && null != mParametersData ) {
+            if (mDepartmentData.fromto == ConstantsUtils.SHEJIPEIHEBI) {
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                mPtrFrameLayout.autoRefresh(true);
+            }
+        }
+    }
+    private void initView() {
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_toolbar);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptrframelayout);
+        mPageStateLayout = (PageStateLayout) findViewById(R.id.pagestatelayout);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //返回到看见此fragment时，fab显示
+        fab.show();
+    }
+
     @Override
     public boolean isCanDoRefresh() {
         //判断是哪种状态的页面，都让其可下拉
@@ -225,16 +235,6 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         }
     }
 
-    @Subscribe
-    public void updateDepartment(DepartmentData mDepartmentData) {
-        if (null != mDepartmentData && null != mParametersData ) {
-            if (mDepartmentData.fromto == ConstantsUtils.PEILIAOTONGZHIDAN) {
-                this.mParametersData.userGroupID = mDepartmentData.departmentID;
-                mPtrFrameLayout.autoRefresh(true);
-            }
-        }
-    }
-
     @Override
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
@@ -244,23 +244,31 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         String endDateTime = "";
         String currentPage = "";
         String maxPageItems = "";
+        String zhuangtai = "";
+        String llsjqd = "";
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
             maxPageItems = mParametersData.maxPageItems;
+            zhuangtai = mParametersData.sjzt;
+            try {
+                llsjqd = URLEncoder.encode(mParametersData.llsjqd,"utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
         }
 
         //用于测试
-//        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
+        //        userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
 
         if (null != listData) {
             listData.clear();
         }
-        return URL.getPeiliaotongzhidan(userGroupID, startDateTime, endDateTime, currentPage,maxPageItems );
+        return URL.getSJpeihebiList(userGroupID, startDateTime, endDateTime,zhuangtai,llsjqd, currentPage,maxPageItems );
     }
-
 
     @Override
     public String createLoadMoreULR() {
@@ -270,16 +278,24 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         String endDateTime = "";
         String currentPage = "";
         String maxPageItems = "";
+        String zhuangtai = "";
+        String llsjqd = "";
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
             maxPageItems = mParametersData.maxPageItems;
+            zhuangtai = mParametersData.sjzt;
+            try {
+                llsjqd = URLEncoder.encode(mParametersData.llsjqd,"utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
         //用于测试
         //userGroupID = "8a8ab0b246dc81120146dc8180ba0017";
-        return URL.getPeiliaotongzhidan(userGroupID, startDateTime, endDateTime, currentPage,maxPageItems );
+        return URL.getSJpeihebiList(userGroupID, startDateTime, endDateTime,zhuangtai,llsjqd, currentPage,maxPageItems );
     }
 
     @Override
@@ -294,9 +310,9 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, PeiliaoTongzhidanFragmentListData.class);
+                itemsData = mGson.fromJson(response, SJPeiHebiData.class);
                 if (null != itemsData) {
-                    if (itemsData.isSuccess() && itemsData.getData().size() > 0) {
+                    if (itemsData.getSuccess() && itemsData.getData().size() > 0) {
                         listData.addAll(itemsData.getData());
                         if (null != listData) {
                             if (listData.size() > 0) {
@@ -331,7 +347,7 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
     @Override
     public void onRefreshFailed(VolleyError error) {
         //提示网络数据异常，展示网络错误页面。此时：1.可能是本机网络有问题，2.可能是服务器问题
-        if (!NetworkUtils.isConnected(_mActivity)) {
+        if (!NetworkUtils.isConnected(this)) {
             //提示网络异常,让用户点击设置网络
             mPageStateLayout.showNetError();
         } else {
@@ -340,8 +356,11 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         }
     }
 
+
+
     @Override
-    public void onLoadMoreSuccess(String response) {
+    public void loadMoreSuccess(String response) {
+        super.loadMoreSuccess(response);
         if (!TextUtils.isEmpty(response)) {
             JSONObject jsonObject = null;
             try {
@@ -352,75 +371,62 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, PeiliaoTongzhidanFragmentListData.class);
+                itemsData = mGson.fromJson(response, SJPeiHebiData.class);
                 if (null != itemsData) {
-                    if (itemsData.isSuccess() && itemsData.getData().size() > 0) {
+                    if (itemsData.getSuccess() && itemsData.getData().size() > 0) {
                         if (null != listData) {
                             listData.addAll(itemsData.getData());
                             if (listData.size() > 0) {
                                 mPageStateLayout.showContent();
                                 mAdapter.notifyDataSetChanged();
                             } else {
-                                TastyToast.makeText(_mActivity.getApplicationContext(), "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
+                                TastyToast.makeText(this, "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
                                 mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
                                 mAdapter.notifyItemRemoved(mAdapter.getItemCount());
                             }
                         } else {
-                            TastyToast.makeText(_mActivity.getApplicationContext(), "数据异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                            TastyToast.makeText(this, "数据异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                             mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
                             mAdapter.notifyItemRemoved(mAdapter.getItemCount());
                         }
                     } else {
-                        TastyToast.makeText(_mActivity.getApplicationContext(), "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
+                        TastyToast.makeText(this, "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
                         mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
                         mAdapter.notifyItemRemoved(mAdapter.getItemCount());
                     }
                 } else {
-                    TastyToast.makeText(_mActivity.getApplicationContext(), "解析异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    TastyToast.makeText(this, "解析异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
                     mAdapter.notifyItemRemoved(mAdapter.getItemCount());
                 }
             } else {
-                TastyToast.makeText(_mActivity.getApplicationContext(), "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
+                TastyToast.makeText(this, "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
                 mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
                 mAdapter.notifyItemRemoved(mAdapter.getItemCount());
             }
         } else {
             //提示返回数据异常，展示错误页面
-            TastyToast.makeText(_mActivity.getApplicationContext(), "数据异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+            TastyToast.makeText(this, "数据异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
             mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
             mAdapter.notifyItemRemoved(mAdapter.getItemCount());
         }
     }
 
     @Override
-    public void onLoadMoreFailed(VolleyError error) {
-        super.onLoadMoreFailed(error);
+    public void loadMoreFailed(VolleyError error) {
+        super.loadMoreFailed(error);
         mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
         mAdapter.notifyItemRemoved(mAdapter.getItemCount());
     }
 
-    private void changeReadedState(View view) {
-        //此处可以做一些修改点击过的item的样式，方便用户看出哪些已经点击查看过
-    }
-
-    //进入ProduceQueryDetailActivity
-    private void jump2DetailActivity(int position) {
-        Intent intent = new Intent(_mActivity, PeiliaoFenLieActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("PeiliaoTongzhidanDetail", listData.get(position));
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-
-
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
-            if (mParametersData.fromTo == ConstantsUtils.PEILIAOTONGZHIDAN) {
+            if (mParametersData.fromTo == ConstantsUtils.SHEJIPEIHEBI) {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
+                this.mParametersData.sjzt = mParametersData.sjzt;
+                this.mParametersData.llsjqd = mParametersData.llsjqd;
                 KLog.e("mParametersData:" + mParametersData.startDateTime);
                 KLog.e("mParametersData:" + mParametersData.endDateTime);
                 mPtrFrameLayout.autoRefresh(true);
@@ -428,38 +434,11 @@ public class PeiliaoTongzhidanFragment extends BaseLazyFragment {
         }
     }
 
-    @Subscribe
-    public void go2TopOrRefresh(EventData event) {
-        if (event.position == 0) {
-            mRecyclerView.smoothScrollToPosition(0);
-        }
-    }
-
-    @Subscribe
-    public void handleRefresh(EventData event) {
-        if (event.position == ConstantsUtils.REFRESH) {
-            mPtrFrameLayout.autoRefresh(true);
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        //防止屏幕旋转后重画时fab显示
-        fab.hide();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        BaseApplication.bus.unregister(this);
-    }
-
     private void setToolbarTitle() {
         if (null != mToolbar && null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
             StringBuffer sb = new StringBuffer(BaseApplication.mDepartmentData.departmentName + " > ");
             sb.append(getString(R.string.laboratory) + " > ");
-            sb.append(getString(R.string.peibi_tongzhin_cx)).trimToSize();
+            sb.append("设计配合比").trimToSize();
             mToolbar.setTitle(sb.toString());
         }
     }

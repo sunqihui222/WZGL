@@ -80,6 +80,7 @@ public class OverproofFragmentViewPagerFragmentRecyclerViewAdapter extends Recyc
 
             if ("0".equals(item.getChuli())) {
                 mItemViewHolder.stv_handle.setText("未处置").setSlantedBackgroundColor(Color.YELLOW);
+                mItemViewHolder.stv_examine.setVisibility(View.GONE);
             } else {
                 mItemViewHolder.stv_handle.setText("已处置").setSlantedBackgroundColor(Color.GREEN);
                 mItemViewHolder.stv_examine.setVisibility(View.VISIBLE);

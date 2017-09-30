@@ -589,6 +589,7 @@ public class OverproofDetailActivity extends BaseActivity implements TimePickerD
                     progressDialog.dismiss();
                     TastyToast.makeText(getApplicationContext(), "上传成功!", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
                     BaseApplication.bus.post(new EventData(ConstantsUtils.REFRESH));
+                    finish();
                 } else {
                     progressDialog.dismiss();
                     TastyToast.makeText(getApplicationContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
@@ -639,6 +640,7 @@ public class OverproofDetailActivity extends BaseActivity implements TimePickerD
 
                         BaseApplication.bus.post(new EventData(ConstantsUtils.REFRESH));
                         TastyToast.makeText(getApplicationContext(), "上传成功!", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
+                        finish();
                     } else {
                         TastyToast.makeText(getApplicationContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     }

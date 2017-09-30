@@ -55,6 +55,7 @@ public class ConstantsUtils {
     public static final int MATERIALCONSUME = 23;
     public static final int PEILIAOTONGZHIDAN = 24;
     public static final int TASKLISTIMPQUERYFRAGMENT = 25;
+    public static final int SHEJIPEIHEBI = 26;
 
 
 

@@ -14,6 +14,7 @@ import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.bean.LilunPeihebiDetailActivityData;
 import com.shtoone.shtw.bean.PeiliaoTongzhidanFragmentListData;
+import com.shtoone.shtw.bean.SJPeiHebiData;
 import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
@@ -29,25 +30,25 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 public class LilunPeihebiDetailActivity extends BaseActivity {
 
     private static final String TAG = LilunPeihebiDetailActivity.class.getSimpleName();
-    private Toolbar mToolbar;
-    private NestedScrollView mNestedScrollView;
-    private PageStateLayout mPageStateLayout;
-    private PtrFrameLayout mPtrFrameLayout;
-    private PeiliaoTongzhidanFragmentListData.DataBean mDataBean;
-    private TextView tv_bianhao;
-    private TextView tv_depart;
-    private TextView tv_sjqd;
-    private TextView tv_taluodu;
-    private TextView tv_kangshen_level;
-    private TextView tv_kangzhedu;
-    private TextView tv1_material;
-    private TextView tv2_material;
-    private TextView tv3_material;
-    private TextView tv4_material;
-    private TextView tv5_material;
-    private TextView tv6_material;
-    private TextView tv7_material;
-    private TextView tv8_material;
+    private Toolbar                mToolbar;
+    private NestedScrollView       mNestedScrollView;
+    private PageStateLayout        mPageStateLayout;
+    private PtrFrameLayout         mPtrFrameLayout;
+    private SJPeiHebiData.DataEntity mDataBean;
+    private TextView               tv_bianhao;
+    private TextView               tv_depart;
+    private TextView               tv_sjqd;
+    private TextView               tv_taluodu;
+    private TextView               tv_kangshen_level;
+    private TextView               tv_kangzhedu;
+    private TextView               tv1_material;
+    private TextView               tv2_material;
+    private TextView               tv3_material;
+    private TextView               tv4_material;
+    private TextView               tv5_material;
+    private TextView               tv6_material;
+    private TextView               tv7_material;
+    private TextView               tv8_material;
     private TextView tv9_material;
     private TextView tv1_peibizhi;
     private TextView tv2_peibizhi;
@@ -80,7 +81,7 @@ public class LilunPeihebiDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        mDataBean = (PeiliaoTongzhidanFragmentListData.DataBean) getIntent().getSerializableExtra("PeiliaoTongzhidanDetail");
+        mDataBean = (SJPeiHebiData.DataEntity) getIntent().getSerializableExtra("PeiliaoTongzhidanDetail");
         mToolbar = (Toolbar) findViewById(R.id.toolbar_toolbar);
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nsv_lilun_peihebi_detail_activity);
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.ptr_lilun_peihebi_detail_activity);
@@ -141,9 +142,9 @@ public class LilunPeihebiDetailActivity extends BaseActivity {
     @Override
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
-        String produceDetailData = URL.getLilunPeihebiDetailData(mDataBean.getLlphbNo());
+        String produceDetailData = URL.getLilunPeihebiDetailData(mDataBean.getLlphbno());
         Log.e(TAG,"url=:"+produceDetailData);
-        return URL.getLilunPeihebiDetailData(mDataBean.getLlphbNo());
+        return URL.getLilunPeihebiDetailData(mDataBean.getLlphbno());
     }
 
     @Override

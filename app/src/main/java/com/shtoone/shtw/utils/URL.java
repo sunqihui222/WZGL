@@ -41,7 +41,7 @@ public class URL {
 //     public static final String BaseURL = "http://121.40.150.65:8083/zt11j5gs3.6.6WZ/";
      public static final String BaseURL = "http://192.168.0.126:8080/jeecg/";
     //public static final String BaseURL = "http://192.168.0.117:8082/jeecg/";
-    //public static final String BaseURL = "http://121.40.150.65:8083/WZAPP/";
+    public static final String BaseURL = "http://121.40.150.65:8083/zt11j5gs3.6.6WZ/";
 
 //    public static final String BaseURL = "http://192.168.0.141:8082/gxzjzqms/";
 
@@ -1110,6 +1110,23 @@ public class URL {
         }
         Log.e("任务单(浇筑令)结束任务",url);
         return url;
+    }
+
+    //配料通知单查询
+    public static final String SJPPEIHEBI_URL = BaseURL + "appWZSys.do?AppsjphbList&departId=%1&startTime=%2&endTime=%3&zhuangtai=%4&llphblistsjqd=%5&pageNo=%6&maxPageItems=%7";
+
+    public static String getSJpeihebiList(String departId, String startTime, String endTime,String zhuangtai,String llphblistsjqd, String pageNo, String maxPageItems) {
+        startTime = DateUtils.ChangeTimeToLong(startTime);
+        endTime = DateUtils.ChangeTimeToLong(endTime);
+        if (Integer.valueOf(startTime) <= Integer.valueOf(endTime)) {
+            String url = SJPPEIHEBI_URL.replace("%1", departId).replace("%2", startTime).replace("%3", endTime).replace("%4",zhuangtai).replace("%5",llphblistsjqd).replace("%6", pageNo).replace("%7", maxPageItems);
+            Log.e(TAG, "设计配合比查询 :" + url);
+            if (TextUtils.isEmpty(url)) {
+                return null;
+            }
+            return url;
+        }
+        return null;
     }
 
 }
