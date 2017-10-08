@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
@@ -23,18 +24,31 @@ import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.AllPowerTestActivity;
 import com.shtoone.shtw.activity.DesignMixRatioActivity;
 import com.shtoone.shtw.activity.DialogActivity;
+import com.shtoone.shtw.activity.JobOrderCompoundingActivity;
+import com.shtoone.shtw.activity.JobOrderInProductionActvity;
+import com.shtoone.shtw.activity.JobOrderProductionActvity;
+import com.shtoone.shtw.activity.JobOrderUnCompoundingActivity;
+import com.shtoone.shtw.activity.JobOrderUnSubmitActivity;
 import com.shtoone.shtw.activity.LaboratoryActivity;
 import com.shtoone.shtw.activity.MainActivity;
 import com.shtoone.shtw.activity.MatchNoticeActivity;
+import com.shtoone.shtw.activity.MaterialConsumeActivity;
 import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.activity.PressureTestActivity;
+import com.shtoone.shtw.activity.SJPeiHebiActivity;
 import com.shtoone.shtw.activity.StatisticAnalysisActivity;
+import com.shtoone.shtw.activity.TaskListImpQueryActivity;
+import com.shtoone.shtw.activity.WZProjectProgressQueryActivity;
+import com.shtoone.shtw.activity.YCLChuChangWeightActivity;
+import com.shtoone.shtw.activity.YCLJinChangWeightActivity;
 import com.shtoone.shtw.adapter.LaboratoryFragmentRecyclerViewAdapter;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.LaboratoryFragmentRecyclerViewItemData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
+import com.shtoone.shtw.fragment.engineeringactivity.TaskListImpQueryFragment;
+import com.shtoone.shtw.fragment.engineeringactivity.TaskListNewEditActivity;
 import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
@@ -49,6 +63,8 @@ import org.json.JSONObject;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
+
+import static com.shtoone.shtw.BaseApplication.mUserInfoData;
 
 
 /**
@@ -71,6 +87,7 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
     private LinearLayout item3;
     private LinearLayout item4;
     private LinearLayout item5;
+    private Button btn_test;
 
     public static LaboratoryFragment newInstance() {
         return new LaboratoryFragment();
@@ -104,11 +121,13 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
         item3 = (LinearLayout) view.findViewById(R.id.cl_laboratory_item3);
         item4 = (LinearLayout) view.findViewById(R.id.cl_laboratory_item4);
         item5 = (LinearLayout) view.findViewById(R.id.cl_laboratory_item5);
+        btn_test = (Button) view.findViewById(R.id.btn_test);
         item1.setOnClickListener(this);
         item2.setOnClickListener(this);
         item3.setOnClickListener(this);
         item4.setOnClickListener(this);
         item5.setOnClickListener(this);
+        btn_test.setOnClickListener(this);
         /****************************************************************/
     }
 
@@ -123,7 +142,7 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
             mParametersData.fromTo = ConstantsUtils.LABORATORYFRAGMENT;
         }
         if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
-            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.LABORATORYFRAGMENT);
+            mDepartmentData = new DepartmentData(mUserInfoData.getDepartId(), mUserInfoData.getDepartName(), ConstantsUtils.LABORATORYFRAGMENT);
         }
         mGson = new Gson();
         setToolbarTitle();
@@ -350,7 +369,7 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
                      startActivity(intent);
                     break;
                  case R.id.cl_laboratory_item4://设计配合比
-                     intent = new Intent(getContext(), DesignMixRatioActivity.class);
+                     intent = new Intent(getContext(), SJPeiHebiActivity.class);
                      startActivity(intent);
                     break;
                  case R.id.cl_laboratory_item5://统计分析
@@ -358,6 +377,17 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
                      startActivity(intent);
                     break;
 
+                case R.id.btn_test:
+//                    if (mUserInfoData.getQuanxian().isWZGCB()) {
+//
+//                        intent = new Intent(_mActivity, TaskListNewEditActivity.class);
+//                        intent.putExtra("username", mParametersData.username);
+//                        startActivity(intent);
+//                    }
+                    intent = new Intent(_mActivity, WZProjectProgressQueryActivity.class);
+
+                    startActivity(intent);
+                    break;
 
             }
     }

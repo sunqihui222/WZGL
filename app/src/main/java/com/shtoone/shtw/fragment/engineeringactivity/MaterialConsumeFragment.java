@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
@@ -29,12 +30,14 @@ import com.google.gson.Gson;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
+import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.MaterialConsumeFragmentData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
+import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
@@ -47,6 +50,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
+
+import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 
 /**
  * Created by Administrator on 2017/8/10.
@@ -109,7 +114,23 @@ public class MaterialConsumeFragment extends BaseLazyFragment{
         if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
             mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.MATERIALCONSUME);
         }
-
+        mToolbar.inflateMenu(R.menu.menu_hierarchy);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_hierarchy:
+                        Intent intent = new Intent(getContext(), OrganizationActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
+                        intent.putExtras(bundle);
+                        intent.putExtra("type", "3");
+                        AnimationUtils.startActivity(getActivity(), intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color);
+                        break;
+                }
+                return true;
+            }
+        });
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
 //        initToolbarMenu(mToolbar);
@@ -288,12 +309,22 @@ public class MaterialConsumeFragment extends BaseLazyFragment{
     }
 
     @Subscribe
+    public void updateDepartment(DepartmentData mDepartmentData) {
+        if (null != mDepartmentData && null != mParametersData ) {
+            if (mDepartmentData.fromto == ConstantsUtils.MATERIALCONSUME) {
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                mPtrFrameLayout.autoRefresh(true);
+            }
+        }
+    }
+
+    @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
             if (mParametersData.fromTo == ConstantsUtils.MATERIALCONSUME) {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
-                this.mParametersData.userGroupID = mParametersData.userGroupID;
+
                 Log.e(TAG,"mParametersData:" + mParametersData.startDateTime);
                 Log.e(TAG,"mParametersData:" + mParametersData.endDateTime);
                 mPtrFrameLayout.autoRefresh(true);

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -19,6 +20,7 @@ import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
+import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.activity.YCLChuChangWeightFragmentActivity;
 import com.shtoone.shtw.activity.YCLJinChangWeightFragmentActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
@@ -30,6 +32,7 @@ import com.shtoone.shtw.bean.YCLChuChangWeightFragmentListData;
 import com.shtoone.shtw.bean.YCLJinChangWeightFragmentListData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
+import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
@@ -115,6 +118,25 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
         mRecyclerView.setAdapter(mScaleInAnimationAdapter);
+        mToolbar.inflateMenu(R.menu.menu_hierarchy);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_hierarchy:
+                        Intent intent = new Intent(getContext(), OrganizationActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
+                        intent.putExtras(bundle);
+                        intent.putExtra("type", "3");
+                        AnimationUtils.startActivity(getActivity(), intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color);
+                        break;
+                }
+                return true;
+            }
+        });
+        setToolbarTitle();
+        initToolbarBackNavigation(mToolbar);
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -366,6 +388,16 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
     }
 
     @Subscribe
+    public void updateDepartment(DepartmentData mDepartmentData) {
+        if (null != mDepartmentData && null != mParametersData ) {
+            if (mDepartmentData.fromto == ConstantsUtils.YCLCHUCHANG) {
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                mPtrFrameLayout.autoRefresh(true);
+            }
+        }
+    }
+
+    @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
             if (mParametersData.fromTo == ConstantsUtils.YCLCHUCHANG) {
@@ -409,7 +441,7 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
     }
 
     private void initView(View view) {
-        //       mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptrframelayout);
         mPageStateLayout = (PageStateLayout) view.findViewById(R.id.pagestatelayout);
@@ -440,5 +472,14 @@ public class YCLChuChangWeightFragment extends BaseLazyFragment {
         bundle.putSerializable("chuchangquerydetail", listData.get(position));
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    private void setToolbarTitle() {
+        if (null != mToolbar && null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            StringBuffer sb = new StringBuffer(BaseApplication.mDepartmentData.departmentName + " > ");
+            sb.append(getString(R.string.engineering_department) + " > ");
+            sb.append("出场台帐").trimToSize();
+            mToolbar.setTitle(sb.toString());
+        }
     }
 }

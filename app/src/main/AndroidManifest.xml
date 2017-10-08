@@ -197,6 +197,17 @@
             android:launchMode="singleTop"
             />
 
+        <activity android:name=".activity.JobOrderUnSubmitActivity"/>
+        <activity android:name=".activity.JobOrderUnCompoundingActivity"/>
+        <activity android:name=".activity.JobOrderCompoundingActivity"/>
+        <activity android:name=".activity.JobOrderInProductionActvity"/>
+        <activity android:name=".activity.JobOrderProductionActvity"/>
+        <activity android:name=".activity.TaskListImpQueryActivity"/>
+        <activity android:name=".activity.MaterialConsumeActivity"/>
+        <activity android:name=".activity.YCLJinChangWeightActivity"/>
+        <activity android:name=".activity.YCLChuChangWeightActivity"/>
+        <activity android:name=".activity.WZProjectProgressQueryActivity"/>
+
         /*****************************************************************************/
         <service android:name=".InitializeService"></service>
         <activity android:name=".activity.PressureTestActivity"></activity>
