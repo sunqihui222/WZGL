@@ -39,7 +39,7 @@ public class URL {
 //    public static final String BaseURL = "http://120.26.127.135:8082/zj2hj/";
 
 //     public static final String BaseURL = "http://121.40.150.65:8083/zt11j5gs3.6.6WZ/";
-     public static final String BaseURL = "http://192.168.0.126:8080/jeecg/";
+//     public static final String BaseURL = "http://192.168.0.126:8080/jeecg/";
     //public static final String BaseURL = "http://192.168.0.117:8082/jeecg/";
     public static final String BaseURL = "http://121.40.150.65:8083/zt11j5gs3.6.6WZ/";
 

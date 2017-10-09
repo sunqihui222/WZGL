@@ -28,6 +28,7 @@ import com.shtoone.shtw.activity.MainActivity;
 import com.shtoone.shtw.activity.MatchNoticeActivity;
 import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.activity.PressureTestActivity;
+import com.shtoone.shtw.activity.SJPeiHebiActivity;
 import com.shtoone.shtw.activity.StatisticAnalysisActivity;
 import com.shtoone.shtw.adapter.LaboratoryFragmentRecyclerViewAdapter;
 import com.shtoone.shtw.adapter.OnItemClickListener;
@@ -350,7 +351,7 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
                      startActivity(intent);
                     break;
                  case R.id.cl_laboratory_item4://设计配合比
-                     intent = new Intent(getContext(), DesignMixRatioActivity.class);
+                     intent = new Intent(getContext(), SJPeiHebiActivity.class);
                      startActivity(intent);
                     break;
                  case R.id.cl_laboratory_item5://统计分析
