@@ -1,7 +1,6 @@
 package com.shtoone.shtw.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +17,13 @@ import java.util.Map;
  * Created by liangfeng on 2017/10/9.
  */
 
-public class GridViewAdapter extends BaseAdapter {
+public class GridViewAdapter1 extends BaseAdapter {
 
     private List<Map<String, String>> list;
     private Context context;
-    private String TAG = "GridViewAdapter";
+    private String TAG = "GridViewAdapter1";
 
-    public GridViewAdapter(Context context, List<Map<String, String>> list) {
+    public GridViewAdapter1(Context context, List<Map<String, String>> list) {
         this.list = list;
         this.context = context;
     }
@@ -46,7 +45,7 @@ public class GridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.gridview_item, null);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.gridview_item1, null);
         TextView itemNum = (TextView) itemView.findViewById(R.id.tv_gridview_item_num);
         TextView itemTitle = (TextView) itemView.findViewById(R.id.tv_gridview_item_title);
         ImageView itemIcon = (ImageView) itemView.findViewById(R.id.iv_gridview_item);
@@ -55,12 +54,10 @@ public class GridViewAdapter extends BaseAdapter {
         if (position < list.size()) {
             itemNum.setText(list.get(position).get("itemNum"));
         }
-        if (position >= 5) {
+        if (position == 0) {
             itemNum.setVisibility(View.GONE);
             itemIcon.setVisibility(View.VISIBLE);
-            if (position == 5) {
                 itemIcon.setImageResource(R.drawable.gride_view_add);
-            }
         }
 
         return itemView;

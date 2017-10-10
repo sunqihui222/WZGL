@@ -22,20 +22,15 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/yali" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
                 android:text="压力试验"
-                android:textColor="#1296db"
-                android:textSize="18sp" />
+                style="@style/laboratory_text" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -52,26 +47,53 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/cl_laboratory_item4"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ratio" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:text="设计配合比"
+                style="@style/laboratory_text" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="25dp"
+                    android:src="@drawable/arrows"
+                    android:layout_height="25dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/cl_laboratory_item2"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/wanneng" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
                 android:text="万能试验"
-                android:textColor="#1296db"
-                android:textSize="18sp" />
+                style="@style/laboratory_text" />
 
 
             <RelativeLayout
@@ -96,20 +118,15 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="37dp"
-                android:layout_height="37dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="27dp"
+                android:layout_marginLeft="20dp"
                 android:src="@drawable/tongzhidan" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
                 android:text="配比通知单"
-                android:textColor="#1296db"
-                android:textSize="18sp" />
+                style="@style/laboratory_text"/>
 
 
             <RelativeLayout
@@ -126,42 +143,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/cl_laboratory_item4"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="25dp"
-                android:src="@drawable/ratio" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-                android:text="设计配合比"
-                android:textColor="#1296db"
-                android:textSize="18sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_marginRight="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="25dp"
-                    android:src="@drawable/arrows"
-                    android:layout_height="25dp" />
-            </RelativeLayout>
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/cl_laboratory_item5"
@@ -171,20 +153,15 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="29dp"
+                android:layout_marginLeft="20dp"
                 android:src="@drawable/tongji" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"
                 android:text="统计分析"
-                android:textColor="#1296db"
-                android:textSize="18sp" />
+                style="@style/laboratory_text"/>
 
 
             <RelativeLayout

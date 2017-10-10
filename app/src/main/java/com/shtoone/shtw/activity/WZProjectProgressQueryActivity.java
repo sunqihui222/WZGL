@@ -7,8 +7,7 @@ import android.widget.FrameLayout;
 
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
-import com.shtoone.shtw.fragment.EngineeringDepartment.WZProjectProgressQueryFragment;
-import com.shtoone.shtw.fragment.EngineeringDepartment.YCLChuChangWeightFragment;
+import com.shtoone.shtw.fragment.EngineeringDepartment.EngineeringDepartmentFragment;
 
 /**
  * Created by Administrator on 2017/10/8.

@@ -40,11 +40,17 @@ public class URL {
 
 //     public static final String BaseURL = "http://121.40.150.65:8083/zt11j5gs3.6.6WZ/";
 //     public static final String BaseURL = "http://192.168.0.126:8080/jeecg/";
-    //public static final String BaseURL = "http://192.168.0.117:8082/jeecg/";
-    public static final String BaseURL = "http://121.40.150.65:8083/zt11j5gs3.6.6WZ/";
+    public static final String BaseURL = "http://192.168.1.181:8082/jeecg/";
+//    public static final String BaseURL = "http://121.40.150.65:8083/zt11j5gs3.6.6WZ/";
 
 //    public static final String BaseURL = "http://192.168.0.141:8082/gxzjzqms/";
 
+
+    /**
+     * 统计分析
+     */
+
+    public static final String TJFX_URL = BaseURL +"appWZSys.do?wzRenWuDanHome&userGroupId=8a8ab0b246dc81120146dc8180ba0017&startTime=1504886400&endTime=1507478400 ";
     /**
      * 登录地址
      */

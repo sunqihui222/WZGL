@@ -1,4 +1,4 @@
-package com.shtoone.shtw.fragment.EngineeringDepartment;
+package com.shtoone.shtw.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,9 +19,6 @@ import com.google.gson.Gson;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
-import com.shtoone.shtw.activity.EngineerDepartmentActivity;
-import com.shtoone.shtw.activity.MainActivity;
-import com.shtoone.shtw.activity.WZProjectProgressQueryActivity;
 import com.shtoone.shtw.activity.base.FBProjectListActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.WZProjectProgressQueryAdapter;

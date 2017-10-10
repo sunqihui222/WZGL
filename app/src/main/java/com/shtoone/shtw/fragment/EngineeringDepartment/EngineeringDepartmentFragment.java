@@ -67,8 +67,8 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
  * Created by Administrator on 2017/8/7.
  */
 
-public class WZProjectProgressQueryFragment extends BaseLazyFragment {
-    private static final String TAG = "WZProjectProgressQueryFragment";
+public class EngineeringDepartmentFragment extends BaseLazyFragment {
+    private static final String TAG = "EngineeringDepartmentFragment";
     private Toolbar mToolbar;
     private PtrFrameLayout mPtrFrameLayout;
     //    private RecyclerView mRecyclerView;
@@ -86,8 +86,8 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     private int lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
     private GridView gridView1;
-    private String[] titles1 = {"未配料",
-            "已配料", "已完工", "生产中", "未提交", "新增"};
+    private String[] titles1 = {"新增", "未提交", "未配料",
+            "已配料", "生产中", "已完工"};
     private String[] titles2 = {"任务单查询",
             "进耗分析", "进场台账", "出场台账", "进度查询"};
 
@@ -98,8 +98,8 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     private GridViewAdapter1 adapter1;
 
 
-    public static WZProjectProgressQueryFragment newInstance() {
-        return new WZProjectProgressQueryFragment();
+    public static EngineeringDepartmentFragment newInstance() {
+        return new EngineeringDepartmentFragment();
     }
 
     @Override
@@ -159,36 +159,6 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
                 jump2EngineerDepartmentDetailActivity(position);
             }
         });
-/*
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                //还有一个不完美的地方就是当规定的item个数时，最后一个item在屏幕外滑到可见时，其底部没有footview，这点以后再解决。
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition + 1 == mAdapter.getItemCount() && listData.size() >= 4) {
-                    if (!isLoading) {
-                        isLoading = true;
-                        mRecyclerView.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                KLog.e("第" + mParametersData.currentPage + "页");
-                                loadMore();
-                                KLog.e("上拉加载更多下一页=" + mParametersData.currentPage);
-                                isLoading = false;
-                            }
-                        }, 500);
-                    }
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                lastVisibleItemPosition = mLinearLayoutManager.findLastVisibleItemPosition();
-
-
-            }
-        });*/
 
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
@@ -200,26 +170,6 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
         return true;
 
         /********************************************************/
-        //判断是哪种状态的页面，都让其可下拉
-     /*   if (mPageStateLayout.isShowContent) {
-            //判断RecyclerView是否在在顶部，在顶部则允许滑动下拉刷新
-            if (null != mRecyclerView) {
-                if (mRecyclerView.getLayoutManager() instanceof LinearLayoutManager) {
-                    LinearLayoutManager lm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-                    int position = lm.findFirstVisibleItemPosition();
-                    if (position >= 0) {
-                        if (lm.findViewByPosition(position).getTop() > 0 && position == 0) {
-                            return true;
-                        }
-                    }
-                }
-            } else {
-                return true;
-            }
-            return false;
-        } else {
-            return true;
-        }*/
     }
 
     @Override
@@ -275,11 +225,11 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
                         if (null != listData) {
                             if (itemsData.getData().size() > 0) {
                                 mPageStateLayout.showContent();
-                                nums1[0] = itemsData.getData().get(0).getNsrCount();
-                                nums1[1] = itemsData.getData().get(0).getIsrCount();
-                                nums1[2] = itemsData.getData().get(0).getIsshengchancount();
-                                nums1[3] = itemsData.getData().get(0).getShengchaningCount();
-                                nums1[4] = itemsData.getData().get(0).getNotijiaoCount();
+                                nums1[1] = itemsData.getData().get(0).getNotijiaoCount();
+                                nums1[2] = itemsData.getData().get(0).getNsrCount();
+                                nums1[3] = itemsData.getData().get(0).getIsrCount();
+                                nums1[4] = itemsData.getData().get(0).getShengchaningCount();
+                                nums1[5] = itemsData.getData().get(0).getIsshengchancount();
 
                                 //1. 准备数据源
                                 List list1 = new ArrayList<Map<String, String>>();
@@ -340,55 +290,6 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
 
     @Override
     public void onLoadMoreSuccess(String response) {
-      /*  if (!TextUtils.isEmpty(response)) {
-            JSONObject jsonObject = null;
-            try {
-                jsonObject = new JSONObject(response);
-            } catch (JSONException e) {
-                e.printStackTrace();
-                mPageStateLayout.showError();
-                return;
-            }
-            if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, WZProjectProgressQueryData.class);
-                if (null != itemsData) {
-                    if (itemsData.getSuccess() && itemsData.getData().size() > 0) {
-                        if (null != listData) {
-                            listData.addAll(itemsData.getData());
-                            if (listData.size() > 0) {
-                                mPageStateLayout.showContent();
-                                mAdapter.notifyDataSetChanged();
-                            } else {
-                                TastyToast.makeText(_mActivity.getApplicationContext(), "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
-                                mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-                                mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-                            }
-                        } else {
-                            TastyToast.makeText(_mActivity.getApplicationContext(), "数据异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
-                            mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-                            mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-                        }
-                    } else {
-                        TastyToast.makeText(_mActivity.getApplicationContext(), "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
-                        mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-                        mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-                    }
-                } else {
-                    TastyToast.makeText(_mActivity.getApplicationContext(), "解析异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
-                    mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-                    mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-                }
-            } else {
-                TastyToast.makeText(_mActivity.getApplicationContext(), "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
-                mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-                mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-            }
-        } else {
-            //提示返回数据异常，展示错误页面
-            TastyToast.makeText(_mActivity.getApplicationContext(), "数据异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
-            mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-            mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-        }*/
     }
 
     @Override
@@ -415,7 +316,7 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         BaseApplication.bus.register(this);
-        View view = inflater.inflate(R.layout.fragment_wzprogress_query, container, false);
+        View view = inflater.inflate(R.layout.fragment_engineering_department, container, false);
         initView(view);
         return view;
     }
@@ -437,7 +338,7 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
         gridView2 = (GridView) view.findViewById(R.id.gv_tjfx);
 
         List list2 = new ArrayList<Map<String, String>>();
-        for (int i = 0; i < titles1.length-1; i++) {
+        for (int i = 0; i < titles1.length - 1; i++) {
             Map<String, String> map = new HashMap<String, String>();
             map.put("itemTitle", titles2[i]);
             list2.add(map);
@@ -456,36 +357,35 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
                 //
                 Intent intent;
                 Log.e(TAG, "被点击的position：" + position);
+                //"新增","未提交","未配料","已配料","生产中", "已完工"
                 switch (position) {
                     case 0:
-                        intent = new Intent(getActivity(), JobOrderUnCompoundingActivity.class);
-                        startActivity(intent);
-                        break;
-                    case 1:
-                        intent = new Intent(getActivity(), JobOrderCompoundingActivity.class);
-                        startActivity(intent);
-                        break;
-                    case 2:
-                        intent = new Intent(getActivity(), JobOrderProductionActvity.class);
-                        startActivity(intent);
-                        break;
-                    case 3:
-                        intent = new Intent(getActivity(), JobOrderInProductionActvity.class);
-                        startActivity(intent);
-                        break;
-                    case 4:
-                        intent = new Intent(getActivity(), JobOrderUnSubmitActivity.class);
-                        startActivity(intent);
-                        break;
-                    case 5:
                         if (BaseApplication.mUserInfoData.getQuanxian().isWZGCB()) {
                             intent = new Intent(_mActivity, TaskListNewEditActivity.class);
                             intent.putExtra("username", mParametersData.username);
                             startActivity(intent);
                         }
                         break;
-
-
+                    case 1:
+                        intent = new Intent(getActivity(), JobOrderUnSubmitActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 2:
+                        intent = new Intent(getActivity(), JobOrderUnCompoundingActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        intent = new Intent(getActivity(), JobOrderCompoundingActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 4:
+                        intent = new Intent(getActivity(), JobOrderInProductionActvity.class);
+                        startActivity(intent);
+                        break;
+                    case 5:
+                        intent = new Intent(getActivity(), JobOrderProductionActvity.class);
+                        startActivity(intent);
+                        break;
                 }
             }
         });
