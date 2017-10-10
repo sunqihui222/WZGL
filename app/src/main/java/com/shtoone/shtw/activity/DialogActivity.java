@@ -491,7 +491,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 rg_jinchang_handle.setVisibility(View.VISIBLE);
                 ms_select_waagname.setVisibility(View.VISIBLE);
                 tv_MaterialName.setVisibility(View.VISIBLE);
-                tv_DepartmentName.setVisibility(View.VISIBLE);
+                //tv_DepartmentName.setVisibility(View.VISIBLE);
                 url = URL.getWaagList(mParametersData.userGroupID);
                 refresh();
                 break;
@@ -501,7 +501,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 rg_chuchang_handle.setVisibility(View.VISIBLE);
                 ms_select_waagname.setVisibility(View.VISIBLE);
                 tv_MaterialName.setVisibility(View.VISIBLE);
-                tv_DepartmentName.setVisibility(View.VISIBLE);
+                //tv_DepartmentName.setVisibility(View.VISIBLE);
                 url = URL.getWaagList(mParametersData.userGroupID);
                 refresh();
 
@@ -521,8 +521,21 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
 
             case ConstantsUtils.JOBORDERFINSH:
-                tv_DepartmentName.setVisibility(View.VISIBLE);
-                rg_finsh.setVisibility(View.VISIBLE);
+//                tv_DepartmentName.setVisibility(View.VISIBLE);
+//                rg_finsh.setVisibility(View.VISIBLE);
+                break;
+
+            case ConstantsUtils.JOBORDERUNSUBMIT:
+
+
+                break;
+
+            case ConstantsUtils.JOBORDERUNCOMPOUNDING:
+
+                break;
+
+            case ConstantsUtils.JOBORDERCOMPOUNDING:
+
                 break;
 
             case ConstantsUtils.JOBORDERUNFINSH:
@@ -531,7 +544,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
                 break;
 
             case ConstantsUtils.MATERIALCONSUME:
-                tv_DepartmentName.setVisibility(View.VISIBLE);
+                //tv_DepartmentName.setVisibility(View.VISIBLE);
 
                 break;
 

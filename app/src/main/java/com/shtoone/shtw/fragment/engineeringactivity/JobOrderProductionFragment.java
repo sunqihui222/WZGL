@@ -1,9 +1,11 @@
-package com.shtoone.shtw.fragment.EngineeringDepartment;
+package com.shtoone.shtw.fragment.engineeringactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -21,16 +26,18 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.DialogActivity;
 import com.shtoone.shtw.activity.OrganizationActivity;
-import com.shtoone.shtw.activity.YCLJinChangWeightFragmentActivity;
-import com.shtoone.shtw.adapter.OnItemClickListener;
-import com.shtoone.shtw.adapter.YCLJinChangWeightFragmentRecycleViewAdapter;
+import com.shtoone.shtw.adapter.JobOrderFinshFragmentAdapter;
+import com.shtoone.shtw.adapter.OnItemDelClickListener;
 import com.shtoone.shtw.bean.DepartmentData;
+import com.shtoone.shtw.bean.JobOrderFinshData;
 import com.shtoone.shtw.bean.ParametersData;
-import com.shtoone.shtw.bean.YCLJinChangWeightFragmentListData;
+import com.shtoone.shtw.bean.UserInfoData;
+import com.shtoone.shtw.event.EventData;
 import com.shtoone.shtw.fragment.base.BaseLazyFragment;
 import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.utils.AnimationUtils;
 import com.shtoone.shtw.utils.ConstantsUtils;
+import com.shtoone.shtw.utils.HttpUtils;
 import com.shtoone.shtw.utils.NetworkUtils;
 import com.shtoone.shtw.utils.URL;
 import com.socks.library.KLog;
@@ -39,6 +46,8 @@ import com.squareup.otto.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,58 +58,59 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 
 /**
- * Created by Administrator on 2017/8/7.
+ * Created by Administrator on 2017/8/22.
  */
 
-public class YCLJinChangWeightFragment extends BaseLazyFragment {
+public class JobOrderProductionFragment extends BaseLazyFragment {
 
-    private Toolbar mToolbar;
     private PtrFrameLayout mPtrFrameLayout;
     private RecyclerView mRecyclerView;
-    private YCLJinChangWeightFragmentRecycleViewAdapter mAdapter;
-    private YCLJinChangWeightFragmentListData itemsData;
+    private JobOrderFinshFragmentAdapter mAdapter;
+    private JobOrderFinshData itemsData;
 
     private FloatingActionButton fab;
     private boolean isRegistered = false;
     private PageStateLayout mPageStateLayout;
     private Gson mGson;
     private boolean isLoading;
-    private List<YCLJinChangWeightFragmentListData.DataEntity> listData;
+    private List<JobOrderFinshData.DataEntity> listData;
 
-    private ParametersData mParametersData;
-    private LinearLayoutManager mLinearLayoutManager;
-    private int lastVisibleItemPosition;
+
+    private ParametersData          mParametersData;
+    private LinearLayoutManager     mLinearLayoutManager;
+    private int                     lastVisibleItemPosition;
     private ScaleInAnimationAdapter mScaleInAnimationAdapter;
+    private String                  id;
+    private UserInfoData            mUserInfoData;
+    private Toolbar                 mToolbar;
 
-    public static YCLJinChangWeightFragment newInstance() {
-        return new YCLJinChangWeightFragment();
+    public static JobOrderProductionFragment newInstance() {
+        return new JobOrderProductionFragment();
     }
 
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
-
         initData();
-
     }
 
     private void initData() {
         if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
-            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.YCLJINCHANG);
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.JOBORDERFINSH);
             mParametersData = (ParametersData) BaseApplication.parametersData.clone();
             mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
         }
-
-        mParametersData.fromTo = ConstantsUtils.YCLJINCHANG;
+        mParametersData.fromTo = ConstantsUtils.JOBORDERFINSH;
 
         mGson = new Gson();
         listData = new ArrayList<>();
         mLinearLayoutManager = new LinearLayoutManager(_mActivity);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
+        mUserInfoData = BaseApplication.mUserInfoData;
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+
                 Intent intent = new Intent(_mActivity, DialogActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
@@ -111,12 +121,11 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
 
 
         //设置动画与适配器
-        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new YCLJinChangWeightFragmentRecycleViewAdapter(_mActivity, listData));
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new JobOrderFinshFragmentAdapter(_mActivity, listData));
         mSlideInLeftAnimationAdapter.setDuration(500);
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
         mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
         mRecyclerView.setAdapter(mScaleInAnimationAdapter);
-
         mToolbar.inflateMenu(R.menu.menu_hierarchy);
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -136,14 +145,52 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
         });
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                // 实现局部界面刷新, 这个view就是被点击的item布局对象
-                changeReadedState(view);
-                jump2ProduceQueryDetailActivity(position);
-            }
-        });
+        if (mUserInfoData.getQuanxian().isWZGCB()) {
+
+            mAdapter.setOnItemClickListener(new OnItemDelClickListener() {
+
+                @Override
+                public void onItemClick(View view, int position) {
+                    // 实现局部界面刷新, 这个view就是被点击的item布局对象
+
+                }
+
+                @Override
+                public void onLongItemClick(View view, int position) {
+                    if (!TextUtils.isEmpty(listData.get(position).getId())) {
+                        if (listData.get(position).getZhuangtai().equals("2"))
+                        {
+                            //弹出对话框，确定提交
+                            id = listData.get(position).getId();
+                            new MaterialDialog.Builder(getActivity())
+                                    .title("结束")
+                                    .content("请问您确定结束吗？")
+                                    .positiveText("确定")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            MaterialDialog progressDialog = new MaterialDialog.Builder(getActivity())
+                                                    .title("结束")
+                                                    .content("正在结束中，请稍等……")
+                                                    .progress(true, 0)
+                                                    .progressIndeterminateStyle(true)
+                                                    .cancelable(false)
+                                                    .show();
+                                            joborderCancelSubmit(progressDialog, id, mParametersData.username);
+                                        }
+                                    })
+                                    .negativeText("放弃")
+                                    .show();
+                        }else {
+                            Toast.makeText(getContext(),"只有生产中的能够结束",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+            });
+
+        }
+
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -183,6 +230,66 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
         initPtrFrameLayout(mPtrFrameLayout);
     }
 
+    private void joborderCancelSubmit(final MaterialDialog progressDialog, String id, String username) {
+
+        String url = null;
+        try {
+            url = URL.getJOBORDER_CANCEL(id, URLEncoder.encode(username, "utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        HttpUtils.getRequest(url, new HttpUtils.HttpListener() {
+            @Override
+            public void onSuccess(String response) {
+                KLog.json(response);
+                progressDialog.dismiss();
+                if (!TextUtils.isEmpty(response)) {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        TastyToast.makeText(getContext(), "解析异常！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    }
+
+                    if (jsonObject.optBoolean("success")) {
+
+                        BaseApplication.bus.post(new EventData(ConstantsUtils.REFRESH));
+                        TastyToast.makeText(getContext(), "上传成功!", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
+                        mPtrFrameLayout.autoRefresh(true);
+                    } else {
+                        TastyToast.makeText(getContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    }
+
+                } else {
+                    TastyToast.makeText(getContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                }
+
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                progressDialog.dismiss();
+                if (!NetworkUtils.isConnected(getActivity())) {
+                    //提示网络异常,让用户点击设置网络，
+                    View view = getActivity().getWindow().getDecorView();
+                    Snackbar.make(view, "当前网络已断开！", Snackbar.LENGTH_LONG)
+                            .setAction("设置网络", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // 跳转到系统的网络设置界面
+                                    NetworkUtils.openSetting(getActivity());
+                                }
+                            }).show();
+                } else {
+                    //服务器异常，展示错误页面，点击刷新
+                    TastyToast.makeText(getActivity(), "服务器异常！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                }
+            }
+        });
+
+    }
+
     @Override
     public boolean isCanDoRefresh() {
         //判断是哪种状态的页面，都让其可下拉
@@ -205,40 +312,33 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
         } else {
             return true;
         }
-    }
 
+    }
 
     @Override
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
         mParametersData.currentPage = "1";//默认都是第一页
         String userGroupID = "";
-        String cailiaoname = "";
-        String tongjitype = "";
-        String equipmentID = "";
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
+        String finsh = "";
 
 
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
-            cailiaoname = mParametersData.cailiaono;
-            tongjitype = mParametersData.dataType;
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
-            equipmentID = mParametersData.equipmentID;
-
+            finsh = "3";
         }
-
+        String state = "1";
         if (null != listData) {
             listData.clear();
         }
 
-
-        return URL.getYCLJINCHANGquery(userGroupID, cailiaoname, equipmentID, tongjitype, startDateTime, endDateTime, currentPage);
-
+        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage,finsh);
 
     }
 
@@ -246,22 +346,19 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
     public String createLoadMoreULR() {
         mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) + 1) + "";//默认都是第一页
         String userGroupID = "";
-        String cailiaoname = "";
-        String tongjitype = "";
-        String equipmentID = "";
         String startDateTime = "";
         String endDateTime = "";
         String currentPage = "";
+        String finsh = "";
         if (null != mParametersData) {
             userGroupID = mParametersData.userGroupID;
-            cailiaoname = mParametersData.cailiaono;
-            tongjitype = mParametersData.dataType;
             startDateTime = mParametersData.startDateTime;
             endDateTime = mParametersData.endDateTime;
             currentPage = mParametersData.currentPage;
-            equipmentID = mParametersData.equipmentID;
+            finsh = "3";
         }
-        return URL.getYCLJINCHANGquery(userGroupID, cailiaoname, equipmentID, tongjitype, startDateTime, endDateTime, currentPage);
+        String state = "1";
+        return URL.getJobOrderFinsh(userGroupID, state, startDateTime, endDateTime, currentPage,finsh);
     }
 
     @Override
@@ -276,7 +373,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, YCLJinChangWeightFragmentListData.class);
+                itemsData = mGson.fromJson(response, JobOrderFinshData.class);
                 if (null != itemsData) {
                     if (itemsData.getSuccess() && itemsData.getData().size() > 0) {
                         listData.addAll(itemsData.getData());
@@ -334,7 +431,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                itemsData = mGson.fromJson(response, YCLJinChangWeightFragmentListData.class);
+                itemsData = mGson.fromJson(response, JobOrderFinshData.class);
                 if (null != itemsData) {
                     if (itemsData.getSuccess() && itemsData.getData().size() > 0) {
                         if (null != listData) {
@@ -385,7 +482,7 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
     @Subscribe
     public void updateDepartment(DepartmentData mDepartmentData) {
         if (null != mDepartmentData && null != mParametersData ) {
-            if (mDepartmentData.fromto == ConstantsUtils.YCLJINCHANG) {
+            if (mDepartmentData.fromto == ConstantsUtils.JOBORDERFINSH) {
                 this.mParametersData.userGroupID = mDepartmentData.departmentID;
                 mPtrFrameLayout.autoRefresh(true);
             }
@@ -395,22 +492,17 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
-            if (mParametersData.fromTo == ConstantsUtils.YCLJINCHANG) {
+            if (mParametersData.fromTo == ConstantsUtils.JOBORDERFINSH) {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
-                this.mParametersData.dataType = mParametersData.dataType;
-                this.mParametersData.equipmentID = mParametersData.equipmentID;
-                this.mParametersData.cailiaono = mParametersData.cailiaono;
-                this.mParametersData.userGroupID = mParametersData.userGroupID;
+
                 KLog.e("mParametersData:" + mParametersData.startDateTime);
                 KLog.e("mParametersData:" + mParametersData.endDateTime);
-                KLog.e("mParametersData:" + mParametersData.dataType);
-                KLog.e("mParametersData:" + mParametersData.cailiaono);
+
                 mPtrFrameLayout.autoRefresh(true);
             }
         }
     }
-
 
     @Nullable
     @Override
@@ -419,12 +511,9 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
             BaseApplication.bus.register(this);
             isRegistered = true;
         }
-
-        View view = inflater.inflate(R.layout.fragment_jinchang_query, container, false);
+        View view = inflater.inflate(R.layout.fragment_joborder_finsh, container, false);
         initView(view);
         return view;
-
-
     }
 
     @Override
@@ -455,24 +544,11 @@ public class YCLJinChangWeightFragment extends BaseLazyFragment {
         BaseApplication.bus.unregister(this);
     }
 
-    private void changeReadedState(View view) {
-        //此处可以做一些修改点击过的item的样式，方便用户看出哪些已经点击查看过
-    }
-
-    //进入ProduceQueryDetailActivity
-    private void jump2ProduceQueryDetailActivity(int position) {
-        Intent intent = new Intent(_mActivity, YCLJinChangWeightFragmentActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("jinchangquerydetail", listData.get(position));
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
     private void setToolbarTitle() {
         if (null != mToolbar && null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
             StringBuffer sb = new StringBuffer(BaseApplication.mDepartmentData.departmentName + " > ");
             sb.append(getString(R.string.engineering_department) + " > ");
-            sb.append("进场台帐").trimToSize();
+            sb.append("任务单(已完工)").trimToSize();
             mToolbar.setTitle(sb.toString());
         }
     }
