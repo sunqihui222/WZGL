@@ -3,6 +3,7 @@ package com.shtoone.shtw.fragment.EngineeringDepartment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
+import com.shtoone.shtw.activity.DialogActivity;
 import com.shtoone.shtw.activity.EngineerDepartmentActivity;
 import com.shtoone.shtw.activity.JobOrderCompoundingActivity;
 import com.shtoone.shtw.activity.JobOrderInProductionActvity;
@@ -96,6 +98,7 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
     //    private String[] nums2 = {"101", "100", "102", "109", "111"};
     private GridView gridView2;
     private GridViewAdapter1 adapter1;
+    private FloatingActionButton fab;
 
 
     public static EngineeringDepartmentFragment newInstance() {
@@ -176,33 +179,34 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
     public String createRefreshULR() {
         mPageStateLayout.showLoading();
         mParametersData.currentPage = "1";//默认都是第一页
-        String parentno = "";
-        String currentPage = "";
+        String userGroupID = "";
+        String startDateTime = "";
+        String endDateTime = "";
 
         if (null != mParametersData) {
-            currentPage = mParametersData.currentPage;
-            parentno = mParametersData.projectno;
+            userGroupID = mParametersData.userGroupID;
+            startDateTime = mParametersData.startDateTime;
+            endDateTime = mParametersData.endDateTime;
         }
         if (null != listData) {
             listData.clear();
         }
 //        return URL.getWZprojectprogress(parentno, currentPage);
-        return URL.TJFX_URL;
+        return URL.getTJFXUrl(userGroupID,startDateTime,endDateTime);
     }
 
     @Override
     public String createLoadMoreULR() {
         mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) + 1) + "";//默认都是第一页
-        String parentno = "";
-        String currentPage = "";
-
+        String userGroupID = "";
+        String startDateTime = "";
+        String endDateTime = "";
         if (null != mParametersData) {
-            currentPage = mParametersData.currentPage;
-            parentno = mParametersData.projectno;
+            userGroupID = mParametersData.userGroupID;
+            startDateTime = mParametersData.startDateTime;
+            endDateTime = mParametersData.endDateTime;
         }
-
-//        return URL.getWZprojectprogress(parentno, currentPage);
-        return URL.TJFX_URL;
+        return URL.getTJFXUrl(userGroupID,startDateTime,endDateTime);
     }
 
     @Override
@@ -325,6 +329,8 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
     public void onResume() {
         super.onResume();
         //返回到看见此fragment时，fab显示
+        //返回到看见此fragment时，fab显示
+        fab.show();
         Log.e("onResume", "WZProjectProgress");
     }
 
@@ -332,7 +338,7 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptrframelayout);
         mPageStateLayout = (PageStateLayout) view.findViewById(R.id.pagestatelayout);
-//        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab_engineering_department);
         /************************************************/
         gridView1 = (GridView) view.findViewById(R.id.gv_wzprogress);
         gridView2 = (GridView) view.findViewById(R.id.gv_tjfx);
@@ -356,7 +362,6 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //
                 Intent intent;
-                Log.e(TAG, "被点击的position：" + position);
                 //"新增","未提交","未配料","已配料","生产中", "已完工"
                 switch (position) {
                     case 0:
@@ -394,7 +399,6 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent;
-                Log.e(TAG, "被点击的position：" + position);
                 switch (position) {
                     case 0:
                         intent = new Intent(getActivity(), TaskListImpQueryActivity.class);
@@ -417,6 +421,17 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
                         startActivity(intent);
                         break;
                 }
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(_mActivity, DialogActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
