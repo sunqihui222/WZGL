@@ -50,7 +50,22 @@ public class URL {
      * 统计分析
      */
 
-    public static final String TJFX_URL = BaseURL +"appWZSys.do?wzRenWuDanHome&userGroupId=8a8ab0b246dc81120146dc8180ba0017&startTime=1504886400&endTime=1507478400 ";
+//    public static final String TJFX_URL = BaseURL +"appWZSys.do?wzRenWuDanHome&userGroupId=8a8ab0b246dc81120146dc8180ba0017&startTime=1504886400&endTime=1507478400 ";
+
+    public static String getTJFXUrl(String userGroupId,String startTime,String endTime){
+        startTime = DateUtils.ChangeTimeToLong(startTime);
+        endTime = DateUtils.ChangeTimeToLong(endTime);
+        //如果开始时间大于结束时间，返回null
+        if (Integer.valueOf(startTime) <= Integer.valueOf(endTime)) {
+        String url = BaseURL+"appWZSys.do?wzRenWuDanHome&userGroupId="+userGroupId+"&startTime="+startTime+"&endTime="+endTime;
+            Log.e(TAG, "工程部界面URL :" + url);
+            if (TextUtils.isEmpty(url)) {
+                return null;
+            }
+            return url;
+        }
+        return null;
+    }
     /**
      * 登录地址
      */
