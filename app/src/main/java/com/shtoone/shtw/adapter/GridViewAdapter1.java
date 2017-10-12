@@ -59,7 +59,6 @@ public class GridViewAdapter1 extends BaseAdapter {
             itemIcon.setVisibility(View.VISIBLE);
                 itemIcon.setImageResource(R.drawable.gride_view_add);
         }
-
         return itemView;
     }
 }

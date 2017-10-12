@@ -95,7 +95,5 @@ public class InitializeService extends IntentService {
                 KLog.d(error);
             }
         });
-
     }
-
 }

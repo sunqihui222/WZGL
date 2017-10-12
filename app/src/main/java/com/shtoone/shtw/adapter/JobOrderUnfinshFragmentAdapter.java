@@ -2,12 +2,14 @@ package com.shtoone.shtw.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shtoone.shtw.BaseApplication;
@@ -69,6 +71,14 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
             } else if (item.getZhuangtai().equals("-1")) {
                 mItemViewHolder.tvState.setText("未提交");
             }
+
+            /********************************************/
+            if(item.isSelected()){
+                 mItemViewHolder.item_root.setBackgroundColor(Color.parseColor("#00EEEE"));
+            }else {
+                 mItemViewHolder.item_root.setBackgroundColor(Color.parseColor("#e7e9fd"));
+            }
+            /********************************************/
             mItemViewHolder.tvOpenDate.setText(item.getKaipanriqi());
             mItemViewHolder.tvProjectName.setText(item.getGcmc());
             mItemViewHolder.tvCastingParts.setText(item.getJzbw());
@@ -148,7 +158,7 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
         TextView        tvDesignStrength;
         TextView        tvPlanVolume;
         SlantedTextView stv_ischeck;
-
+        LinearLayout item_root;
         public ItemViewHolder(View view) {
             super(view);
             cv = (CardView) view.findViewById(R.id.cv_item_recyclerview_unfinsh_query_fragment);
@@ -163,7 +173,7 @@ public class JobOrderUnfinshFragmentAdapter extends RecyclerView.Adapter<Recycle
             tvDesignStrength = (TextView) view.findViewById(R.id.tvDesignStrength);
             tvPlanVolume = (TextView) view.findViewById(R.id.tvPlanVolume);
             stv_ischeck = (SlantedTextView) view.findViewById(R.id.stv_ischeck);
-
+            item_root = (LinearLayout) view.findViewById(R.id.item_root);
         }
     }
 
