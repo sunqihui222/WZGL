@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,6 +71,7 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
  */
 
 public class JobOrderUnSubmitFragment extends BaseLazyFragment {
+    private static final String TAG = "JobOrderUnSubmitFragment";
     private PtrFrameLayout mPtrFrameLayout;
     private RecyclerView mRecyclerView;
     private JobOrderUnfinshFragmentAdapter mAdapter;
@@ -90,6 +92,8 @@ public class JobOrderUnSubmitFragment extends BaseLazyFragment {
     private  UserInfoData            mUserInfoData;
     private  PopupWindow             mPopTop;
     private Toolbar                 mToolbar;
+
+
 
     public static JobOrderUnSubmitFragment newInstance() {
         return new JobOrderUnSubmitFragment();
@@ -156,25 +160,21 @@ public class JobOrderUnSubmitFragment extends BaseLazyFragment {
         initToolbarBackNavigation(mToolbar);
 
         if (mUserInfoData.getQuanxian().isWZGCB()) {
-
-
             mAdapter.setOnItemClickListener(new OnItemDelClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
+                    Log.e(TAG,"一剑寒光十九州");
+                    for (JobOrderUnfinshData.DataEntity dataEntity : listData){
+                        dataEntity.setSelected(false);
+                    }
+                    listData.get(position).setSelected(true);
                     // 实现局部界面刷新, 这个view就是被点击的item布局对象
                     if (!TextUtils.isEmpty(listData.get(position).getId())) {
-
-//                        if (listData.get(position).getZhuangtai().equals("-1")){
-//
-//                            changeReadedState(view);
-//                            jump2TaskListDetailActivity(position);
-//                        }
                         zhuangtai = listData.get(position).getZhuangtai();
                         id = listData.get(position).getId();
                         setMyPop(view);
-
                     }
-
+                    mAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -624,6 +624,18 @@ public class JobOrderUnSubmitFragment extends BaseLazyFragment {
         setContentViewClickListener(conentView);
         mPopTop.setContentView(conentView);
         mPopTop.showAsDropDown(view, ScreenUtils.getScreenWidth(context)/4, -(ScreenUtils.getScreenWidth(context)/2));
+        /*************************************/
+        mPopTop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                //使pop弹框和选中状态同步
+                for (JobOrderUnfinshData.DataEntity dataEntity : listData){
+                    dataEntity.setSelected(false);
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+        /*************************************/
     }
 
     private void setContentViewClickListener(View conentView){

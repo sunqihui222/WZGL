@@ -59,6 +59,16 @@ public class JobOrderUnfinshData {
         private String zhuangtai;
         private String renwuno;
 
+        private boolean isSelected = false;
+
+        public boolean isSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(boolean selected) {
+            isSelected = selected;
+        }
+
         public void setCreatetime(String createtime) {
             this.createtime = createtime;
         }
