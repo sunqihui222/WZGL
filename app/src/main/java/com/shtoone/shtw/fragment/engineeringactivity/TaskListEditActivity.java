@@ -263,6 +263,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         List<TaskListEditActivityData.DataBean> data = this.data.getData();
         TaskListEditActivityData.DataBean dataBean = data.get(0);
         tv_renwuno.setText(dataBean.getRenwuno());
+        tv_renwuno.setFocusable(false);
         tv_jhfl.setText(dataBean.getJihuafangliang());
         tv_kaipan_time.setText(dataBean.getKaipanriqi());
         tv_gcmc.setText(dataBean.getGcmc());

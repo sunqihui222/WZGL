@@ -500,9 +500,13 @@ public class TaskListNewEditActivity extends BaseActivity implements View.OnClic
                         BaseApplication.bus.post(new EventData(ConstantsUtils.REFRESH));
                         TastyToast.makeText(getApplicationContext(), "上传成功!", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
                         finish();
-                    } else {
+                    } else if(!jsonObject.optBoolean("success")){
+                        TastyToast.makeText(getApplicationContext(), "任务单单号已存在", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
+                    }else {
                         TastyToast.makeText(getApplicationContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     }
+
+
 
                 } else {
                     TastyToast.makeText(getApplicationContext(), "上传失败，请重试！", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
