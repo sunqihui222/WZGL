@@ -413,6 +413,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
         //设置哪些条件选择该显示，默认只有时间选择是显示的
         switch (mParametersData.fromTo) {
+            case ConstantsUtils.WZPROGRESS:
             case ConstantsUtils.LABORATORYFRAGMENT:
             case ConstantsUtils.CONCRETEFRAGMENT:
                 //默认开始和结束时间是可见的

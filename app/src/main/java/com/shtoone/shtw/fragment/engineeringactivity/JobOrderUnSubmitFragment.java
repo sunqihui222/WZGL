@@ -623,7 +623,7 @@ public class JobOrderUnSubmitFragment extends BaseLazyFragment {
         View conentView = inflater.inflate(R.layout.pop_top, null);
         setContentViewClickListener(conentView);
         mPopTop.setContentView(conentView);
-        mPopTop.showAsDropDown(view, ScreenUtils.getScreenWidth(context)/4, -(ScreenUtils.getScreenWidth(context)/4));
+        mPopTop.showAsDropDown(view, ScreenUtils.getScreenWidth(context)/4, -(ScreenUtils.getScreenWidth(context)/2));
     }
 
     private void setContentViewClickListener(View conentView){
@@ -731,8 +731,10 @@ public class JobOrderUnSubmitFragment extends BaseLazyFragment {
                     Intent intent = new Intent(_mActivity, TaskListEditActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("tasklistdetail",id);
+                    intent.putExtra("departId",mParametersData.userGroupID);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    mPopTop.dismiss();
                 }
             });
 

@@ -998,10 +998,10 @@ public class URL {
     /**
      * 获取浇筑部位
      */
-    public static final String POUR_POSITION_URL = BaseURL + "appWZproject.do?AppjzbwList&departId=%1";
+    public static final String POUR_POSITION_URL = BaseURL + "appWZproject.do?AppjzbwList&departId=%1&page=%2&rows=10";
 
-    public static String getPourPosData(String departId) {
-        String url = POUR_POSITION_URL.replace("%1",departId);
+    public static String getPourPosData(String departId,String page) {
+        String url = POUR_POSITION_URL.replace("%1",departId).replace("%2",page);
         Log.e(TAG, "浇筑部位查询 :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;
@@ -1148,6 +1148,20 @@ public class URL {
             return url;
         }
         return null;
+    }
+
+    /**
+     * 获取数据字典(设计强度,塌落度,浇筑方式)
+     */
+    public static final String DATA_WORKTEAM = BaseURL + "appWZproject.do?AppWzshigongteam&departId=%1";
+
+    public static String getDataWORKTEAM(String departId) {
+        String url = DATA_WORKTEAM.replace("%1", departId);
+        Log.e(TAG, "数据字典查询 :" + url);
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+        return url;
     }
 
 }

@@ -28,6 +28,7 @@ import com.shtoone.shtw.activity.JobOrderProductionActvity;
 import com.shtoone.shtw.activity.JobOrderUnCompoundingActivity;
 import com.shtoone.shtw.activity.JobOrderUnSubmitActivity;
 import com.shtoone.shtw.activity.MaterialConsumeActivity;
+import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.activity.TaskListImpQueryActivity;
 import com.shtoone.shtw.activity.WZProjectProgressQueryActivity;
 import com.shtoone.shtw.activity.YCLChuChangWeightActivity;
@@ -99,6 +100,7 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
     private GridView gridView2;
     private GridViewAdapter1 adapter1;
     private FloatingActionButton fab;
+    private List mList1;
 
 
     public static EngineeringDepartmentFragment newInstance() {
@@ -133,11 +135,12 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_hierarchy:
-                        Intent intent = new Intent(getActivity(), FBProjectListActivity.class);
+                        Intent intent = new Intent(getActivity(), OrganizationActivity.class);
 //                        Log.e(TAG,"跳转到FBProjectListActivity");
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
+                        bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
                         intent.putExtras(bundle);
+                        intent.putExtra("type", "3");
                         AnimationUtils.startActivity(_mActivity, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color, 500);
                         break;
                 }
@@ -221,7 +224,7 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                Log.e(TAG, "response*****>>>>>" + response);
+                //Log.e(TAG, "response*****>>>>>" + response);
                 itemsData = mGson.fromJson(response, TJFXData.class);
                 if (null != itemsData) {
                     if (itemsData.isSuccess() && itemsData.getData().size() > 0) {
@@ -236,20 +239,26 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
                                 nums1[5] = itemsData.getData().get(0).getIsshengchancount();
 
                                 //1. 准备数据源
-                                List list1 = new ArrayList<Map<String, String>>();
+                                if (mList1==null){
+                                    mList1 = new ArrayList<Map<String, String>>();
+                                }else {
+                                    mList1.clear();
+                                }
+
                                 for (int i = 0; i < titles1.length; i++) {
                                     Map<String, String> map = new HashMap<String, String>();
                                     map.put("itemTitle", titles1[i]);
                                     if (nums1.length > i) {
                                         map.put("itemNum", nums1[i]);
                                     }
-                                    list1.add(map);
+                                    mList1.add(map);
                                 }
                                 //      2.为数据源设置适配器
                                 if (adapter1 == null) {
-                                    adapter1 = new GridViewAdapter1(getContext(), list1);
+                                    adapter1 = new GridViewAdapter1(getContext(), mList1);
                                     gridView1.setAdapter(adapter1);
                                 } else {
+
                                     adapter1.notifyDataSetChanged();
                                 }
 //                                mRecyclerView.setAdapter(mScaleInAnimationAdapter);
@@ -304,12 +313,21 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
     }
 
     @Subscribe
+    public void updateDepartment(DepartmentData mDepartmentData) {
+        if (null != mDepartmentData && null != mParametersData ) {
+            if (mDepartmentData.fromto == ConstantsUtils.WZPROGRESS) {
+                this.mParametersData.userGroupID = mDepartmentData.departmentID;
+                mPtrFrameLayout.autoRefresh(true);
+            }
+        }
+    }
+
+    @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
             if (mParametersData.fromTo == ConstantsUtils.WZPROGRESS) {
-                this.mParametersData = mParametersData;
-                //this.mParametersData.projectno = mParametersData.projectno;
-                KLog.e("mParametersData:" + mParametersData.projectno);
+                this.mParametersData.startDateTime = mParametersData.startDateTime;
+                this.mParametersData.endDateTime = mParametersData.endDateTime;
                 mPtrFrameLayout.autoRefresh(true);
             }
 
@@ -368,6 +386,7 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
                         if (BaseApplication.mUserInfoData.getQuanxian().isWZGCB()) {
                             intent = new Intent(_mActivity, TaskListNewEditActivity.class);
                             intent.putExtra("username", mParametersData.username);
+                            intent.putExtra("departmentID",mDepartmentData.departmentID);
                             startActivity(intent);
                         }
                         break;

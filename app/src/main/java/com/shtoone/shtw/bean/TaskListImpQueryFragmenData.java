@@ -105,6 +105,7 @@ public class TaskListImpQueryFragmenData {
         private String zhuangtai;
         private String sgphbNo;
 
+
         public String getDepartname() {
             return departname;
         }

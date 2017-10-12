@@ -23,7 +23,9 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="8dp" >
+            android:padding="8dp"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:id="@+id/tv_newedit"

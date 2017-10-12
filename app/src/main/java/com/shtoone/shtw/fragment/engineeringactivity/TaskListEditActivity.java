@@ -27,6 +27,7 @@ import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.activity.PourPositionActivity;
 import com.shtoone.shtw.activity.PourWayActivity;
 import com.shtoone.shtw.activity.SlumpActivity;
+import com.shtoone.shtw.activity.WorkingTeamActivity;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.bean.TaskListEditActivityData;
 import com.shtoone.shtw.bean.TaskListImpQueryFragmenData;
@@ -69,6 +70,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     private TaskListImpQueryFragmenData.DataBean mDataBean;
     private boolean isStartDateTime;
     private String startDateTime;
+    private String kaipanDataTime;
     private Gson mGson;
     private EditText tv_renwuno;
     private EditText tv_jhfl;
@@ -84,6 +86,8 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     private TextView tv_sjqd;
     private TextView tv_taluodu;
     private TextView tv_jzfs;
+    private TextView tv_sgd;
+    private String workteamid;
     private TaskListEditActivityData data;
     private List<TaskListEditActivityData.DataBean> listData;
     private String url;
@@ -105,6 +109,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     private String createTime;
     private String remark;
     private String tasklistdetail;
+    private String departmentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +142,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         tv_person = (TextView) findViewById(R.id.tv_person_task_list_edit);
         tv_create_time = (TextView) findViewById(R.id.tv_create_time_task_list_edit);
         tv_remrak = (EditText) findViewById(R.id.tv_remrak_task_list_edit);
+        tv_sgd = (TextView) findViewById(R.id.tv_workteam_task_list_edit);
 
         btn_save.setOnClickListener(this);
         tv_depart.setOnClickListener(this);
@@ -144,6 +150,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         tv_sjqd.setOnClickListener(this);
         tv_taluodu.setOnClickListener(this);
         tv_jzfs.setOnClickListener(this);
+        tv_sgd.setOnClickListener(this);
 
         tv_kaipan_time.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -162,6 +169,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     private void initData() {
         listData = new ArrayList<>();
         mGson = new Gson();
+
         setToolbarTitle();
         initToolbarBackNavigation(mToolbar);
         setSupportActionBar(mToolbar);
@@ -267,11 +275,14 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         tv_depart.setText(dataBean.getDepartname());
         tv_sjqd.setText(dataBean.getShuinibiaohao());
         tv_taluodu.setText(dataBean.getTanluodu());
+        tv_sgd.setText(dataBean.getShigongteamname());
 
         if(!TextUtils.isEmpty(dataBean.getJzbw())){
             tv_jzbw.setText(dataBean.getJzbw());
         }
         id = dataBean.getId();
+        departmentId = dataBean.getDepartid();
+        workteamid = dataBean.getShigongteamid();
 
     }
 
@@ -357,6 +368,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
 
             case R.id.tv_jzbw_task_list_edit:
                 Intent intent2 = new Intent(this,PourPositionActivity.class);
+                intent2.putExtra("departId",getIntent().getStringExtra("departId"));
                 startActivityForResult(intent2,2);
                 break;
 
@@ -374,6 +386,13 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
                 Intent intent5 = new Intent(this,PourWayActivity.class);
                 startActivityForResult(intent5,5);
                 break;
+
+            case R.id.tv_workteam_task_list_edit:
+                Intent intent6 = new Intent(this,WorkingTeamActivity.class);
+                intent6.putExtra("departId",getIntent().getStringExtra("departId"));
+                startActivityForResult(intent6,6);
+
+                break;
         }
     }
 
@@ -384,6 +403,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         if (requestCode == 1){
             if (resultCode == 15){
                 tv_depart.setText(data.getExtras().getString("departmentname"));
+                departmentId = data.getExtras().getString("departmentnno");
                 Log.e("tv_depart",data.getStringExtra("departmentname"));
             }
         }if (requestCode == 2){
@@ -408,6 +428,12 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
                 tv_jzfs.setText(data.getExtras().getString("pourway"));
                 Log.e("tv_jzfs",data.getStringExtra("pourway"));
             }
+        }else if (requestCode == 6){
+            if (resultCode == 66){
+                tv_sgd.setText(data.getExtras().getString("workteam"));
+                workteamid = data.getExtras().getString("workteamid");
+                Log.e("tv_sgd",data.getStringExtra("workteamid"));
+            }
         }
     }
 
@@ -419,15 +445,18 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         paramsMap.put("renwuno", renwuno);
         paramsMap.put("jihuafangliang", jihuafangliang);
         paramsMap.put("jzbw", jzbw);
-        paramsMap.put("shuinibiaohao ", sjqd);
-        paramsMap.put("gcmc ", gcmc);
-        paramsMap.put("tanluodu  ", taluodu);
+        paramsMap.put("shuinibiaohao", sjqd);
+        paramsMap.put("gcmc", gcmc);
+        paramsMap.put("tanluodu", taluodu);
         paramsMap.put("kangdongdengji", kangdongdengji);
         paramsMap.put("kangshendengji", kangshendengji);
         paramsMap.put("jiaozhufangshi", jzfs);
         paramsMap.put("createperson", createperson);
         paramsMap.put("createtime", createTime);
+        paramsMap.put("kaipanriqi",kaipan_time);
+        paramsMap.put("departid",departmentId);
         paramsMap.put("remark", remark);
+        paramsMap.put("shigongteamid",workteamid);
 
         HttpUtils.postJsonRequest(URL.TASK_EDIT_SAVE, paramsMap, new HttpUtils.HttpListener() {
             @Override
@@ -512,6 +541,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         String dateString = year + "-" + monthString + "-" + dayString + " ";
         if (isStartDateTime) {
             startDateTime = dateString;
+            kaipanDataTime = dateString;
         }
         showTimePicker();
     }
@@ -524,7 +554,8 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         String timeString = hourString + ":" + minuteString + ":" + secondString;
         if (isStartDateTime) {
             startDateTime = startDateTime + timeString;
-            tv_kaipan_time.setText(startDateTime);
+            tv_create_time.setText(startDateTime);
+            tv_kaipan_time.setText(kaipanDataTime);
         }
     }
 }

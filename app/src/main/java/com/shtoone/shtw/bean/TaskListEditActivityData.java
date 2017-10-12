@@ -76,6 +76,26 @@ public class TaskListEditActivityData {
         private String sgphbguid;
         private String gcmc;
         private String renwuno;
+        private String shigongteamname;
+        private String shigongteamid;
+
+        public String getShigongteamid() {
+            return shigongteamid;
+        }
+
+        public void setShigongteamid(String shigongteamid) {
+            this.shigongteamid = shigongteamid;
+        }
+
+        public String getShigongteamname() {
+            return shigongteamname;
+        }
+
+        public void setShigongteamname(String shigongteamname) {
+            this.shigongteamname = shigongteamname;
+        }
+
+
 
         public String getDepartname() {
             return departname;

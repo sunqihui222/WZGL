@@ -79,7 +79,9 @@ public class TaskListImpQueryFragmentRecyclerViewAdapter extends RecyclerView.Ad
             double baifenbi = item.getBaifenbi()* 100;
             int jindu = (int)baifenbi;
             mItemViewHolder.tv_progress.setProgress(jindu);
-            if (item.getZhuangtai().equals("1")){
+            if (String.valueOf(item.getZhuangtai()).equals("null")){
+                mItemViewHolder.stv_ischeck.setText("");
+            }else if (item.getZhuangtai().equals("1")){
                 mItemViewHolder.stv_ischeck.setText("已配料");
             }else if (item.getZhuangtai().equals("0")){
                 mItemViewHolder.stv_ischeck.setText("未配料");
@@ -87,6 +89,8 @@ public class TaskListImpQueryFragmentRecyclerViewAdapter extends RecyclerView.Ad
                 mItemViewHolder.stv_ischeck.setText("生产中");
             }else if (item.getZhuangtai().equals("3")){
                 mItemViewHolder.stv_ischeck.setText("已完成");
+            }else if (item.getZhuangtai().equals("-1")){
+                mItemViewHolder.stv_ischeck.setText("未提交");
             }
 
 

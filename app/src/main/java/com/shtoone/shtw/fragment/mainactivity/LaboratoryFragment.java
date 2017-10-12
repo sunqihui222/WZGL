@@ -72,7 +72,7 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
     private LinearLayout item3;
     private LinearLayout item4;
     private LinearLayout item5;
-    private Button btn_test;
+
 
     public static LaboratoryFragment newInstance() {
         return new LaboratoryFragment();
@@ -91,12 +91,11 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
     public void onResume() {
         super.onResume();
         //返回到看见此fragment时，fab显示
-        fab.show();
+
     }
 
     private void initView(View view) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar_toolbar);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.ptrframelayout);
 //        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         mPageStateLayout = (PageStateLayout) view.findViewById(R.id.pagestatelayout);
@@ -106,13 +105,13 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
         item3 = (LinearLayout) view.findViewById(R.id.cl_laboratory_item3);
         item4 = (LinearLayout) view.findViewById(R.id.cl_laboratory_item4);
         item5 = (LinearLayout) view.findViewById(R.id.cl_laboratory_item5);
-        btn_test = (Button) view.findViewById(R.id.btn_test);
+
         item1.setOnClickListener(this);
         item2.setOnClickListener(this);
         item3.setOnClickListener(this);
         item4.setOnClickListener(this);
         item5.setOnClickListener(this);
-        btn_test.setOnClickListener(this);
+
         /****************************************************************/
     }
 
@@ -151,16 +150,7 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(_mActivity, DialogActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+
 
 //        mPageStateLayout.setPadding(0, 0, 0, DensityUtils.dp2px(_mActivity, 56));
         initPageStateLayout(mPageStateLayout);
@@ -294,7 +284,7 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
     public void onPause() {
         super.onPause();
         //防止屏幕旋转后重画时fab显示
-        fab.hide();
+
     }
 
     @Override
@@ -362,17 +352,6 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
                      startActivity(intent);
                     break;
 
-                case R.id.btn_test:
-//                    if (mUserInfoData.getQuanxian().isWZGCB()) {
-//
-//                        intent = new Intent(_mActivity, TaskListNewEditActivity.class);
-//                        intent.putExtra("username", mParametersData.username);
-//                        startActivity(intent);
-//                    }
-                    intent = new Intent(_mActivity, WZProjectProgressQueryActivity.class);
-
-                    startActivity(intent);
-                    break;
 
             }
     }

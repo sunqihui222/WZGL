@@ -152,19 +152,14 @@ public class JobOrderInProductionFragment extends BaseLazyFragment {
                 @Override
                 public void onItemClick(View view, int position) {
                     // 实现局部界面刷新, 这个view就是被点击的item布局对象
-
-                }
-
-                @Override
-                public void onLongItemClick(View view, int position) {
                     if (!TextUtils.isEmpty(listData.get(position).getId())) {
                         if (listData.get(position).getZhuangtai().equals("2"))
                         {
                             //弹出对话框，确定提交
                             id = listData.get(position).getId();
                             new MaterialDialog.Builder(getActivity())
-                                    .title("结束")
-                                    .content("请问您确定结束吗？")
+                                    .title("完工")
+                                    .content("请问您确定完工吗？")
                                     .positiveText("确定")
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
@@ -185,6 +180,12 @@ public class JobOrderInProductionFragment extends BaseLazyFragment {
                             Toast.makeText(getContext(),"只有生产中的能够结束",Toast.LENGTH_SHORT).show();
                         }
                     }
+
+                }
+
+                @Override
+                public void onLongItemClick(View view, int position) {
+
                 }
 
             });

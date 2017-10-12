@@ -321,6 +321,23 @@
                                             android:layout_weight="1.5"
                                             android:gravity="left|center_vertical"
                                             android:paddingRight="5dp"
+                                            android:text="施工队：" />
+
+                                        <TextView
+                                            android:id="@+id/tv_workteam_task_list_edit"
+                                            style="@style/peibitongzhidanDetail"
+                                            android:layout_weight="2.5"
+                                            android:gravity="left|center_vertical"
+                                            android:paddingLeft="5dp" />
+                                    </TableRow>
+
+                                    <TableRow>
+
+                                        <TextView
+                                            style="@style/peibitongzhidanDetail"
+                                            android:layout_weight="1.5"
+                                            android:gravity="left|center_vertical"
+                                            android:paddingRight="5dp"
                                             android:text="创建人：" />
 
                                         <TextView

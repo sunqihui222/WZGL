@@ -11,15 +11,11 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
 import com.google.gson.Gson;
-import com.sdsmdg.tastytoast.TastyToast;
-import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
-import com.shtoone.shtw.adapter.PourPositionActivityRecylerView;
-import com.shtoone.shtw.bean.JobOrderUnfinshData;
-import com.shtoone.shtw.bean.ParametersData;
-import com.shtoone.shtw.bean.PourPositionData;
+import com.shtoone.shtw.bean.DesignStrengthData;
+import com.shtoone.shtw.bean.WorkingTeamData;
 import com.shtoone.shtw.ui.DividerItemDecoration;
 import com.shtoone.shtw.ui.PageStateLayout;
 import com.shtoone.shtw.utils.URL;
@@ -39,24 +35,24 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 /**
  * Created by Administrator on 2017/8/22.
  */
-public class PourPositionActivity extends BaseActivity{
+public class WorkingTeamActivity extends BaseActivity{
 
-    private static final String TAG = PourPositionActivity.class.getSimpleName();
-    private Toolbar                         mToolbar;
-    private PtrFrameLayout                  mPtrFrameLayout;
-    private RecyclerView                    mRecyclerView;
-    private PageStateLayout                 mPageStateLayout;
-    private Gson                            mGson;
-    private PourPositionData                data;
-    private List<PourPositionData.DataBean> listData;
-    private LinearLayoutManager             mLinearLayoutManager;
-    private PourPositionActivityRecylerView mAdapter;
-    private ParametersData                  mParametersData;
+    private static final String TAG = WorkingTeamActivity.class.getSimpleName();
+    private Toolbar                           mToolbar;
+    private PtrFrameLayout                    mPtrFrameLayout;
+    private RecyclerView                      mRecyclerView;
+    private PageStateLayout                   mPageStateLayout;
+    private Gson                              mGson;
+    private WorkingTeamData                data;
+    private List<WorkingTeamData.DataEntity>    listData;
+    private LinearLayoutManager               mLinearLayoutManager;
+    private WorkingTeamActivityRecylerView mAdapter;
+    private String departId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pour_position);
+        setContentView(R.layout.activity_design_strength);
         initView();
         initData();
     }
@@ -70,8 +66,8 @@ public class PourPositionActivity extends BaseActivity{
 
     public void initData(){
         listData = new ArrayList<>();
-        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
         mGson = new Gson();
+        departId = getIntent().getStringExtra("departId");
         setToolbarTitle();
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
@@ -79,18 +75,8 @@ public class PourPositionActivity extends BaseActivity{
 
     @Override
     public String createRefreshULR() {
-        mParametersData.currentPage = "1";//默认都是第一页
-        String currentPage = "";
-        currentPage = mParametersData.currentPage = "1";
-        return URL.getPourPosData(getIntent().getStringExtra("departId"),currentPage);
-    }
 
-    @Override
-    public String createLoadMoreULR() {
-        mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) + 1) + "";//默认都是第一页
-        String currentPage = "";
-        currentPage = mParametersData.currentPage;
-        return URL.getPourPosData(getIntent().getStringExtra("departId"),currentPage);
+        return URL.getDataWORKTEAM(departId);
     }
 
     @Override
@@ -105,9 +91,9 @@ public class PourPositionActivity extends BaseActivity{
                 return;
             }
             if (jsonObject.optBoolean("success")) {
-                data = mGson.fromJson(response, PourPositionData.class);
+                data = mGson.fromJson(response, WorkingTeamData.class);
                 if (null != data) {
-                    if (data.isSuccess()) {
+                    if (data.getSuccess()) {
                         mPageStateLayout.showContent();
                         listData.addAll(data.getData());
                         setAdapter();
@@ -130,68 +116,13 @@ public class PourPositionActivity extends BaseActivity{
 
     }
 
-    @Override
-    public void loadMoreSuccess(String response) {
-        if (!TextUtils.isEmpty(response)) {
-            JSONObject jsonObject = null;
-            try {
-                jsonObject = new JSONObject(response);
-            } catch (JSONException e) {
-                e.printStackTrace();
-                mPageStateLayout.showError();
-                return;
-            }
-            if (jsonObject.optBoolean("success")) {
-                data = mGson.fromJson(response, PourPositionData.class);
-                if (null != data) {
-                    if (data.getData().size() > 0) {
-                        if (null != listData) {
-                            listData.addAll(data.getData());
-                            if (listData.size() > 0) {
-                                mPageStateLayout.showContent();
-                                mAdapter.notifyDataSetChanged();
-                            } else {
-                                TastyToast.makeText(getApplicationContext(), "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
-                                mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-                                mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-                            }
-                        } else {
-                            TastyToast.makeText(getApplicationContext(), "数据异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
-                            mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-                            mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-                        }
-                    } else {
-                        TastyToast.makeText(getApplicationContext(), "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
-                        mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-                        mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-                    }
-                } else {
-                    TastyToast.makeText(getApplicationContext(), "解析异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
-                    mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-                    mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-                }
-            } else {
-                TastyToast.makeText(getApplicationContext(), "无更多数据!", TastyToast.LENGTH_SHORT, TastyToast.INFO);
-                mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-                mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-            }
-        } else {
-            //提示返回数据异常，展示错误页面
-            TastyToast.makeText(getApplicationContext(), "数据异常!", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
-            mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) - 1) + "";
-            mAdapter.notifyItemRemoved(mAdapter.getItemCount());
-        }
-
-
-    }
-
     public void setAdapter(){
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
         //设置动画与适配器
-        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new PourPositionActivityRecylerView(this, listData));
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new WorkingTeamActivityRecylerView(this, listData));
         mSlideInLeftAnimationAdapter.setFirstOnly(true);
         mSlideInLeftAnimationAdapter.setDuration(500);
         mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
@@ -204,8 +135,9 @@ public class PourPositionActivity extends BaseActivity{
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent();
-                intent.putExtra("pourposition",listData.get(position).getProjectname());
-                setResult(22, intent);
+                intent.putExtra("workteamid",listData.get(position).getId());
+                intent.putExtra("workteam",listData.get(position).getName());
+                setResult(66, intent);
                 onBackPressed();
             }
         });
