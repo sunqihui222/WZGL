@@ -64,7 +64,7 @@ public class ConstantsUtils {
     public static final int YCLJINCHANG = 37;
     public static final int YCLCHUCHANG = 38;
     public static final int WZPROGRESS = 39;
-    //public static final int ENGINEERINGHOME = 39;
+    public static final int ENGINEERINGHOME = 40;
 
 
     public static final int JOBORDERUNFINSH = 43;

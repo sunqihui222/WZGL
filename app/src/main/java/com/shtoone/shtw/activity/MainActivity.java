@@ -63,20 +63,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (savedInstanceState == null) {
             mFragments[0] = LaboratoryFragment.newInstance();
             mFragments[1] = ConcreteFragment.newInstance();
-            mFragments[2] = WeightHouseFragment.newInstance();
-            mFragments[3] = StorageFragment.newInstance();
+            mFragments[2] = EngineeringDepartmentFragment.newInstance();
+            mFragments[3] = WeightHouseFragment.newInstance();
          //   mFragments[4] = EngineeringDepartmentFragment.newInstance();
-            mFragments[4] = EngineeringDepartmentFragment.newInstance();
+            mFragments[4] = StorageFragment.newInstance();
             loadMultipleRootFragment(R.id.fl_container_main_activity, 0, mFragments[0], mFragments[1],mFragments[2],mFragments[3],mFragments[4]);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
             // 这里我们需要拿到mFragments的引用,也可以通过getSupportFragmentManager.getFragments()自行进行判断查找(效率更高些),用下面的方法查找更方便些
             mFragments[0] = findFragment(LaboratoryFragment.class);
             mFragments[1] = findFragment(ConcreteFragment.class);
-            mFragments[2] = findFragment(WeightHouseFragment.class);
-            mFragments[3] = findFragment(StorageFragment.class);
+            mFragments[2] = findFragment(EngineeringDepartmentFragment.class);
+            mFragments[3] = findFragment(WeightHouseFragment.class);
     //        mFragments[4] = findFragment(EngineeringDepartmen.class);
-            mFragments[4] = findFragment(EngineeringDepartmentFragment.class);
+            mFragments[4] = findFragment(StorageFragment.class);
         }
 
         initView();
@@ -126,9 +126,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.laboratory, R.drawable.ic_lab, R.color.white);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.concrete, R.drawable.ic_bhz, R.color.material_yellow_100);
 
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.weight_house, R.drawable.ic_lab, R.color.white);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.storage, R.drawable.ic_bhz, R.color.material_yellow_100);
-        AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.engineering_department, R.drawable.ic_bhz, R.color.material_yellow_100);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.engineering_department, R.drawable.ic_lab, R.color.white);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.weight_house, R.drawable.ic_bhz, R.color.material_yellow_100);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.storage, R.drawable.ic_bhz, R.color.material_yellow_100);
         bottomNavigationItems.add(item1);
         bottomNavigationItems.add(item2);
         bottomNavigationItems.add(item3);

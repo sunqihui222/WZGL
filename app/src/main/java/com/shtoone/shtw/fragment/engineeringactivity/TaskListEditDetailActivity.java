@@ -45,7 +45,6 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -60,9 +59,9 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
  * Created by Administrator on 2017/8/17.
  */
 
-public class TaskListEditActivity extends BaseActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class TaskListEditDetailActivity extends BaseActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    private static final String TAG = TaskListEditActivity.class.getSimpleName();
+    private static final String TAG = TaskListEditDetailActivity.class.getSimpleName();
     private Toolbar mToolbar;
     private NestedScrollView mNestedScrollView;
     private PageStateLayout mPageStateLayout;
@@ -114,7 +113,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_list_edit);
+        setContentView(R.layout.activity_task_listdetail_edit);
         initView();
         initData();
     }
@@ -143,27 +142,28 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         tv_create_time = (TextView) findViewById(R.id.tv_create_time_task_list_edit);
         tv_remrak = (EditText) findViewById(R.id.tv_remrak_task_list_edit);
         tv_sgd = (TextView) findViewById(R.id.tv_workteam_task_list_edit);
+        btn_save.setVisibility(View.GONE);
 
-        btn_save.setOnClickListener(this);
-        tv_depart.setOnClickListener(this);
-        tv_jzbw.setOnClickListener(this);
-        tv_sjqd.setOnClickListener(this);
-        tv_taluodu.setOnClickListener(this);
-        tv_jzfs.setOnClickListener(this);
-        tv_sgd.setOnClickListener(this);
-
-        tv_kaipan_time.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        setStartDateTime();
-                        break;
-                }
-                return true;
-            }
-        });
+//        btn_save.setOnClickListener(this);
+//        tv_depart.setOnClickListener(this);
+//        tv_jzbw.setOnClickListener(this);
+//        tv_sjqd.setOnClickListener(this);
+//        tv_taluodu.setOnClickListener(this);
+//        tv_jzfs.setOnClickListener(this);
+//        tv_sgd.setOnClickListener(this);
+//
+//        tv_kaipan_time.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//
+//                switch (motionEvent.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        setStartDateTime();
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
     }
 
     private void initData() {
@@ -265,13 +265,19 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         tv_renwuno.setText(dataBean.getRenwuno());
         tv_renwuno.setFocusable(false);
         tv_jhfl.setText(dataBean.getJihuafangliang());
+        tv_jhfl.setFocusable(false);
         tv_kaipan_time.setText(dataBean.getKaipanriqi());
+        tv_kaipan_time.setFocusable(false);
         tv_gcmc.setText(dataBean.getGcmc());
+        tv_gcmc.setFocusable(false);
         tv_kddj.setText(dataBean.getKangdongdengji());
+        tv_kddj.setFocusable(false);
         tv_ksdj.setText(dataBean.getKangshendengji());
+        tv_ksdj.setFocusable(false);
         tv_person.setText(dataBean.getCreateperson());
         tv_create_time.setText(dataBean.getCreatetime());
         tv_remrak.setText(dataBean.getRemark());
+        tv_remrak.setFocusable(false);
         tv_jzfs.setText(dataBean.getJiaozhufangshi());
         tv_depart.setText(dataBean.getDepartname());
         tv_sjqd.setText(dataBean.getShuinibiaohao());
@@ -320,16 +326,16 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
                 remark   = tv_remrak.getText().toString().trim();
                 if (!TextUtils.isEmpty(renwuno) && !TextUtils.isEmpty(jihuafangliang) && !TextUtils.isEmpty(kaipan_time)&& !TextUtils.isEmpty(department) && !TextUtils.isEmpty(jzbw)&& !TextUtils.isEmpty(gcmc)) {
                     //弹出对话框，确定提交
-                    new MaterialDialog.Builder(TaskListEditActivity.this)
+                    new MaterialDialog.Builder(TaskListEditDetailActivity.this)
                             .title("确认")
-                            .content("请问您确定填写无误并保存吗？")
+                            .content("请问您确定填写无误并提交吗？")
                             .positiveText("确定")
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    MaterialDialog progressDialog = new MaterialDialog.Builder(TaskListEditActivity.this)
-                                            .title("保存")
-                                            .content("正在保存中，请稍等……")
+                                    MaterialDialog progressDialog = new MaterialDialog.Builder(TaskListEditDetailActivity.this)
+                                            .title("提交")
+                                            .content("正在提交中，请稍等……")
                                             .progress(true, 0)
                                             .progressIndeterminateStyle(true)
                                             .cancelable(false)
@@ -490,15 +496,15 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onFailed(VolleyError error) {
                 progressDialog.dismiss();
-                if (!NetworkUtils.isConnected(TaskListEditActivity.this)) {
+                if (!NetworkUtils.isConnected(TaskListEditDetailActivity.this)) {
                     //提示网络异常,让用户点击设置网络，
-                    View view = TaskListEditActivity.this.getWindow().getDecorView();
+                    View view = TaskListEditDetailActivity.this.getWindow().getDecorView();
                     Snackbar.make(view, "当前网络已断开！", Snackbar.LENGTH_LONG)
                             .setAction("设置网络", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     // 跳转到系统的网络设置界面
-                                    NetworkUtils.openSetting(TaskListEditActivity.this);
+                                    NetworkUtils.openSetting(TaskListEditDetailActivity.this);
                                 }
                             }).show();
                 } else {
@@ -519,7 +525,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
         if (isStartDateTime) {
             now.add(Calendar.MONTH, -3);
         }
-        DatePickerDialog dpd = DatePickerDialog.newInstance(TaskListEditActivity.this, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
+        DatePickerDialog dpd = DatePickerDialog.newInstance(TaskListEditDetailActivity.this, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
         dpd.vibrate(true);
         dpd.dismissOnPause(false);
         dpd.setAccentColor(Color.parseColor("#3F51B5"));
@@ -528,7 +534,7 @@ public class TaskListEditActivity extends BaseActivity implements View.OnClickLi
 
     private void showTimePicker() {
         Calendar now = Calendar.getInstance();
-        TimePickerDialog tpd = TimePickerDialog.newInstance(TaskListEditActivity.this, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), false);
+        TimePickerDialog tpd = TimePickerDialog.newInstance(TaskListEditDetailActivity.this, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), false);
         tpd.vibrate(true);
         tpd.dismissOnPause(false);
         tpd.setAccentColor(Color.parseColor("#3F51B5"));

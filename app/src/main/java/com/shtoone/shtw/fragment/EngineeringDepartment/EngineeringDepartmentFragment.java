@@ -118,7 +118,7 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
             mParametersData.fromTo = ConstantsUtils.WZPROGRESS;
         }
         if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
-            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.WZPROGRESS);
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.ENGINEERINGHOME);
 
         }
         BaseApplication.mDepartmentData.departmentID = BaseApplication.mUserInfoData.getDepartId();
@@ -315,7 +315,7 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
     @Subscribe
     public void updateDepartment(DepartmentData mDepartmentData) {
         if (null != mDepartmentData && null != mParametersData ) {
-            if (mDepartmentData.fromto == ConstantsUtils.WZPROGRESS) {
+            if (mDepartmentData.fromto == ConstantsUtils.ENGINEERINGHOME) {
                 this.mParametersData.userGroupID = mDepartmentData.departmentID;
                 mPtrFrameLayout.autoRefresh(true);
             }
@@ -325,7 +325,7 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
     @Subscribe
     public void updateSearch(ParametersData mParametersData) {
         if (mParametersData != null) {
-            if (mParametersData.fromTo == ConstantsUtils.WZPROGRESS) {
+            if (mParametersData.fromTo == ConstantsUtils.ENGINEERINGHOME) {
                 this.mParametersData.startDateTime = mParametersData.startDateTime;
                 this.mParametersData.endDateTime = mParametersData.endDateTime;
                 mPtrFrameLayout.autoRefresh(true);

@@ -423,7 +423,6 @@ public class StorageFragment extends BaseLazyFragment {
                 this.mParametersData.userGroupID = mDepartmentData.departmentID;
                 this.mDepartmentData.departmentID = mDepartmentData.departmentID;
                 this.mDepartmentData.departmentName = mDepartmentData.departmentName;
-                this.mParametersData.materialID = mParametersData.materialID;
                 setToolbarTitle();
                 mPtrFrameLayout.autoRefresh(true);
             }

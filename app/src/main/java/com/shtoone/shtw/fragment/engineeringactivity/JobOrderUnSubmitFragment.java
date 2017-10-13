@@ -163,7 +163,7 @@ public class JobOrderUnSubmitFragment extends BaseLazyFragment {
             mAdapter.setOnItemClickListener(new OnItemDelClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    Log.e(TAG,"一剑寒光十九州");
+                    //Log.e(TAG,"一剑寒光十九州");
                     for (JobOrderUnfinshData.DataEntity dataEntity : listData){
                         dataEntity.setSelected(false);
                     }
@@ -639,7 +639,7 @@ public class JobOrderUnSubmitFragment extends BaseLazyFragment {
     }
 
     private void setContentViewClickListener(View conentView){
-        LinearLayout lin_newedit = (LinearLayout) conentView
+        LinearLayout lin_detail = (LinearLayout) conentView
                 .findViewById(R.id.lin_newedit);
 
         LinearLayout lin_edit = (LinearLayout) conentView
@@ -652,20 +652,20 @@ public class JobOrderUnSubmitFragment extends BaseLazyFragment {
 
 
 
-//        lin_newedit.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View arg0) {
-//                if (mUserInfoData.getQuanxian().isWZGCB()) {
-//
-//                    Intent intent = new Intent(_mActivity, TaskListNewEditActivity.class);
-//                    intent.putExtra("username", mParametersData.username);
-//                    startActivity(intent);
-//                }
-//
-//                mPopTop.dismiss();
-//            }
-//        });
+        lin_detail.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(_mActivity, TaskListEditDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("tasklistdetail",id);
+                intent.putExtra("departId",mParametersData.userGroupID);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                mPopTop.dismiss();
+            }
+        });
 
         if (zhuangtai.equals("-1"))
         {

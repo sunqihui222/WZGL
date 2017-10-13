@@ -21,6 +21,7 @@ import com.shtoone.shtw.BaseApplication;
 import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.AllPowerTestActivity;
 import com.shtoone.shtw.activity.DialogActivity;
+import com.shtoone.shtw.activity.JobOrderUnCompoundingActivity;
 import com.shtoone.shtw.activity.LaboratoryActivity;
 import com.shtoone.shtw.activity.MainActivity;
 import com.shtoone.shtw.activity.MatchNoticeActivity;
@@ -350,6 +351,7 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
                  case R.id.cl_laboratory_item5://统计分析
                      intent = new Intent(getContext(), StatisticAnalysisActivity.class);
                      startActivity(intent);
+
                     break;
 
 

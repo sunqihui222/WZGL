@@ -180,6 +180,8 @@
 
         <activity android:name=".activity.PourWayActivity"/>
 
+        <activity android:name=".fragment.engineeringactivity.TaskListEditDetailActivity"/>
+
         <activity
             android:name=".activity.base.FBProjectListActivity"
             android:launchMode="singleTop" />

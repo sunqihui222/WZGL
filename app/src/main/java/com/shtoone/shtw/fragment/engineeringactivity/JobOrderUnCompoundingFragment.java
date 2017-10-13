@@ -592,10 +592,15 @@ public class JobOrderUnCompoundingFragment extends BaseLazyFragment {
     }
 
     private void jump2TaskListDetailActivity(int position) {
-        Intent intent = new Intent(_mActivity, TaskListDetailActivity.class);
+//        Intent intent = new Intent(_mActivity, TaskListDetailActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("idNumber", listData.get(position).getId());
+//        bundle.putString("biaoshi","0");
+//        intent.putExtras(bundle);
+        Intent intent = new Intent(_mActivity, TaskListEditDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("idNumber", listData.get(position).getId());
-        bundle.putString("biaoshi","0");
+        bundle.putString("tasklistdetail",listData.get(position).getId());
+        intent.putExtra("departId",mParametersData.userGroupID);
         intent.putExtras(bundle);
         startActivity(intent);
     }

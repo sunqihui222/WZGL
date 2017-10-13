@@ -24,7 +24,6 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:padding="8dp"
-            android:visibility="gone"
             >
 
             <TextView
@@ -33,7 +32,7 @@
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:text="新建"
+                android:text="详情"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
         </LinearLayout>
