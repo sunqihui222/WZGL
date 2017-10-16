@@ -115,7 +115,7 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
     private void initData() {
         if (null != BaseApplication.parametersData) {
             mParametersData = (ParametersData) BaseApplication.parametersData.clone();
-            mParametersData.fromTo = ConstantsUtils.WZPROGRESS;
+            mParametersData.fromTo = ConstantsUtils.ENGINEERINGHOME;
         }
         if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
             mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.ENGINEERINGHOME);

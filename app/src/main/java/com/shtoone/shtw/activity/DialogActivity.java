@@ -642,6 +642,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     public void onRefreshSuccess(String response) {
         Log.e(TAG, "response=:" + response.toString());
         switch (mParametersData.fromTo) {
+            case ConstantsUtils.ENGINEERINGHOME:
             case ConstantsUtils.LABORATORYFRAGMENT:
             case ConstantsUtils.CONCRETEFRAGMENT:
 
