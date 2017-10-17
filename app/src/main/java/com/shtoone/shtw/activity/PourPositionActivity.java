@@ -96,6 +96,7 @@ public class PourPositionActivity extends BaseActivity{
         mParametersData.fromTo = ConstantsUtils.POURPOSITION;
         mGson = new Gson();
         listData = new ArrayList<>();
+        initToolbarBackNavigation(mToolbar);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         //设置动画与适配器

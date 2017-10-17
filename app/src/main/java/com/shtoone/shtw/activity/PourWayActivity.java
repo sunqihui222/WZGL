@@ -67,6 +67,7 @@ public class PourWayActivity extends BaseActivity{
         listData = new ArrayList<>();
         mGson = new Gson();
         setToolbarTitle();
+        initToolbarBackNavigation(mToolbar);
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
     }
@@ -167,7 +168,7 @@ public class PourWayActivity extends BaseActivity{
     private void setToolbarTitle() {
         if (null != mToolbar && null != mDepartmentData && !TextUtils.isEmpty(mDepartmentData.departmentName)) {
             StringBuffer sb = new StringBuffer(getString(R.string.engineering_department)+ " > ");
-            sb.append(getString(R.string.pour_position)).trimToSize();
+            sb.append("浇筑方式");
             mToolbar.setTitle(sb.toString());
         }
     }
