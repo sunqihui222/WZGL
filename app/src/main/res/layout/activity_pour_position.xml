@@ -14,4 +14,5 @@
 
         <include layout="@layout/recyclerview"/>
     </LinearLayout>
+    <include layout="@layout/floatingactionbutton" />
 </android.support.design.widget.CoordinatorLayout>
