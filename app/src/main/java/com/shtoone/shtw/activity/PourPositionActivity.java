@@ -2,6 +2,7 @@ package com.shtoone.shtw.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,16 +18,22 @@ import com.shtoone.shtw.R;
 import com.shtoone.shtw.activity.base.BaseActivity;
 import com.shtoone.shtw.adapter.OnItemClickListener;
 import com.shtoone.shtw.adapter.PourPositionActivityRecylerView;
+import com.shtoone.shtw.bean.DepartmentData;
 import com.shtoone.shtw.bean.JobOrderUnfinshData;
 import com.shtoone.shtw.bean.ParametersData;
 import com.shtoone.shtw.bean.PourPositionData;
 import com.shtoone.shtw.ui.DividerItemDecoration;
 import com.shtoone.shtw.ui.PageStateLayout;
+import com.shtoone.shtw.utils.ConstantsUtils;
 import com.shtoone.shtw.utils.URL;
+import com.socks.library.KLog;
+import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,20 +49,30 @@ import static com.shtoone.shtw.BaseApplication.mDepartmentData;
 public class PourPositionActivity extends BaseActivity{
 
     private static final String TAG = PourPositionActivity.class.getSimpleName();
+    private boolean isRegistered = false;
     private Toolbar                         mToolbar;
+    private FloatingActionButton    fab;
     private PtrFrameLayout                  mPtrFrameLayout;
     private RecyclerView                    mRecyclerView;
     private PageStateLayout                 mPageStateLayout;
     private Gson                            mGson;
     private PourPositionData                data;
+    private boolean                         isLoading;
     private List<PourPositionData.DataBean> listData;
     private LinearLayoutManager             mLinearLayoutManager;
+    private ScaleInAnimationAdapter         mScaleInAnimationAdapter;
     private PourPositionActivityRecylerView mAdapter;
     private ParametersData                  mParametersData;
+    private int                             lastVisibleItemPosition;
+    private DepartmentData                  mDepartmentData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!isRegistered) {
+            BaseApplication.bus.register(this);
+            isRegistered = true;
+        }
         setContentView(R.layout.activity_pour_position);
         initView();
         initData();
@@ -63,15 +80,90 @@ public class PourPositionActivity extends BaseActivity{
 
     public void initView(){
         mToolbar = (Toolbar)findViewById(R.id.toolbar_toolbar);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         mPtrFrameLayout = (PtrFrameLayout)findViewById(R.id.ptrframelayout);
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerview);
         mPageStateLayout = (PageStateLayout)findViewById(R.id.pagestatelayout);
     }
 
     public void initData(){
-        listData = new ArrayList<>();
-        mParametersData = (ParametersData) BaseApplication.parametersData.clone();
+
+        if (null != BaseApplication.mDepartmentData && !TextUtils.isEmpty(BaseApplication.mDepartmentData.departmentName)) {
+            mDepartmentData = new DepartmentData(BaseApplication.mUserInfoData.getDepartId(), BaseApplication.mUserInfoData.getDepartName(), ConstantsUtils.POURPOSITION);
+            mParametersData = (ParametersData) BaseApplication.parametersData.clone();
+            mParametersData.userGroupID = BaseApplication.mDepartmentData.departmentID;
+        }
+        mParametersData.fromTo = ConstantsUtils.POURPOSITION;
         mGson = new Gson();
+        listData = new ArrayList<>();
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        //设置动画与适配器
+        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new PourPositionActivityRecylerView(this, listData));
+        mSlideInLeftAnimationAdapter.setDuration(500);
+        mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
+        mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
+        mRecyclerView.setAdapter(mScaleInAnimationAdapter);
+
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent();
+                intent.putExtra("pourposition",listData.get(position).getProjectname());
+                intent.putExtra("projectname",listData.get(position).getZjiedian());
+                intent.putExtra("sjqd",listData.get(position).getShejiqiangdu());
+                intent.putExtra("sjfl",listData.get(position).getShejifangliang());
+                setResult(22, intent);
+                onBackPressed();
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PourPositionActivity.this, DialogActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ConstantsUtils.PARAMETERS, mParametersData);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //还有一个不完美的地方就是当规定的item个数时，最后一个item在屏幕外滑到可见时，其底部没有footview，这点以后再解决。
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition + 1 == mAdapter.getItemCount() && listData.size() >= 4) {
+                    if (!isLoading) {
+                        isLoading = true;
+                        mRecyclerView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                KLog.e("第" + mParametersData.currentPage + "页");
+                                loadMore();
+                                KLog.e("上拉加载更多下一页=" + mParametersData.currentPage);
+                                isLoading = false;
+                            }
+                        }, 500);
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItemPosition = mLinearLayoutManager.findLastVisibleItemPosition();
+
+                if (dy > 5) {
+                    fab.hide();
+                } else if (dy < -5) {
+                    fab.show();
+                }
+            }
+        });
+
+
         setToolbarTitle();
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
@@ -82,15 +174,32 @@ public class PourPositionActivity extends BaseActivity{
         mParametersData.currentPage = "1";//默认都是第一页
         String currentPage = "";
         currentPage = mParametersData.currentPage = "1";
-        return URL.getPourPosData(getIntent().getStringExtra("departId"),currentPage);
+        String keyword= mParametersData.keyword;
+        try {
+            if (null != listData) {
+                listData.clear();
+            }
+            return URL.getPourPosData(getIntent().getStringExtra("departId"),currentPage, URLEncoder.encode(keyword,"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
+        return null;
     }
 
     @Override
     public String createLoadMoreULR() {
         mParametersData.currentPage = (Integer.parseInt(mParametersData.currentPage) + 1) + "";//默认都是第一页
         String currentPage = "";
+        String keyword= mParametersData.keyword;
         currentPage = mParametersData.currentPage;
-        return URL.getPourPosData(getIntent().getStringExtra("departId"),currentPage);
+        try {
+            return URL.getPourPosData(getIntent().getStringExtra("departId"),currentPage, URLEncoder.encode(keyword,"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -108,9 +217,9 @@ public class PourPositionActivity extends BaseActivity{
                 data = mGson.fromJson(response, PourPositionData.class);
                 if (null != data) {
                     if (data.isSuccess()) {
-                        mPageStateLayout.showContent();
                         listData.addAll(data.getData());
-                        setAdapter();
+                        mPageStateLayout.showContent();
+                        mRecyclerView.setAdapter(mScaleInAnimationAdapter);
                     } else {
                         //提示数据为空，展示空状态
                         mPageStateLayout.showEmpty();
@@ -187,28 +296,7 @@ public class PourPositionActivity extends BaseActivity{
 
     public void setAdapter(){
 
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mRecyclerView.setNestedScrollingEnabled(false);
-        //设置动画与适配器
-        SlideInLeftAnimationAdapter mSlideInLeftAnimationAdapter = new SlideInLeftAnimationAdapter(mAdapter = new PourPositionActivityRecylerView(this, listData));
-        mSlideInLeftAnimationAdapter.setFirstOnly(true);
-        mSlideInLeftAnimationAdapter.setDuration(500);
-        mSlideInLeftAnimationAdapter.setInterpolator(new OvershootInterpolator(.5f));
-        ScaleInAnimationAdapter mScaleInAnimationAdapter = new ScaleInAnimationAdapter(mSlideInLeftAnimationAdapter);
-        mScaleInAnimationAdapter.setFirstOnly(true);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-        mRecyclerView.setAdapter(mScaleInAnimationAdapter);
 
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent();
-                intent.putExtra("pourposition",listData.get(position).getProjectname());
-                setResult(22, intent);
-                onBackPressed();
-            }
-        });
     }
 
     @Override
@@ -233,6 +321,18 @@ public class PourPositionActivity extends BaseActivity{
             return false;
         } else {
             return true;
+        }
+    }
+
+    @Subscribe
+    public void updateSearch(ParametersData mParametersData) {
+        if (mParametersData != null) {
+            if (mParametersData.fromTo == ConstantsUtils.POURPOSITION) {
+
+                this.mParametersData.keyword = mParametersData.keyword;
+                KLog.e("mParametersData:" + mParametersData.keyword);
+                mPtrFrameLayout.autoRefresh(true);
+            }
         }
     }
 

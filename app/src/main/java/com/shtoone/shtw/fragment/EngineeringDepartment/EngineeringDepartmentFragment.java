@@ -27,6 +27,7 @@ import com.shtoone.shtw.activity.JobOrderInProductionActvity;
 import com.shtoone.shtw.activity.JobOrderProductionActvity;
 import com.shtoone.shtw.activity.JobOrderUnCompoundingActivity;
 import com.shtoone.shtw.activity.JobOrderUnSubmitActivity;
+import com.shtoone.shtw.activity.MainActivity;
 import com.shtoone.shtw.activity.MaterialConsumeActivity;
 import com.shtoone.shtw.activity.OrganizationActivity;
 import com.shtoone.shtw.activity.TaskListImpQueryActivity;
@@ -127,8 +128,7 @@ public class EngineeringDepartmentFragment extends BaseLazyFragment {
 
         mGson = new Gson();
         setToolbarTitle();
-        //((MainActivity) _mActivity).initToolBar(mToolbar);
-        initToolbarBackNavigation(mToolbar);
+        ((MainActivity) _mActivity).initToolBar(mToolbar);
         mToolbar.inflateMenu(R.menu.menu_hierarchy);
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

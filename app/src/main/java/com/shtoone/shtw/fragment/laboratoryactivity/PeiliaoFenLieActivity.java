@@ -67,7 +67,7 @@ public class PeiliaoFenLieActivity extends BaseActivity {
     private void setToolbarTitle() {
         if (null != mToolbar && null != mDepartmentData && !TextUtils.isEmpty(mDepartmentData.departmentName)) {
             StringBuffer sb = new StringBuffer(mDepartmentData.departmentName + " > ");
-            sb.append("进出厂台账");
+            sb.append("配比通知单详情");
             mToolbar.setTitle(sb.toString());
         }
     }

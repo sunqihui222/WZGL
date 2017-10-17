@@ -998,10 +998,10 @@ public class URL {
     /**
      * 获取浇筑部位
      */
-    public static final String POUR_POSITION_URL = BaseURL + "appWZproject.do?AppjzbwList&departId=%1&page=%2&rows=10";
+    public static final String POUR_POSITION_URL = BaseURL + "appWZproject.do?AppjzbwList&departId=%1&page=%2&rows=10&keyword=%3";
 
-    public static String getPourPosData(String departId,String page) {
-        String url = POUR_POSITION_URL.replace("%1",departId).replace("%2",page);
+    public static String getPourPosData(String departId,String page,String keyword) {
+        String url = POUR_POSITION_URL.replace("%1",departId).replace("%2",page).replace("%3",keyword);
         Log.e(TAG, "浇筑部位查询 :" + url);
         if (TextUtils.isEmpty(url)) {
             return null;

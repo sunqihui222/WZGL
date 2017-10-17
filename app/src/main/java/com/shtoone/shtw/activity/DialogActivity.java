@@ -16,6 +16,7 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -100,6 +101,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
     private List<String>             cailiaoNo;
     private TextView tv_MaterialName;
     private TextView tv_DepartmentName;
+    private EditText ed_jzbw;
 
 
     @Override
@@ -138,6 +140,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
         end_date_time.getEditText().setInputType(InputType.TYPE_NULL);
         tv_MaterialName = (TextView) findViewById(R.id.tv_material_choose);
         tv_DepartmentName = (TextView) findViewById(R.id.tv_department_choose);
+        ed_jzbw = (EditText) findViewById(R.id.ed_jzbw_choose);
 
         iv_cancel.setOnClickListener(this);
         bt_search.setOnClickListener(this);
@@ -413,6 +416,15 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
 
         //设置哪些条件选择该显示，默认只有时间选择是显示的
         switch (mParametersData.fromTo) {
+
+            case ConstantsUtils.POURPOSITION:
+                start_date_time.setVisibility(View.GONE);
+                end_date_time.setVisibility(View.GONE);
+                ed_jzbw.setVisibility(View.VISIBLE);
+
+
+                break;
+
             case ConstantsUtils.ENGINEERINGHOME:
             case ConstantsUtils.LABORATORYFRAGMENT:
             case ConstantsUtils.CONCRETEFRAGMENT:
@@ -941,6 +953,7 @@ public class DialogActivity extends BaseActivity implements View.OnClickListener
             case R.id.bt_search_dialog:
                 String startTime = DateUtils.ChangeTimeToLong(start_date_time.getEditText().getText().toString());
                 String endTime = DateUtils.ChangeTimeToLong(end_date_time.getEditText().getText().toString());
+                mParametersData.keyword = ed_jzbw.getText().toString().trim();
                 if (Integer.valueOf(startTime) <= Integer.valueOf(endTime)) {
                     BaseApplication.bus.post(mParametersData);
                     onBackPressed();

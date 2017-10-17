@@ -430,6 +430,9 @@ public class TaskListNewEditActivity extends BaseActivity implements View.OnClic
         }if (requestCode == 2){
             if (resultCode == 22){
                 tv_jzbw.setText(data.getExtras().getString("pourposition"));
+                tv_gcmc.setText(data.getExtras().getString("projectname"));
+                tv_sjqd.setText(data.getExtras().getString("sjqd"));
+                tv_jhfl.setText(data.getExtras().getString("sjfl"));
                 Log.e("tv_jzbw",data.getStringExtra("pourposition"));
 
             }

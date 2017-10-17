@@ -133,23 +133,23 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
         setToolbarTitle();
         ((MainActivity) _mActivity).initToolBar(mToolbar);
 
-        mToolbar.inflateMenu(R.menu.menu_hierarchy);
-        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_hierarchy:
-                        Intent intent = new Intent(_mActivity, OrganizationActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
-                        intent.putExtras(bundle);
-                        intent.putExtra("type", "3");
-                        AnimationUtils.startActivity(_mActivity, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color);
-                        break;
-                }
-                return true;
-            }
-        });
+//        mToolbar.inflateMenu(R.menu.menu_hierarchy);
+//        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.action_hierarchy:
+//                        Intent intent = new Intent(_mActivity, OrganizationActivity.class);
+//                        Bundle bundle = new Bundle();
+//                        bundle.putSerializable(ConstantsUtils.DEPARTMENT, mDepartmentData);
+//                        intent.putExtras(bundle);
+//                        intent.putExtra("type", "3");
+//                        AnimationUtils.startActivity(_mActivity, intent, mToolbar.findViewById(R.id.action_hierarchy), R.color.base_color);
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
 
 
 

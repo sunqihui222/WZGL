@@ -73,4 +73,5 @@ public class ConstantsUtils {
     public static final int JOBORDERUNSUBMIT = 45;
     public static final int JOBORDERUNCOMPOUNDING = 46;
     public static final int JOBORDERCOMPOUNDING = 47;
+    public static final int POURPOSITION = 48;
 }

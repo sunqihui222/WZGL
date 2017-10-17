@@ -47,6 +47,7 @@ public class ParametersData implements Cloneable, Serializable {
     public String lq = "";
     public String sjzt = "";
     public String llsjqd = "";
+    public String keyword = "";
 
 
     public ParametersData() {
