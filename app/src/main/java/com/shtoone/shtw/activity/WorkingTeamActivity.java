@@ -69,6 +69,7 @@ public class WorkingTeamActivity extends BaseActivity{
         mGson = new Gson();
         departId = getIntent().getStringExtra("departId");
         setToolbarTitle();
+        initToolbarBackNavigation(mToolbar);
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
     }
@@ -171,7 +172,7 @@ public class WorkingTeamActivity extends BaseActivity{
     private void setToolbarTitle() {
         if (null != mToolbar && null != mDepartmentData && !TextUtils.isEmpty(mDepartmentData.departmentName)) {
             StringBuffer sb = new StringBuffer(getString(R.string.engineering_department)+ " > ");
-            sb.append(getString(R.string.pour_position)).trimToSize();
+            sb.append("施工队");
             mToolbar.setTitle(sb.toString());
         }
     }

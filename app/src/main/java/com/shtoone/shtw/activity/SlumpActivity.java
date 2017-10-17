@@ -67,6 +67,7 @@ public class SlumpActivity extends BaseActivity{
         listData = new ArrayList<>();
         mGson = new Gson();
         setToolbarTitle();
+        initToolbarBackNavigation(mToolbar);
         initPageStateLayout(mPageStateLayout);
         initPtrFrameLayout(mPtrFrameLayout);
     }
@@ -168,7 +169,7 @@ public class SlumpActivity extends BaseActivity{
     private void setToolbarTitle() {
         if (null != mToolbar && null != mDepartmentData && !TextUtils.isEmpty(mDepartmentData.departmentName)) {
             StringBuffer sb = new StringBuffer(getString(R.string.engineering_department)+ " > ");
-            sb.append(getString(R.string.pour_position)).trimToSize();
+            sb.append("坍落度");
             mToolbar.setTitle(sb.toString());
         }
     }
