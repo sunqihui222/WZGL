@@ -248,17 +248,6 @@ public class LaboratoryFragment extends BaseLazyFragment implements View.OnClick
         }
     }
 
-    @Subscribe
-    public void updateSearch(ParametersData mParametersData) {
-
-        if (mParametersData != null) {
-            if (mParametersData.fromTo == ConstantsUtils.LABORATORYFRAGMENT) {
-                fab.show();
-                this.mParametersData = mParametersData;
-                mPtrFrameLayout.autoRefresh(true);
-            }
-        }
-    }
 
     /*@Subscribe
     public void updateDepartment(DepartmentData mDepartmentData) {

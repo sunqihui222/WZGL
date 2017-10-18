@@ -196,9 +196,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 } else if (id == R.id.logout_drawer_main_activity) {
                     JumpToLoginActivity();
                 } else if (id == R.id.about_drawer_main_activity) {
-                    JumpToAboutActivity();
+                    //JumpToAboutActivity();
                 } else if (id == R.id.version_drawer_main_activity) {
-                    JumpToVersionActivity();
+                    //JumpToVersionActivity();
                 }
             }
         }, 250);
