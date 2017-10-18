@@ -126,7 +126,7 @@ public class WZProjectProgressQueryFragment extends BaseLazyFragment {
             public void onItemClick(View view, int position) {
                 // 实现局部界面刷新, 这个view就是被点击的item布局对象
                 changeReadedState(view);
-                jump2EngineerDepartmentDetailActivity(position);
+                //jump2EngineerDepartmentDetailActivity(position);
             }
         });
 
